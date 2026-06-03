@@ -46,7 +46,7 @@ loginForm.addEventListener("submit", async function(event) {
             localStorage.setItem("userRole", result.role);
 
             if (result.role === "ADMIN") {
-                window.location.href = "admin-dashboard.html";
+                window.location.href = "admin-home.html";
             } else if (result.role === "TEACHER") {
                 window.location.href = "teacher-dashboard.html";
             } else if (result.role === "STUDENT") {

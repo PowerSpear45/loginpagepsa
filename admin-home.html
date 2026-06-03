@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <header class="top-header">
+      <h2>Power Public School</h2>
+
+      <div class="header-right">
+        <div class="notification">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+
+        <div class="admin-box">
+          <span>Admin 1</span>
+          <small>Suresh Kumar</small>
+          <img src="images/admin.png" class="profile-img">
+        </div>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <a class="active"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a><i class="fa-solid fa-user-graduate"></i> Students Management</a>
+      <a><i class="fa-solid fa-chalkboard-user"></i> Teachers Management</a>
+      <a><i class="fa-solid fa-school"></i> Classes & Sections</a>
+      <a><i class="fa-solid fa-money-bill-wave"></i> Fees Management</a>
+      <a><i class="fa-solid fa-calendar-check"></i> Attendance Report</a>
+      <a><i class="fa-solid fa-chart-column"></i> Marks Report</a>
+      <a><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+
+      <div class="date-card">
+    <i class="fa-solid fa-calendar-days"></i>
+
+    <p>Today's Date</p>
+
+    <h3 id="currentDate"></h3>
+
+    <span id="currentDay"></span>
+</div>
+    </aside>
+
+    <main class="main-content">
+      <h3>Welcome , Admin!</h3>
+
+      <div class="stats-container">
+
+        <div class="stat-card">
+          <div class="card-icon students">
+            <i class="fa-solid fa-user-graduate"></i>
+          </div>
+          <div class="card-content">
+            <p>Total Students</p>
+            <h2 id="totalStudents">0</h2>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="card-icon teachers">
+            <i class="fa-solid fa-chalkboard-user"></i>
+          </div>
+          <div class="card-content">
+            <p>Total Teachers</p>
+            <h2 id="totalTeachers">0</h2>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="card-icon attendance">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <div class="card-content">
+            <p>Attendance</p>
+            <h2 id="attendancePercent">0%</h2>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="card-icon bugs">
+            <i class="fa-solid fa-bug"></i>
+          </div>
+          <div class="card-content">
+            <p>System Bugs & Fixes</p>
+            <small>"Fees Bug" Fixed on 09 Apr</small>
+          </div>
+        </div>
+
+      </div>
+
+      <section class="charts-row">
+        <div class="chart-card">
+          <h4>Fees Collection Overview</h4>
+          <canvas id="feesChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <h4>Attendance Overview</h4>
+          <canvas id="attendanceChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <h4>Students by Gender</h4>
+          <canvas id="genderChart"></canvas>
+        </div>
+      </section>
+
+      <section class="bottom-area">
+        <div class="recent-box">
+  <h3>Recent Activities</h3>
+
+  <div id="recentActivities"></div>
+
+</div>
+
+        <div class="right-panel">
+          <div class="quick-actions">
+            <h3>Quick Actions</h3>
+
+            <div class="quick-action-item student">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span>Add New Student</span>
+            </div>
+
+            <div class="quick-action-item teacher">
+              <i class="fa-solid fa-user-plus"></i>
+              <span>Add New Teacher</span>
+            </div>
+
+            <div class="quick-action-item announcement">
+              <i class="fa-solid fa-bullhorn"></i>
+              <span>Create Announcement</span>
+            </div>
+
+            <div class="quick-action-item fees">
+              <i class="fa-solid fa-money-bill-wave"></i>
+              <span>Collect Fees</span>
+            </div>
+          </div>
+
+          <div class="system-status">
+            <div>
+              <h4>Backup Status</h4>
+              <p>Backup Successful</p>
+            </div>
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="admin-home.js"></script>
+</body>
+</html>
