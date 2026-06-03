@@ -55,7 +55,7 @@ new Chart(document.getElementById("genderChart"), {
     maintainAspectRatio: false
   }
 });
-fetch("http://localhost:8080/api/admin/dashboard")
+fetch("https://loginpagepsabackend.onrender.com/api/admin/dashboard")
   .then(response => response.json())
   .then(data => {
     document.getElementById("totalStudents").innerText = data.totalStudents;
