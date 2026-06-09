@@ -322,3 +322,14 @@ body {
 .icon.announcement {
   background-color: #feca57;
 }
+.sidebar a {
+  font-size: 16px !important;
+  padding: 12px 14px !important;
+  gap: 14px !important;
+  line-height: 1.2 !important;
+}
+
+.sidebar a i {
+  font-size: 18px !important;
+  width: 24px !important;
+}
