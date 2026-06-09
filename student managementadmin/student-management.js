@@ -24,7 +24,7 @@ closeBtn.onclick = function () {
 
 async function loadStudents() {
     try {
-        const response = await fetch("http://localhost:8080/api/students");
+        const response = await fetch("https://loginpagepsabackend.onrender.com/api/students");
         const students = await response.json();
 
         allStudents = students;
@@ -140,8 +140,8 @@ studentForm.addEventListener("submit", async function (e) {
     };
 
     const url = editingStudentId
-        ? `http://localhost:8080/api/students/${editingStudentId}`
-        : "http://localhost:8080/api/students";
+        ? `https://loginpagepsabackend.onrender.com/api/students/${editingStudentId}`
+        : "https://loginpagepsabackend.onrender.com/api/students";
 
     const method = editingStudentId ? "PUT" : "POST";
 
@@ -176,7 +176,7 @@ async function deleteStudent(id) {
     if (!confirm("Are you sure you want to delete this student?")) return;
 
     try {
-        const response = await fetch(`http://localhost:8080/api/students/${id}`, {
+        const response = await fetch(`https://loginpagepsabackend.onrender.com/api/students/${id}`, {
             method: "DELETE"
         });
 
