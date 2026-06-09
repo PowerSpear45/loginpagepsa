@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Management</title>
+  <link rel="stylesheet" href="student-management.css">
+</head>
+<body>
+
+  <div class="page">
+    <aside class="sidebar">
+      <h3>Power Public School</h3>
+
+      <a href="admin.html">Dashboard</a>
+      <a class="active" href="student-management.html">Students Management</a>
+      <a href="#">Teachers Management</a>
+      <a href="#">Classes & Sections</a>
+      <a href="#">Fees Management</a>
+      <a href="#">Attendance Report</a>
+      <a href="#">Marks Report</a>
+      <a href="#">Announcements</a>
+    </aside>
+
+    <main class="content">
+      <div class="top-bar">
+    <h2>Student Management</h2>
+
+    <button class="add-btn">
+        + Add New Student
+    </button>
+</div>
+
+<div class="cards">
+    <div class="card">
+        <h4>Total Students</h4>
+        <p id="totalStudents">0</p>
+        
+    </div>
+
+    <div class="card">
+        <h4>Boys</h4>
+        <p id="boysCount">0</p>
+      
+    </div>
+
+    <div class="card">
+        <h4>Girls</h4>
+        <p id="girlsCount">0</p>
+        
+    </div>
+
+    <div class="card">
+        <h4>New Admissions</h4>
+        <p id="newAdmissionsCount">0</p>
+        
+    </div>
+</div>
+<div class="filters">
+  <select id="classFilter">
+    <option>All Classes</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+    
+  </select>
+
+  <select id="sectionFilter">
+    <option>All Sections</option>
+    <option>A</option>
+    <option>B</option>
+  </select>
+
+  <select id="genderFilter">
+    <option>All Genders</option>
+    <option>Male</option>
+    <option>Female</option>
+  </select>
+ 
+
+  <input id="searchInput" type="text" placeholder="Search by name, roll no, admission no">
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Admission No</th>
+                <th>Class-Section</th>
+                <th>Roll No</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="studentTableBody">
+</tbody>
+            
+    </table>
+</div>
+<div id="studentModal" class="modal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>Add New Student</h2>
+      <span class="close-btn">&times;</span>
+    </div>
+
+   <form class="student-form">
+
+  <h3>Student Details</h3>
+
+<input id="fullName" type="text" placeholder="Student Name">
+<input id="admissionNo" type="text" placeholder="Admission No">
+<input id="rollNo" type="text" placeholder="Roll No">
+<input id="dateOfBirth" type="date">
+
+  <select id="gender">
+    <option>Select Gender</option>
+    <option>Male</option>
+    <option>Female</option>
+  </select>
+
+<input id="bloodGroup" type="text" placeholder="Blood Group">
+<input id="nationality" type="text" placeholder="Nationality">
+<input id="motherTongue" type="text" placeholder="Mother Tongue">
+<input id="religion" type="text" placeholder="Religion">
+<input id="firstLanguage" type="text" placeholder="First Language">
+<input id="secondLanguage" type="text" placeholder="Second Language">
+<input id="thirdLanguage" type="text" placeholder="Third Language">
+
+  <select id="className">
+    <option>Select Class</option>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+  </select>
+
+  <select id="section">
+    <option>Select Section</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+
+  <textarea placeholder="Current Residential Address"></textarea>
+
+  <h3>Parent Details</h3>
+
+<input id="fatherName" type="text" placeholder="Father Name">
+<input id="fatherQualification" type="text" placeholder="Father Qualification">
+<input id="fatherCompany" type="text" placeholder="Father Company Name">
+<input id="fatherOccupation" type="text" placeholder="Father Occupation">
+
+<input id="motherName" type="text" placeholder="Mother Name">
+<input id="motherCompany" type="text" placeholder="Mother Company Name">
+<input id="motherOccupation" type="text" placeholder="Mother Occupation">
+
+  <h3>Attachment Details</h3>
+
+  <label>Student Photo</label>
+  <input type="file" accept="image/*">
+
+  <label>Father Photo</label>
+  <input type="file" accept="image/*">
+
+  <label>Mother Photo</label>
+  <input type="file" accept="image/*">
+
+  <button type="submit" class="submit-btn">Save Student</button>
+
+</form>
+
+  </div>
+
+</div>
+      
+    </main>
+  </div>
+
+  <script src="student-management.js"></script>
+</body>
+</html>
