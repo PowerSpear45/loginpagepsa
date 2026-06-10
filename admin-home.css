@@ -333,35 +333,3 @@ body {
   font-size: 18px !important;
   width: 24px !important;
 }
-.page {
-  display: flex;
-  width: 100%;
-  min-height: 100vh;
-}
-
-.sidebar {
-  flex: 0 0 230px;
-}
-
-.content {
-  flex: 1;
-  min-width: 0;
-  overflow-x: hidden;
-}
-
-.cards {
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
-}
-
-.filters {
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
-}
-
-.table-container {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.add-btn {
-  white-space: nowrap;
-}
