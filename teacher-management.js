@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/teachers";
+const API_URL = "https://loginpagepsabackend.onrender.com/api/teachers";
 
 let teachers = [];
 let editTeacherId = null;
