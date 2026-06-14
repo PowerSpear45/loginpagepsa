@@ -153,7 +153,7 @@ teacherForm.addEventListener("submit", async function(event)
     email: document.getElementById("email").value.trim(),
     phone: document.getElementById("phone").value.trim(),
     joiningDate: document.getElementById("joiningDate").value,
-    status: document.getElementById("status").value,
+    status: document.getElementById("status").value.toUpperCase(),
     address: document.getElementById("address").value.trim(),
     photo: "https://randomuser.me/api/portraits/lego/1.jpg"
   };
