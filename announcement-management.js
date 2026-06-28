@@ -1,70 +1,12 @@
-let announcements = [
-  {
-    id: 1,
-    title: "Annual Sports Day 2025",
-    description: "All Students are informed that Annual Sports Day will be conducted next week.",
-    audience: "All Students",
-    postedBy: "Admin 1",
-    date: "2025-05-21",
-    time: "10:30",
-    status: "Published"
-  },
-  {
-    id: 2,
-    title: "Summer Vacation Notice",
-    description: "School will remain closed for summer vacation from next month.",
-    audience: "All Students",
-    postedBy: "Admin 1",
-    date: "2025-05-18",
-    time: "09:15",
-    status: "Published"
-  },
-  {
-    id: 3,
-    title: "Parent-Teacher Meeting",
-    description: "PTM is scheduled for next week. Parents are requested to attend.",
-    audience: "Parents",
-    postedBy: "Admin 2",
-    date: "2025-05-15",
-    time: "11:45",
-    status: "Scheduled"
-  },
-  {
-    id: 4,
-    title: "New Academic Session",
-    description: "New academic session will begin soon. Students must collect books.",
-    audience: "All Students",
-    postedBy: "Admin 1",
-    date: "2025-05-11",
-    time: "16:20",
-    status: "Published"
-  },
-  {
-    id: 5,
-    title: "Fee Payment Reminder",
-    description: "This is a reminder to clear pending fee payments before due date.",
-    audience: "Parents",
-    postedBy: "Admin 2",
-    date: "2025-05-06",
-    time: "18:00",
-    status: "Draft"
-  }
-];
+const API_URL = "https://loginpagepsabackend.onrender.com/api/announcements";
 
+let announcements = [];
 let selectedAnnouncementId = null;
 let activeCardStatus = "All";
 
 document.addEventListener("DOMContentLoaded", function () {
-  const tableBody = document.getElementById("announcementTableBody");
-  const searchInput = document.getElementById("searchInput");
-  const statusFilter = document.getElementById("statusFilter");
-  const audienceFilter = document.getElementById("audienceFilter");
-  const modal = document.getElementById("announcementModal");
-  const viewModal = document.getElementById("viewModal");
-  const form = document.getElementById("announcementForm");
-
   setTodayDate();
-  loadAnnouncements();
+  fetchAnnouncements();
 
   document.getElementById("createBtn").addEventListener("click", openAddModal);
   document.getElementById("draftBtn").addEventListener("click", () => filterByCard("Draft"));
@@ -77,31 +19,32 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("closeModalBtn").addEventListener("click", closeModal);
   document.getElementById("closeViewModalBtn").addEventListener("click", closeViewModal);
 
-  searchInput.addEventListener("input", applyFilters);
-  statusFilter.addEventListener("change", function () {
-    activeCardStatus = statusFilter.value;
+  document.getElementById("searchInput").addEventListener("input", applyFilters);
+
+  document.getElementById("statusFilter").addEventListener("change", function () {
+    activeCardStatus = this.value;
     updateActiveCard();
     applyFilters();
   });
-  audienceFilter.addEventListener("change", applyFilters);
 
-  form.addEventListener("submit", saveAnnouncement);
+  document.getElementById("audienceFilter").addEventListener("change", applyFilters);
 
-  tableBody.addEventListener("click", function (event) {
-    const button = event.target.closest("button");
+  document.getElementById("announcementForm").addEventListener("submit", saveAnnouncement);
+
+  document.getElementById("announcementTableBody").addEventListener("click", function (event) {
+    const button = event.target.closest(".view-btn, .edit-btn, .delete-btn");
     if (!button) return;
 
     const id = Number(button.dataset.id);
-    const action = button.dataset.action;
 
-    if (action === "view") viewAnnouncement(id);
-    if (action === "edit") editAnnouncement(id);
-    if (action === "delete") deleteAnnouncement(id);
+    if (button.classList.contains("view-btn")) viewAnnouncement(id);
+    if (button.classList.contains("edit-btn")) editAnnouncement(id);
+    if (button.classList.contains("delete-btn")) deleteAnnouncement(id);
   });
 
   window.addEventListener("click", function (event) {
-    if (event.target === modal) closeModal();
-    if (event.target === viewModal) closeViewModal();
+    if (event.target === document.getElementById("announcementModal")) closeModal();
+    if (event.target === document.getElementById("viewModal")) closeViewModal();
   });
 });
 
@@ -119,6 +62,36 @@ function setTodayDate() {
     today.toLocaleDateString("en-GB", {
       weekday: "long"
     });
+}
+
+async function fetchAnnouncements() {
+  try {
+    const response = await fetch(API_URL);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch announcements");
+    }
+
+    const data = await response.json();
+
+    announcements = data.map(item => ({
+      id: item.announcementId,
+      title: item.title,
+      description: item.description,
+      audience: item.audience,
+      postedBy: item.postedBy,
+      date: item.date,
+      time: item.time,
+      status: item.status
+    }));
+
+    loadAnnouncements();
+  } catch (error) {
+    console.error("Error loading announcements:", error);
+    showToast("Failed to load announcements");
+    announcements = [];
+    loadAnnouncements();
+  }
 }
 
 function loadAnnouncements(data = announcements) {
@@ -173,15 +146,15 @@ function loadAnnouncements(data = announcements) {
 
       <td>
         <div class="action-buttons">
-          <button type="button" class="view-btn" data-action="view" data-id="${item.id}">
+          <button type="button" class="view-btn" data-id="${item.id}">
             <i class="fa-solid fa-eye"></i>
           </button>
 
-          <button type="button" class="edit-btn" data-action="edit" data-id="${item.id}">
+          <button type="button" class="edit-btn" data-id="${item.id}">
             <i class="fa-solid fa-pen"></i>
           </button>
 
-          <button type="button" class="delete-btn" data-action="delete" data-id="${item.id}">
+          <button type="button" class="delete-btn" data-id="${item.id}">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -277,11 +250,10 @@ function closeModal() {
   document.getElementById("announcementModal").classList.remove("show");
 }
 
-function saveAnnouncement(event) {
+async function saveAnnouncement(event) {
   event.preventDefault();
 
   const announcementData = {
-    id: selectedAnnouncementId || Date.now(),
     title: document.getElementById("title").value.trim(),
     description: document.getElementById("description").value.trim(),
     audience: document.getElementById("audience").value,
@@ -291,18 +263,41 @@ function saveAnnouncement(event) {
     time: document.getElementById("time").value
   };
 
-  if (selectedAnnouncementId) {
-    announcements = announcements.map(item =>
-      item.id === selectedAnnouncementId ? announcementData : item
-    );
-    showToast("Announcement updated successfully");
-  } else {
-    announcements.push(announcementData);
-    showToast("Announcement added successfully");
-  }
+  try {
+    let response;
 
-  closeModal();
-  applyFilters();
+    if (selectedAnnouncementId) {
+      response = await fetch(`${API_URL}/${selectedAnnouncementId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(announcementData)
+      });
+    } else {
+      response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(announcementData)
+      });
+    }
+
+    if (!response.ok) {
+      throw new Error("Save failed");
+    }
+
+    showToast(selectedAnnouncementId ? "Announcement updated successfully" : "Announcement added successfully");
+
+    closeModal();
+    selectedAnnouncementId = null;
+    fetchAnnouncements();
+
+  } catch (error) {
+    console.error("Error saving announcement:", error);
+    showToast("Failed to save announcement");
+  }
 }
 
 function editAnnouncement(id) {
@@ -323,12 +318,25 @@ function editAnnouncement(id) {
   document.getElementById("announcementModal").classList.add("show");
 }
 
-function deleteAnnouncement(id) {
+async function deleteAnnouncement(id) {
   if (!confirm("Are you sure you want to delete this announcement?")) return;
 
-  announcements = announcements.filter(item => item.id !== id);
-  showToast("Announcement deleted successfully");
-  applyFilters();
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE"
+    });
+
+    if (!response.ok) {
+      throw new Error("Delete failed");
+    }
+
+    showToast("Announcement deleted successfully");
+    fetchAnnouncements();
+
+  } catch (error) {
+    console.error("Error deleting announcement:", error);
+    showToast("Failed to delete announcement");
+  }
 }
 
 function viewAnnouncement(id) {
@@ -426,22 +434,3 @@ function formatTime(timeValue) {
     minute: "2-digit"
   });
 }
-document.addEventListener("click", function(event) {
-  const button = event.target.closest(".view-btn, .edit-btn, .delete-btn");
-
-  if (!button) return;
-
-  const id = Number(button.dataset.id);
-
-  if (button.classList.contains("view-btn")) {
-    viewAnnouncement(id);
-  }
-
-  if (button.classList.contains("edit-btn")) {
-    editAnnouncement(id);
-  }
-
-  if (button.classList.contains("delete-btn")) {
-    deleteAnnouncement(id);
-  }
-});
