@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Announcements</title>
+
+  <link rel="stylesheet" href="announcement-management.css">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="page">
+
+  <aside class="sidebar">
+    <h3>Power Public School</h3>
+
+    <a href="admin-home.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+    <a href="student-management.html"><i class="fa-solid fa-user-graduate"></i> Students Management</a>
+    <a href="teacher-management.html"><i class="fa-solid fa-chalkboard-user"></i> Teachers Management</a>
+    <a href="classes-sections.html"><i class="fa-solid fa-school"></i> Classes & Sections</a>
+    <a href="#"><i class="fa-solid fa-money-bill"></i> Fees Management</a>
+    <a href="#"><i class="fa-solid fa-calendar-check"></i> Attendance Report</a>
+    <a href="#"><i class="fa-solid fa-clipboard-list"></i> Marks Report</a>
+    <a class="active" href="announcement-management.html"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+
+    <div class="date-box">
+      <i class="fa-solid fa-calendar-days"></i>
+      <p>Today's Date</p>
+      <h4 id="todayDate"></h4>
+      <span id="todayDay"></span>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <h2>Announcements</h2>
+
+    <div class="top-section">
+
+      <section class="left-content">
+
+        <div class="cards">
+          <div class="card clickable-card" id="publishedCard">
+            <div class="card-icon blue"><i class="fa-solid fa-bullhorn"></i></div>
+            <div>
+              <p>Published</p>
+              <span>Active</span>
+              <h3 id="publishedCount">0</h3>
+            </div>
+          </div>
+
+          <div class="card clickable-card" id="scheduledCard">
+            <div class="card-icon yellow"><i class="fa-solid fa-calendar-check"></i></div>
+            <div>
+              <p>Scheduled</p>
+              <span>Upcoming</span>
+              <h3 id="scheduledCount">0</h3>
+            </div>
+          </div>
+
+          <div class="card clickable-card" id="draftCard">
+            <div class="card-icon orange"><i class="fa-solid fa-clipboard-list"></i></div>
+            <div>
+              <p>Drafts</p>
+              <span>Unpublished</span>
+              <h3 id="draftCount">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="filters">
+          <input type="text" id="searchInput" placeholder="Search announcements...">
+
+          <select id="statusFilter">
+            <option value="All">All Status</option>
+            <option value="Published">Published</option>
+            <option value="Scheduled">Scheduled</option>
+            <option value="Draft">Draft</option>
+          </select>
+
+          <select id="audienceFilter">
+            <option value="All">All Audience</option>
+            <option value="All Students">All Students</option>
+            <option value="Parents">Parents</option>
+            <option value="Teachers">Teachers</option>
+            <option value="Everyone">Everyone</option>
+          </select>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Audience</th>
+              <th>Posted By</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="announcementTableBody"></tbody>
+        </table>
+
+      </section>
+
+      <aside class="quick-actions">
+        <h3>Quick Actions</h3>
+
+        <button type="button" id="createBtn">
+          <i class="fa-solid fa-circle-plus"></i>
+          Create New Announcement
+        </button>
+
+        <button type="button" id="draftBtn">
+          <i class="fa-solid fa-file-lines"></i>
+          View Drafts
+        </button>
+
+        <button type="button" id="scheduledBtn">
+          <i class="fa-solid fa-calendar-days"></i>
+          View Scheduled
+        </button>
+      </aside>
+
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal" id="announcementModal">
+  <div class="modal-content">
+
+    <span class="close-btn" id="closeModalBtn">&times;</span>
+
+    <h2 id="modalTitle">Create Announcement</h2>
+
+    <form id="announcementForm">
+      <input type="hidden" id="announcementId">
+
+      <label>Title</label>
+      <input type="text" id="title" required>
+
+      <label>Description</label>
+      <textarea id="description" required></textarea>
+
+      <label>Audience</label>
+      <select id="audience" required>
+        <option value="">Select Audience</option>
+        <option value="All Students">All Students</option>
+        <option value="Parents">Parents</option>
+        <option value="Teachers">Teachers</option>
+        <option value="Everyone">Everyone</option>
+      </select>
+
+      <label>Posted By</label>
+      <input type="text" id="postedBy" value="Admin 1" required>
+
+      <label>Status</label>
+      <select id="status" required>
+        <option value="Published">Published</option>
+        <option value="Scheduled">Scheduled</option>
+        <option value="Draft">Draft</option>
+      </select>
+
+      <label>Date</label>
+      <input type="date" id="date" required>
+
+      <label>Time</label>
+      <input type="time" id="time" required>
+
+      <button type="submit" class="save-btn">Save Announcement</button>
+    </form>
+
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal" id="viewModal">
+  <div class="modal-content">
+
+    <span class="close-btn" id="closeViewModalBtn">&times;</span>
+
+    <h2 id="viewTitle"></h2>
+
+    <p><b>Description:</b></p>
+    <p id="viewDescription"></p>
+
+    <p><b>Audience:</b> <span id="viewAudience"></span></p>
+    <p><b>Posted By:</b> <span id="viewPostedBy"></span></p>
+    <p><b>Date:</b> <span id="viewDate"></span></p>
+    <p><b>Status:</b> <span id="viewStatus"></span></p>
+
+  </div>
+</div>
+
+<script src="announcement-management.js"></script>
+</body>
+</html>
