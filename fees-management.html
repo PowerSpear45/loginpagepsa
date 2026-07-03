@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fees Management</title>
+  <link rel="stylesheet" href="fees-management.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3>Power Public School</h3>
+
+    <a href="admin-home.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+    <a href="student-management.html"><i class="fa-solid fa-user-graduate"></i> Students Management</a>
+    <a href="teacher-management.html"><i class="fa-solid fa-chalkboard-user"></i> Teachers Management</a>
+    <a href="classes-sections.html"><i class="fa-solid fa-school"></i> Classes & Sections</a>
+
+    <a class="active" href="fees-management.html">
+      <i class="fa-solid fa-money-bill-wave"></i> Fees Management
+    </a>
+
+    <a href="#"><i class="fa-solid fa-calendar-check"></i> Attendance Report</a>
+    <a href="#"><i class="fa-solid fa-file-pen"></i> Marks Report</a>
+    <a href="announcement-management.html"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+
+    <div class="date-box">
+      <i class="fa-solid fa-calendar-days"></i> Today's Date
+      <h2 id="todayDate">09 May, 2026</h2>
+      <p id="todayDay">Saturday</p>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <header class="topbar">
+      <h2>Fees Management</h2>
+
+      <button class="reminder-btn">
+        <i class="fa-solid fa-envelope"></i> Send Reminder
+      </button>
+    </header>
+
+    <!-- Summary Cards -->
+    <section class="cards">
+      <div class="card">
+        <div class="icon blue"><i class="fa-solid fa-wallet"></i></div>
+        <div>
+          <p>Total Fees Amount</p>
+          <h3 id="totalFees">Rs. 0</h3>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon green"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <div>
+          <p>Collected Amount</p>
+          <h3 id="collectedFees">Rs. 0</h3>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon yellow"><i class="fa-solid fa-circle-exclamation"></i></div>
+        <div>
+          <p>Pending Amount</p>
+          <h3 id="pendingFees">Rs. 0</h3>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div>
+          <p>Pending Students</p>
+          <h3 id="pendingStudents">0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+      <div>
+        <label>Class :</label>
+        <select id="classFilter">
+          <option value="">All Classes</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Section :</label>
+        <select id="sectionFilter">
+          <option value="">All Sections</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Fee Type :</label>
+        <select id="feeTypeFilter">
+          <option value="">All Fee Types</option>
+          <option value="Tuition Fee">Tuition Fee</option>
+          <option value="Transport Fee">Transport Fee</option>
+          <option value="Exam Fee">Exam Fee</option>
+          <option value="Books Fee">Books Fee</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Status :</label>
+        <select id="statusFilter">
+          <option value="">All Status</option>
+          <option value="Paid">Paid</option>
+          <option value="Partial">Partial</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Search :</label>
+        <input type="text" id="searchInput" placeholder="Search student..." />
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section class="table-section">
+      <div class="table-title-row">
+        <h3>Students Fee Details :</h3>
+        <p id="recordCount">Showing 0 of 0 Records</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Class - Section</th>
+            <th>Fee Type</th>
+            <th>Due Date</th>
+            <th>Total Fees</th>
+            <th>Paid Amount</th>
+            <th>Pending Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="feesTableBody"></tbody>
+      </table>
+
+      <div class="pagination">
+        <button onclick="previousPage()">&lt;</button>
+        <button onclick="goToPage(1)">1</button>
+        <button onclick="goToPage(2)">2</button>
+        <button onclick="goToPage(3)">3</button>
+        <span>...</span>
+        <button onclick="nextPage()">&gt;</button>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+      <h3>Quick Actions :</h3>
+
+      <button class="collect-btn" onclick="openCollectModal()">
+        <i class="fa-solid fa-indian-rupee-sign"></i> Collect New Fees
+      </button>
+
+      <button class="structure-btn">
+        <i class="fa-solid fa-table-list"></i> Fees Structure
+      </button>
+    </section>
+
+  </main>
+</div>
+
+<!-- Collect/Edit Fee Modal -->
+<div class="modal" id="feeModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeFeeModal()">&times;</span>
+
+    <h2 id="modalTitle">Collect New Fee</h2>
+
+    <form id="feeForm">
+      <input type="hidden" id="feeId" />
+
+      <label>Student Name</label>
+      <input type="text" id="studentName" required />
+
+      <label>Class</label>
+      <input type="text" id="className" required />
+
+      <label>Section</label>
+      <input type="text" id="section" required />
+
+      <label>Fee Type</label>
+      <select id="feeType" required>
+        <option value="">Select Fee Type</option>
+        <option value="Tuition Fee">Tuition Fee</option>
+        <option value="Transport Fee">Transport Fee</option>
+        <option value="Exam Fee">Exam Fee</option>
+        <option value="Books Fee">Books Fee</option>
+      </select>
+
+      <label>Due Date</label>
+      <input type="date" id="dueDate" required />
+
+      <label>Total Fees</label>
+      <input type="number" id="totalAmount" required />
+
+      <label>Paid Amount</label>
+      <input type="number" id="paidAmount" required />
+
+      <label>Student Photo URL</label>
+      <input type="text" id="photoUrl" />
+
+      <button type="submit" class="save-btn">Save Fee</button>
+    </form>
+  </div>
+</div>
+
+<!-- View Fee Modal -->
+<div class="modal" id="viewModal">
+  <div class="modal-content view-modal-content">
+    <span class="close-btn" onclick="closeViewModal()">&times;</span>
+    <h2>Fee Details</h2>
+    <div id="viewFeeDetails"></div>
+  </div>
+</div>
+
+<!-- Collect Payment Modal -->
+<div class="modal" id="collectModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeCollectModal()">&times;</span>
+
+    <h2>Collect Payment</h2>
+
+    <form id="collectForm">
+      <input type="hidden" id="collectFeeId" />
+
+      <label>Student Name</label>
+      <input type="text" id="collectStudentName" readonly />
+
+      <label>Pending Amount</label>
+      <input type="text" id="collectPendingAmount" readonly />
+
+      <label>Amount Received</label>
+      <input type="number" id="collectAmount" required />
+
+      <label>Payment Date</label>
+      <input type="date" id="paymentDate" required />
+
+      <label>Payment Mode</label>
+      <select id="paymentMode" required>
+        <option value="">Select Mode</option>
+        <option value="Cash">Cash</option>
+        <option value="UPI">UPI</option>
+        <option value="Card">Card</option>
+        <option value="Bank Transfer">Bank Transfer</option>
+      </select>
+
+      <label>Remarks</label>
+      <input type="text" id="paymentRemarks" placeholder="Optional" />
+
+      <button type="submit" class="save-btn">Collect Payment</button>
+    </form>
+  </div>
+</div>
+
+<script src="fees-management.js"></script>
+</body>
+</html>
