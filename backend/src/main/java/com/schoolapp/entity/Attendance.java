@@ -1,6 +1,7 @@
 package com.schoolapp.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -24,15 +25,31 @@ public class Attendance {
         return attendanceId;
     }
 
+    public void setAttendanceId(Integer attendanceId) {
+        this.attendanceId = attendanceId;
+    }
+
     public Integer getStudentId() {
         return studentId;
+    }
+
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
     }
 
     public LocalDate getAttendanceDate() {
         return attendanceDate;
     }
 
+    public void setAttendanceDate(LocalDate attendanceDate) {
+        this.attendanceDate = attendanceDate;
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

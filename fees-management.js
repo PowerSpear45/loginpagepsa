@@ -1,61 +1,6 @@
-let feesData = [
-  {
-    feeId: 1,
-    studentName: "Abinash Kumar",
-    className: "4",
-    section: "B",
-    feeType: "Tuition Fee",
-    dueDate: "2026-07-15",
-    totalAmount: 20000,
-    paidAmount: 20000,
-    photoUrl: "https://randomuser.me/api/portraits/men/32.jpg"
-  },
-  {
-    feeId: 2,
-    studentName: "Dhivya.S",
-    className: "5",
-    section: "B",
-    feeType: "Transport Fee",
-    dueDate: "2026-07-20",
-    totalAmount: 30000,
-    paidAmount: 20000,
-    photoUrl: "https://randomuser.me/api/portraits/women/44.jpg"
-  },
-  {
-    feeId: 3,
-    studentName: "Babu.U",
-    className: "5",
-    section: "B",
-    feeType: "Tuition Fee",
-    dueDate: "2026-07-25",
-    totalAmount: 30000,
-    paidAmount: 0,
-    photoUrl: "https://randomuser.me/api/portraits/men/45.jpg"
-  },
-  {
-    feeId: 4,
-    studentName: "Deepika.K",
-    className: "6",
-    section: "A",
-    feeType: "Exam Fee",
-    dueDate: "2026-08-01",
-    totalAmount: 35000,
-    paidAmount: 35000,
-    photoUrl: "https://randomuser.me/api/portraits/women/68.jpg"
-  },
-  {
-    feeId: 5,
-    studentName: "Krishna.P",
-    className: "6",
-    section: "B",
-    feeType: "Books Fee",
-    dueDate: "2026-08-05",
-    totalAmount: 35000,
-    paidAmount: 30000,
-    photoUrl: "https://randomuser.me/api/portraits/men/75.jpg"
-  }
-];
+const API_URL = "https://loginpagepsabackend.onrender.com/api/fees";
 
+let feesData = [];
 let currentPage = 1;
 const rowsPerPage = 5;
 
@@ -78,6 +23,7 @@ const collectForm = document.getElementById("collectForm");
 function formatCurrency(amount) {
   return "Rs. " + Number(amount).toLocaleString("en-IN");
 }
+
 
 function formatDate(dateValue) {
   return new Date(dateValue).toLocaleDateString("en-IN", {
@@ -309,45 +255,50 @@ function closeCollectModal() {
   collectModal.style.display = "none";
 }
 
-collectForm.addEventListener("submit", function (event) {
+collectForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const id = Number(document.getElementById("collectFeeId").value);
-  const fee = feesData.find(item => item.feeId === id);
+  const amount = Number(document.getElementById("collectAmount").value);
 
-  const pendingAmount = fee.totalAmount - fee.paidAmount;
-  const collectAmount = Number(document.getElementById("collectAmount").value);
+  const response = await fetch(`${API_URL}/${id}/collect`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: amount })
+  });
 
-  if (collectAmount <= 0 || collectAmount > pendingAmount) {
-    alert("Enter a valid amount.");
+  if (!response.ok) {
+    alert("Collect payment failed");
     return;
   }
 
-  fee.paidAmount += collectAmount;
-
-  alert("Payment collected successfully.");
+  alert("Payment collected online.");
   closeCollectModal();
-  renderFees(getFilteredData());
+  await loadFeesFromAPI();
 });
 
-function deleteFee(id) {
-  const confirmDelete = confirm("Are you sure you want to delete this fee record?");
+async function deleteFee(id) {
+  if (!confirm("Are you sure you want to delete this fee record?")) return;
 
-  if (!confirmDelete) return;
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "DELETE"
+  });
 
-  feesData = feesData.filter(item => item.feeId !== id);
+  if (!response.ok) {
+    alert("Delete failed");
+    return;
+  }
 
-  loadFilters();
-  renderFees(getFilteredData());
+  alert("Fee deleted online.");
+  await loadFeesFromAPI();
 }
 
-feeForm.addEventListener("submit", function (event) {
+feeForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const id = document.getElementById("feeId").value;
 
   const feeObject = {
-    feeId: id ? Number(id) : Date.now(),
     studentName: document.getElementById("studentName").value.trim(),
     className: document.getElementById("className").value.trim(),
     section: document.getElementById("section").value.trim(),
@@ -358,23 +309,23 @@ feeForm.addEventListener("submit", function (event) {
     photoUrl: document.getElementById("photoUrl").value.trim()
   };
 
-  if (feeObject.paidAmount > feeObject.totalAmount) {
-    alert("Paid amount cannot be greater than total fees.");
+  const url = id ? `${API_URL}/${id}` : API_URL;
+  const method = id ? "PUT" : "POST";
+
+  const response = await fetch(url, {
+    method: method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(feeObject)
+  });
+
+  if (!response.ok) {
+    alert("Save failed");
     return;
   }
 
-  if (id) {
-    const index = feesData.findIndex(item => item.feeId === Number(id));
-    feesData[index] = feeObject;
-    alert("Fee record updated successfully.");
-  } else {
-    feesData.push(feeObject);
-    alert("Fee record added successfully.");
-  }
-
+  alert(id ? "Fee updated online." : "Fee added online.");
   closeFeeModal();
-  loadFilters();
-  renderFees(getFilteredData());
+  await loadFeesFromAPI();
 });
 
 function previousPage() {
@@ -442,11 +393,32 @@ function loadTodayDate() {
 }
 
 window.onclick = function (event) {
-  if (event.target === feeModal) closeFeeModal();
-  if (event.target === viewModal) closeViewModal();
-  if (event.target === collectModal) closeCollectModal();
+    if (event.target === feeModal) closeFeeModal();
+    if (event.target === viewModal) closeViewModal();
+    if (event.target === collectModal) closeCollectModal();
 };
 
+// =============================
+// Load Fees from Backend API
+// =============================
+async function loadFeesFromAPI() {
+    try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch fees");
+        }
+
+        feesData = await response.json();
+
+        loadFilters();
+        renderFees(feesData);
+
+    } catch (error) {
+        console.error("Error loading fees:", error);
+        alert("Failed to load fees from server.");
+    }
+}
+
 loadTodayDate();
-loadFilters();
-renderFees(feesData);
+loadFeesFromAPI();
