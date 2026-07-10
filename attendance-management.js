@@ -1,3 +1,4 @@
+const API_BASE = "https://loginpagepsabackend.onrender.com/api";
 const attendanceTableBody = document.getElementById("attendanceTableBody");
 
 const classFilter = document.getElementById("classFilter");
@@ -14,85 +15,45 @@ const overallAttendanceEl = document.getElementById("overallAttendance");
 let attendanceChart;
 let monthlyChart;
 
-let studentsData = [
-  {
-    rollNo: "260501",
-    photo: "https://i.pravatar.cc/100?img=12",
-    studentName: "Abinash Kumar",
-    className: "5",
-    section: "B",
-    presentDays: 18,
-    absentDays: 2,
-    lateDays: 1,
-    todayStatus: "Present"
-  },
-  {
-    rollNo: "260502",
-    photo: "https://i.pravatar.cc/100?img=47",
-    studentName: "Dhivya.S",
-    className: "5",
-    section: "B",
-    presentDays: 19,
-    absentDays: 1,
-    lateDays: 1,
-    todayStatus: "Present"
-  },
-  {
-    rollNo: "260503",
-    photo: "https://i.pravatar.cc/100?img=15",
-    studentName: "Babu.U",
-    className: "5",
-    section: "B",
-    presentDays: 20,
-    absentDays: 1,
-    lateDays: 0,
-    todayStatus: "Present"
-  },
-  {
-    rollNo: "260504",
-    photo: "https://i.pravatar.cc/100?img=33",
-    studentName: "Deepika.K",
-    className: "5",
-    section: "B",
-    presentDays: 17,
-    absentDays: 3,
-    lateDays: 1,
-    todayStatus: "Late"
-  },
-  {
-    rollNo: "260505",
-    photo: "https://i.pravatar.cc/100?img=52",
-    studentName: "Krishna.P",
-    className: "5",
-    section: "B",
-    presentDays: 16,
-    absentDays: 4,
-    lateDays: 1,
-    todayStatus: "Absent"
-  },
-  {
-    rollNo: "260601",
-    photo: "https://i.pravatar.cc/100?img=21",
-    studentName: "Sanjay P",
-    className: "6",
-    section: "A",
-    presentDays: 18,
-    absentDays: 3,
-    lateDays: 0,
-    todayStatus: "Present"
-  },
-  {
-    rollNo: "260602",
-    photo: "https://i.pravatar.cc/100?img=44",
-    studentName: "Anjali",
-    className: "6",
-    section: "A",
-    presentDays: 17,
-    absentDays: 4,
-    lateDays: 2,
-    todayStatus: "Leave"
-  }
-];
+let studentsData = [];
+async function loadStudents() {
+    try {
+
+        const response = await fetch(`${API_BASE}/students`);
+
+        console.log("Response Status:", response.status);
+
+        studentsData = await response.json();
+
+        console.log("Students from backend:", studentsData);
+
+        studentsData = studentsData.map(student => ({
+            studentId: student.studentId,
+            rollNo: student.rollNo || "",
+            studentName: student.fullName || "",
+            className: student.className || "",
+            section: student.section || "",
+            photo: student.studentPhoto
+                ? student.studentPhoto
+                : `https://i.pravatar.cc/100?u=${student.studentId}`,
+            presentDays: 0,
+            absentDays: 0,
+            lateDays: 0,
+            todayStatus: "Present"
+        }));
+
+        console.log("Mapped Students:", studentsData);
+
+        loadAttendanceTable();
+
+    } catch (error) {
+
+        console.error("LOAD STUDENT ERROR:", error);
+
+        alert(error.message);
+
+    }
+}
 
 function loadAttendanceTable() {
   const filteredData = getFilteredData();
@@ -218,26 +179,64 @@ document.getElementById("markAllAbsent").addEventListener("click", () => {
   loadAttendanceTable();
 });
 
-document.getElementById("saveAttendanceBtn").addEventListener("click", () => {
-  const selectedDate = attendanceDate.value;
+document.getElementById("saveAttendanceBtn").addEventListener("click", async () => {
 
-  if (!selectedDate) {
-    alert("Please select attendance date");
-    return;
-  }
+    const selectedDate = attendanceDate.value;
 
-  const attendancePayload = getFilteredData().map(student => ({
-    rollNo: student.rollNo,
-    studentName: student.studentName,
-    className: student.className,
-    section: student.section,
-    date: selectedDate,
-    status: student.todayStatus
-  }));
+    if (!selectedDate) {
 
-  console.log("Attendance Saved:", attendancePayload);
+        alert("Select attendance date");
 
-  alert("Attendance saved successfully. Backend connection will be added next.");
+        return;
+
+    }
+
+    const attendancePayload = getFilteredData().map(student => ({
+
+        studentId: student.studentId,
+
+        attendanceDate: selectedDate,
+
+        status: student.todayStatus.toUpperCase()
+
+    }));
+
+    try{
+
+        const response = await fetch(`${API_BASE}/attendance/save`,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(attendancePayload)
+
+        });
+
+        if(response.ok){
+
+            alert("Attendance Saved Successfully.");
+
+        }
+
+        else{
+
+            alert("Failed to save attendance.");
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("Server error.");
+
+    }
+
 });
 
 document.getElementById("exportBtn").addEventListener("click", () => {
@@ -358,4 +357,44 @@ setDefaultDate();
 updateDateTime();
 setInterval(updateDateTime, 1000);
 
-loadAttendanceTable();
+loadStudents().then(loadTodayAttendance); 
+attendanceDate.addEventListener("change", loadTodayAttendance);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+async function loadTodayAttendance() {
+
+    const selectedDate = attendanceDate.value;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/attendance?date=${selectedDate}`
+        );
+
+        const attendance = await response.json();
+
+        attendance.forEach(record => {
+
+            const student = studentsData.find(
+                s => s.studentId === record.studentId
+            );
+
+            if(student){
+
+                student.todayStatus =
+                    record.status.charAt(0) +
+                    record.status.slice(1).toLowerCase();
+
+            }
+
+        });
+
+        loadAttendanceTable();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
