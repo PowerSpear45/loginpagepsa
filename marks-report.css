@@ -1,0 +1,879 @@
+/* ===========================
+   GLOBAL
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#eef2f7;
+}
+
+.page{
+    display:flex;
+    min-height:100vh;
+}
+
+
+/* ===========================
+   SIDEBAR
+=========================== */
+
+.sidebar{
+
+    width:250px;
+    background:#b8ccec;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    overflow-y:auto;
+    z-index:1000;
+
+}
+
+.sidebar h3{
+
+    background:#173a77;
+    color:#fff;
+    padding:22px 18px;
+    font-size:20px;
+    font-weight:700;
+
+}
+
+.sidebar a{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    text-decoration:none;
+    color:#111827;
+
+    padding:16px 20px;
+
+    font-size:16px;
+    font-weight:500;
+
+    transition:.25s;
+
+}
+
+.sidebar a:hover{
+
+    background:#dbeafe;
+
+}
+
+.sidebar a.active{
+
+    background:#dbeafe;
+    font-weight:700;
+
+}
+
+.sidebar i{
+
+    width:22px;
+    text-align:center;
+    font-size:18px;
+
+}
+
+
+/* ===========================
+   DATE CARD
+=========================== */
+
+.date-box{
+
+    position:absolute;
+
+    bottom:10px;
+    left:18px;
+
+    width: 190px;
+
+    background:#223f78;
+
+    color:#fff;
+
+    border-radius:18px;
+
+    padding:16px;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.20);
+
+}
+
+.date-box h5{
+
+    font-size:14px;
+    font-weight:500;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#d7e6ff;
+
+}
+
+.date-box h4{
+
+    margin-top:10px;
+
+    font-size:28px;
+    font-weight:700;
+
+}
+
+.date-box span{
+
+    display:block;
+    margin-top:4px;
+
+    color:#33d4ff;
+
+    font-size:16px;
+    font-weight:600;
+
+}
+
+
+/* ===========================
+   MAIN CONTENT
+=========================== */
+
+.main-content{
+
+    margin-left:250px;
+
+    width:calc(100% - 250px);
+
+    padding:28px;
+
+}
+
+
+/* ===========================
+   PAGE TITLE
+=========================== */
+
+.page-title{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.page-title h2{
+
+    color:#1d3f7a;
+
+    font-size:46px;
+
+    font-weight:700;
+
+}
+/* ===========================
+   DASHBOARD CARDS
+=========================== */
+
+.cards{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+
+    margin-bottom:28px;
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 20px rgba(0,0,0,.12);
+
+}
+
+
+/* ===========================
+   CARD ICONS
+=========================== */
+
+.icon{
+
+    width:72px;
+    height:72px;
+
+    border-radius:18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:#fff;
+
+    font-size:30px;
+
+    flex-shrink:0;
+
+}
+
+.icon.blue{
+
+    background:#2f80ed;
+
+}
+
+.icon.green{
+
+    background:#32b100;
+
+}
+
+.icon.orange{
+
+    background:#ff9800;
+
+}
+
+
+/* ===========================
+   CARD TEXT
+=========================== */
+
+.card h4{
+
+    color:#666;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+}
+
+.card h2{
+
+    color:#111827;
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================
+   FILTERS
+=========================== */
+
+.filters{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr
+        1fr
+        1.2fr;
+
+    gap:18px;
+
+    margin-bottom:28px;
+
+}
+
+.filters select,
+.filters input{
+
+    height:58px;
+
+    border:1px solid #d6dce6;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    padding:0 18px;
+
+    font-size:18px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.filters select:focus,
+.filters input:focus{
+
+    border-color:#2f80ed;
+
+    box-shadow:0 0 0 3px rgba(47,128,237,.15);
+
+}
+
+.filters input{
+
+    width:100%;
+
+}
+
+.filters input::placeholder{
+
+    color:#888;
+
+}
+/* ===========================
+   TABLE CONTAINER
+=========================== */
+
+.table-container{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    margin-bottom:28px;
+
+}
+
+
+/* ===========================
+   TABLE
+=========================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#173a77;
+
+}
+
+thead th{
+
+    color:#fff;
+
+    padding:18px 14px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    text-align:center;
+
+    white-space:nowrap;
+
+}
+
+tbody td{
+
+    padding:16px 12px;
+
+    text-align:center;
+
+    font-size:15px;
+
+    color:#333;
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+tbody tr:nth-child(even){
+
+    background:#f8fbff;
+
+}
+
+tbody tr:hover{
+
+    background:#eaf4ff;
+
+    transition:.25s;
+
+}
+
+
+/* ===========================
+   STUDENT PHOTO
+=========================== */
+
+.student-photo{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid #d9e8ff;
+
+}
+
+
+/* ===========================
+   TOTAL MARKS
+=========================== */
+
+.total{
+
+    font-weight:700;
+
+    color:#173a77;
+
+}
+
+
+/* ===========================
+   VIEW BUTTON
+=========================== */
+
+.view-btn{
+
+    background:#2f80ed;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:9px 16px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    transition:.3s;
+
+}
+
+.view-btn:hover{
+
+    background:#1d63c9;
+
+    transform:translateY(-2px);
+
+}
+
+.view-btn i{
+
+    font-size:13px;
+
+}
+
+
+/* ===========================
+   EMPTY TABLE MESSAGE
+=========================== */
+
+.no-data{
+
+    text-align:center;
+
+    padding:35px;
+
+    color:#888;
+
+    font-size:18px;
+
+}
+/* ===========================
+   QUICK ACTIONS
+=========================== */
+
+.quick-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:18px;
+
+    margin-top:20px;
+
+    flex-wrap:wrap;
+
+}
+
+.quick-actions button{
+
+    background:#173a77;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:13px 22px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    transition:.3s;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.12);
+
+}
+
+.quick-actions button:hover{
+
+    background:#2453a6;
+
+    transform:translateY(-3px);
+
+}
+
+.quick-actions button i{
+
+    font-size:16px;
+
+}
+
+
+/* ===========================
+   SCROLLABLE TABLE
+=========================== */
+
+.table-container{
+
+    overflow-x:auto;
+
+}
+
+table{
+
+    min-width:1100px;
+
+}
+.mark{
+    font-size:16px;
+    font-weight:500;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:1200px){
+
+    .cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .filters{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .sidebar{
+
+        display:none;
+
+    }
+
+    .main-content{
+
+        margin-left:0;
+
+        width:100%;
+
+        padding:20px;
+
+    }
+
+    .page-title{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .page-title h2{
+
+        font-size:34px;
+
+    }
+
+    .filters{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .quick-actions{
+
+        justify-content:center;
+
+    }
+
+    .quick-actions button{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .card{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .icon{
+
+        width:60px;
+
+        height:60px;
+
+        font-size:24px;
+
+    }
+
+    .card h2{
+
+        font-size:32px;
+
+    }
+
+    .page-title h2{
+
+        font-size:28px;
+
+    }
+
+}
+.table-container table td{
+    font-size:16px;
+    font-weight:500;
+    color:#222;
+}
+.table-container th{
+    padding:18px 12px;
+    font-size:17px;
+    font-weight:600;
+    text-align:center;
+}
+.card h2{
+    font-size:32px;
+    font-weight:700;
+}
+
+.card h4{
+    font-size:18px;
+    font-weight:600;
+}
+.sidebar a{
+    font-size:16px;
+    font-weight:500;
+}
+.filters select,
+.filters input{
+    font-size:17px;
+    height:58px;
+}
+.quick-actions button{
+    font-size:18px;
+    font-weight:600;
+}
+.roll{
+    font-size:16px;
+    font-weight:500;
+}
+
+.name{
+    font-size:17px;
+    font-weight:600;
+}
+.total{
+    font-size:17px;
+    font-weight:700;
+    color:#1f3b73;
+}
+.view-btn{
+    background:#2d7ff9;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:8px 16px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.view-btn:hover{
+    background:#1b63c9;
+}
+/* ===========================
+   TABLE
+=========================== */
+
+.table-container{
+    margin-top:30px;
+    background:#fff;
+    border-radius:22px;
+    overflow-x:auto;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#234583;
+}
+
+thead th{
+    color:#fff;
+    font-size:18px;
+    font-weight:600;
+    padding:22px 14px;
+    text-align:center;
+}
+
+tbody td{
+    padding:18px 14px;
+    text-align:center;
+    font-size:16px;
+    font-weight:500;
+    color:#333;
+    border-bottom:1px solid #eef2f7;
+}
+
+tbody tr:hover{
+    background:#f8fbff;
+}
+
+tbody tr:last-child td{
+    border-bottom:none;
+}
+.student-name{
+    font-size:18px;
+    font-weight:600;
+}
+.roll-number{
+    font-size:15px;
+    color:#666;
+}
+.view-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.view-btn:hover{
+    background:#1d4ed8;
+}
+.student-photo{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    object-fit:cover;
+}
+.pass{
+    color:#2e7d32;
+    font-weight:600;
+}
+
+.fail{
+    color:#d32f2f;
+    font-weight:600;
+}

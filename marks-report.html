@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Report</title>
+
+    <link rel="stylesheet" href="marks-report.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- ================= Sidebar ================= -->
+
+    <aside class="sidebar">
+
+        <h3>Power Public School</h3>
+
+        <a href="admin-home.html">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
+
+        <a href="student-management.html">
+            <i class="fa-solid fa-user-graduate"></i>
+            Students Management
+        </a>
+
+        <a href="teacher-management.html">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            Teachers Management
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-school"></i>
+            Classes & Sections
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-money-bill-wave"></i>
+            Fees Management
+        </a>
+
+        <a href="attendance-report.html">
+            <i class="fa-solid fa-calendar-check"></i>
+            Attendance Report
+        </a>
+
+        <a href="marks-report.html" class="active">
+            <i class="fa-solid fa-chart-column"></i>
+            Marks Report
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-bullhorn"></i>
+            Announcements
+        </a>
+
+        
+
+    </aside>
+
+    <!-- ================= Main ================= -->
+
+    <main class="main-content">
+
+        <div class="page-title">
+
+            <h2>Marks Report</h2>
+
+        </div>
+
+        <!-- ================= Dashboard Cards ================= -->
+
+        <section class="cards">
+
+            <div class="card average-card">
+
+                <div class="icon blue">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <div>
+
+                    <h4>Average Percentage</h4>
+
+                    <h2 id="averagePercentage">0%</h2>
+
+                </div>
+
+            </div>
+
+            <div class="card highest-card">
+
+                <div class="icon green">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+
+                <div>
+
+                    <h4>Highest Total</h4>
+
+                    <h2 id="highestMarks">0</h2>
+
+                </div>
+
+            </div>
+
+            <div class="card lowest-card">
+
+                <div class="icon orange">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </div>
+
+                <div>
+
+                    <h4>Lowest Total</h4>
+
+                    <h2 id="lowestMarks">0</h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Filters ================= -->
+
+        <section class="filters">
+
+            <select id="academicYear">
+                <option>2024 - 2025</option>
+                <option>2025 - 2026</option>
+            </select>
+
+            <select id="classFilter">
+                <option value="">All Classes</option>
+            </select>
+
+            <select id="sectionFilter">
+                <option value="">All Sections</option>
+            </select>
+
+            <select id="examFilter">
+                <option value="">All Exams</option>
+            </select>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by student name or roll number">
+
+        </section>
+
+        <!-- ================= Table ================= -->
+
+        <section class="table-container">
+
+            <table>
+
+                <thead>
+<tr>
+    <th>S.No</th>
+    <th>Roll No</th>
+    <th>Photo</th>
+    <th>Student Name</th>
+    <th>Total Marks</th>
+    <th>Average</th>
+    <th>Result</th>
+    <th>Action</th>
+</tr>
+</thead>
+
+<tbody id="marksTableBody">
+</tbody>
+                    <td>
+    <button class="view-btn">
+       
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- ================= Quick Actions ================= -->
+
+        <section class="quick-actions">
+
+            <button id="exportExcel">
+
+                <i class="fa-solid fa-file-excel"></i>
+
+                Export Excel
+
+            </button>
+
+            <button id="subjectAnalysis">
+
+                <i class="fa-solid fa-book-open"></i>
+
+                Subject Analysis
+
+            </button>
+
+            <button id="topPerformers">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                Top Performers
+
+            </button>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="marks-report.js"></script>
+
+</body>
+
+</html>
