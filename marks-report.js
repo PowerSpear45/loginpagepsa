@@ -1,33 +1,47 @@
+// ==========================================
+// MARKS REPORT
+// ==========================================
+
 const API_BASE = "https://loginpagepsabackend.onrender.com/api";
 
-// ==========================
-// DOM Elements
-// ==========================
+// ==========================================
+// DOM
+// ==========================================
 
 const tableBody = document.getElementById("marksTableBody");
 
-const averagePercentage = document.getElementById("averagePercentage");
-const highestMarks = document.getElementById("highestMarks");
-const lowestMarks = document.getElementById("lowestMarks");
+const averagePercentage =
+document.getElementById("averagePercentage");
 
-const classFilter = document.getElementById("classFilter");
-const sectionFilter = document.getElementById("sectionFilter");
-const examFilter = document.getElementById("examFilter");
-const searchInput = document.getElementById("searchInput");
+const highestMarks =
+document.getElementById("highestMarks");
 
-let students = [];
+const lowestMarks =
+document.getElementById("lowestMarks");
+
+const classFilter =
+document.getElementById("classFilter");
+
+const sectionFilter =
+document.getElementById("sectionFilter");
+
+const examFilter =
+document.getElementById("examFilter");
+
+const searchInput =
+document.getElementById("searchInput");
+
+// ==========================================
+
 let marks = [];
-let exams = [];
 
-// ==========================
-// Initial Load
-// ==========================
+// ==========================================
+// PAGE LOAD
+// ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    loadStudents();
     loadMarks();
-    loadExams();
 
     classFilter.addEventListener("change", renderTable);
     sectionFilter.addEventListener("change", renderTable);
@@ -36,371 +50,393 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-// ==========================
-// Load Students
-// ==========================
+// ==========================================
+// LOAD MARKS
+// ==========================================
 
-async function loadStudents(){
+async function loadMarks() {
 
-    try{
+    try {
 
-        const response = await fetch(`${API_BASE}/students`);
+        const response =
+        await fetch(`${API_BASE}/marks`);
 
-        students = await response.json();
+        marks = await response.json();
 
         populateFilters();
 
         renderTable();
 
     }
-    catch(err){
 
-        console.error(err);
+    catch (error) {
 
-    }
+        console.error(error);
 
-}
-
-// ==========================
-// Load Marks
-// ==========================
-
-async function loadMarks(){
-
-    try{
-
-        const response = await fetch(`${API_BASE}/marks`);
-
-        marks = await response.json();
-
-        renderTable();
-
-    }
-    catch(err){
-
-        console.error(err);
+        alert("Unable to load marks.");
 
     }
 
 }
 
-// ==========================
-// Load Exams
-// ==========================
-
-async function loadExams(){
-
-    try{
-
-        const response = await fetch(`${API_BASE}/exams`);
-
-        exams = await response.json();
-
-        populateExamFilter();
-
-    }
-    catch(err){
-
-        console.error(err);
-
-    }
-
-}
-// ==========================
-// Populate Filters
-// ==========================
+// ==========================================
+// FILTERS
+// ==========================================
 
 function populateFilters() {
 
-    const classes = [...new Set(students.map(s => s.className))];
-    const sections = [...new Set(students.map(s => s.section))];
+    const classes =
+        [...new Set(marks.map(m => m.className))];
 
-    classFilter.innerHTML = `<option value="">All Classes</option>`;
-    sectionFilter.innerHTML = `<option value="">All Sections</option>`;
+    const sections =
+        [...new Set(marks.map(m => m.section))];
+
+    const exams =
+        [...new Set(marks.map(m => m.examName))];
+
+    classFilter.innerHTML =
+        `<option value="">All Classes</option>`;
+
+    sectionFilter.innerHTML =
+        `<option value="">All Sections</option>`;
+
+    examFilter.innerHTML =
+        `<option value="">All Exams</option>`;
 
     classes.forEach(c => {
-        classFilter.innerHTML += `<option value="${c}">${c}</option>`;
+
+        classFilter.innerHTML +=
+        `<option value="${c}">${c}</option>`;
+
     });
 
     sections.forEach(s => {
-        sectionFilter.innerHTML += `<option value="${s}">${s}</option>`;
+
+        sectionFilter.innerHTML +=
+        `<option value="${s}">${s}</option>`;
+
     });
 
-}
-
-// ==========================
-// Populate Exam Filter
-// ==========================
-
-function populateExamFilter() {
-
-    examFilter.innerHTML = `<option value="">All Exams</option>`;
-
-    exams.forEach(exam => {
+    exams.forEach(e => {
 
         examFilter.innerHTML +=
-        `
-        <option value="${exam.id}">
-            ${exam.examName}
-        </option>
-        `;
+        `<option value="${e}">${e}</option>`;
 
     });
 
 }
 
-// ==========================
-// Render Table
-// ==========================
+// ==========================================
+// TABLE
+// ==========================================
 
 function renderTable() {
 
     tableBody.innerHTML = "";
 
-    let filteredStudents = students.filter(student => {
+    const filtered = marks.filter(student => {
 
         const classOk =
             !classFilter.value ||
-            student.className == classFilter.value;
+            student.className === classFilter.value;
 
         const sectionOk =
             !sectionFilter.value ||
-            student.section == sectionFilter.value;
+            student.section === sectionFilter.value;
+
+        const examOk =
+            !examFilter.value ||
+            student.examName === examFilter.value;
 
         const searchOk =
-            student.fullName.toLowerCase().includes(searchInput.value.toLowerCase()) ||
 
-            student.rollNo.toString().includes(searchInput.value) ||
+            student.fullName
+            .toLowerCase()
+            .includes(searchInput.value.toLowerCase())
 
-            student.admissionNo.toString().includes(searchInput.value);
+            ||
 
-        return classOk && sectionOk && searchOk;
+            String(student.rollNo || "")
+            .includes(searchInput.value);
+
+        return classOk &&
+               sectionOk &&
+               examOk &&
+               searchOk;
 
     });
 
     let highest = 0;
-    let lowest = 500;
-    let totalPercentage = 0;
+    let lowest = 999;
+    let percentageSum = 0;
 
-    filteredStudents.forEach((student,index)=>{
+    filtered.forEach((student,index)=>{
 
-        const studentMarks = marks.find(m => m.student.id == student.id);
+        const total =
+            student.total || 0;
 
-        let tamil = studentMarks?.tamil || 0;
-        let english = studentMarks?.english || 0;
-        let maths = studentMarks?.maths || 0;
-        let science = studentMarks?.science || 0;
-        let social = studentMarks?.social || 0;
+        const percentage =
+            student.percentage || 0;
 
-        let total =
-            tamil +
-            english +
-            maths +
-            science +
-            social;
+        const result =
+            percentage >= 35
+            ? "<span class='pass'>Pass</span>"
+            : "<span class='fail'>Fail</span>";
 
-        let average = (total / 5).toFixed(1);
+        highest =
+            Math.max(highest,total);
 
-        let percentage = (total / 500 * 100);
+        lowest =
+            Math.min(lowest,total);
 
-        highest = Math.max(highest,total);
-        lowest = Math.min(lowest,total);
+        percentageSum += Number(percentage);
 
-        totalPercentage += percentage;
+        const row =
+        document.createElement("tr");
 
-     row.innerHTML = `
-    <td>${index + 1}</td>
+        row.innerHTML = `
 
-    <td>${student.rollNo || "-"}</td>
+            <td>${index+1}</td>
 
-    <td>
-        <img src="${student.studentPhoto || "images/default-user.png"}"
-             class="student-photo">
-    </td>
+            <td>${student.rollNo ?? "-"}</td>
 
-    <td>${student.fullName}</td>
+            <td>
 
-    <td><strong>${student.total}</strong></td>
+                <img
+                src="${student.studentPhoto || 'images/default-user.png'}"
+                class="student-photo">
 
-    <td>${average}%</td>
+            </td>
 
-    <td>${result}</td>
+            <td>
 
-    <td>
-        <button class="view-btn"
-                onclick="viewStudent(${student.studentId})">
-            <i class="fa-solid fa-eye"></i> View
-        </button>
-    </td>
-`;
-`;
+                ${student.fullName}
 
-        </tr> </td>
+            </td>
 
-            <td class="student-name">${student.fullName}</td>
+            <td>
 
-            <td class="mark">${student.tamil}</td>
-<td class="mark">${student.english}</td>
-<td class="mark">
+                <strong>${total}</strong>
 
-        
+            </td>
+
+            <td>
+
+                ${percentage}%
+
+            </td>
+
+            <td>
+
+                ${result}
+
+            </td>
+
+            <td>
+
+                <button
+                    class="view-btn"
+                    onclick="viewStudent(${student.studentId})">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                    View
+
+                </button>
+
+            </td>
+
+        `;
+
+        tableBody.appendChild(row);
 
     });
 
-    if(filteredStudents.length>0){
+    if(filtered.length>0){
 
         averagePercentage.textContent =
-            (totalPercentage/filteredStudents.length).toFixed(1) + "%";
+            (percentageSum/filtered.length).toFixed(1) + "%";
 
-        highestMarks.textContent = highest;
+        highestMarks.textContent =
+            highest;
 
-        lowestMarks.textContent = lowest;
+        lowestMarks.textContent =
+            lowest;
 
     }
 
 }
-// ==========================
-// View Student
-// ==========================
+// ==========================================
+// VIEW STUDENT
+// ==========================================
 
 function viewStudent(studentId) {
 
-    window.location.href = `student-marks.html?id=${studentId}`;
+    const student =
+        marks.find(m => m.studentId == studentId);
+
+    if (!student) {
+
+        alert("Student not found.");
+
+        return;
+
+    }
+
+    alert(
+
+`Student Name : ${student.fullName}
+
+Roll No : ${student.rollNo || "-"}
+
+Class : ${student.className} - ${student.section}
+
+Exam : ${student.examName}
+
+Academic Year : ${student.academicYear}
+
+Tamil : ${student.tamil}
+
+English : ${student.english}
+
+Maths : ${student.maths}
+
+Science : ${student.science}
+
+Social : ${student.social}
+
+Computer : ${student.computer}
+
+-------------------------
+
+Total : ${student.total}
+
+Percentage : ${student.percentage}%
+
+Grade : ${student.grade}
+
+Remarks : ${student.remarks}`
+
+    );
 
 }
 
-// ==========================
-// Export Excel
-// ==========================
+// ==========================================
+// EXPORT EXCEL
+// ==========================================
 
-document
-.getElementById("exportExcel")
-.addEventListener("click", () => {
+const exportBtn =
+document.getElementById("exportExcel");
 
-    alert("Export Excel feature will be added soon.");
+if(exportBtn){
 
-});
+    exportBtn.addEventListener("click",()=>{
 
-// ==========================
-// Subject Analysis
-// ==========================
-
-document
-.getElementById("subjectAnalysis")
-.addEventListener("click", () => {
-
-    alert("Subject Analysis page coming soon.");
-
-});
-
-// ==========================
-// Top Performers
-// ==========================
-
-document
-.getElementById("topPerformers")
-.addEventListener("click", () => {
-
-    const ranking = students.map(student => {
-
-        const mark = marks.find(
-            m => m.student.studentId === student.studentId
-        );
-
-        if (!mark) {
-
-            return {
-                name: student.fullName,
-                total: 0
-            };
-
-        }
-
-        const total =
-            mark.tamil +
-            mark.english +
-            mark.maths +
-            mark.science +
-            mark.social;
-
-        return {
-
-            name: student.fullName,
-            total: total
-
-        };
+        alert("Excel Export Coming Soon");
 
     });
 
-    ranking.sort((a, b) => b.total - a.total);
+}
 
-    let message = "🏆 TOP 5 PERFORMERS\n\n";
+// ==========================================
+// SUBJECT ANALYSIS
+// ==========================================
 
-    ranking.slice(0, 5).forEach((student, index) => {
+const analysisBtn =
+document.getElementById("subjectAnalysis");
+
+if(analysisBtn){
+
+    analysisBtn.addEventListener("click",()=>{
+
+        alert("Subject Analysis Coming Soon");
+
+    });
+
+}
+
+// ==========================================
+// TOP PERFORMERS
+// ==========================================
+
+const topBtn =
+document.getElementById("topPerformers");
+
+if(topBtn){
+
+topBtn.addEventListener("click",()=>{
+
+    const ranking = [...marks];
+
+    ranking.sort((a,b)=>b.total-a.total);
+
+    let message="🏆 TOP 5 PERFORMERS\n\n";
+
+    ranking.slice(0,5).forEach((student,index)=>{
 
         message +=
-`${index + 1}. ${student.name} - ${student.total}/500\n`;
+`${index+1}. ${student.fullName}
+Total : ${student.total}/600
+
+`;
 
     });
 
     alert(message);
 
-};
+});
 
-// ==========================
-// Today's Date
-// ==========================
+}
 
-const dateElement = document.getElementById("todayDate");
-const dayElement = document.getElementById("todayDay");
+// ==========================================
+// TODAY DATE
+// ==========================================
 
-if (dateElement && dayElement) {
+const dateElement =
+document.getElementById("todayDate");
+
+const dayElement =
+document.getElementById("todayDay");
+
+if(dateElement && dayElement){
 
     const today = new Date();
 
     dateElement.textContent =
-        today.toLocaleDateString("en-IN", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
+        today.toLocaleDateString("en-IN",{
+
+            day:"2-digit",
+
+            month:"short",
+
+            year:"numeric"
+
         });
 
     dayElement.textContent =
-        today.toLocaleDateString("en-IN", {
-            weekday: "long"
+        today.toLocaleDateString("en-IN",{
+
+            weekday:"long"
+
         });
 
 }
 
-// ==========================
-// Helper Functions
-// ==========================
+// ==========================================
+// HELPERS
+// ==========================================
 
-function calculateTotal(mark) {
+function calculateGrade(percentage){
 
-    return (
-        mark.tamil +
-        mark.english +
-        mark.maths +
-        mark.science +
-        mark.social
-    );
+    if(percentage>=90) return "A+";
 
-}
+    if(percentage>=80) return "A";
 
-function calculatePercentage(total) {
+    if(percentage>=70) return "B";
 
-    return ((total / 500) * 100).toFixed(1);
+    if(percentage>=60) return "C";
 
-}
-
-function calculateGrade(percentage) {
-
-    if (percentage >= 90) return "A+";
-    if (percentage >= 80) return "A";
-    if (percentage >= 70) return "B";
-    if (percentage >= 60) return "C";
-    if (percentage >= 50) return "D";
+    if(percentage>=50) return "D";
 
     return "F";
 
