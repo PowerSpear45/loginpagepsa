@@ -1,217 +1,921 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Student Management</title>
-  <link rel="stylesheet" href="student-management.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management</title>
+
+    <link rel="stylesheet" href="student-management.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
+
+
 <body>
 
-  <div class="page">
+
+<div class="page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
     <aside class="sidebar">
-      <h3>Power Public School</h3>
 
-     <a href="admin-home.html">
-  <i class="fa-solid fa-house"></i> Dashboard
-</a>
+        <h3>Power Public School</h3>
 
-<a class="active" href="student-management.html">
-  <i class="fa-solid fa-user-graduate"></i> Students Management
-</a>
 
-<a href="teacher-management.html">
-  <i class="fa-solid fa-chalkboard-user"></i> Teachers Management
-</a>
+        <a href="admin-home.html">
 
-<a href="classes-sections.html">
-  <i class="fa-solid fa-school"></i> Classes & Sections
-</a>
+            <i class="fa-solid fa-house"></i>
 
-<a href="#">
-  <i class="fa-solid fa-money-bill-wave"></i> Fees Management
-</a>
+            Dashboard
 
-<a href="attendance-management.html" class="menu-card">
-    <i class="fa-solid fa-calendar-check"></i>
-    <span>Attendance</span>
-</a>
+        </a>
 
-<a href="marks-report.html" class="menu-card">
 
-    <i class="fa-solid fa-graduation-cap"></i>
+        <a class="active" href="student-management.html">
 
-    <span>Marks Report</span>
+            <i class="fa-solid fa-user-graduate"></i>
 
-</a>
+            Students Management
 
-<a href="announcement-management.html">
-  <i class="fa-solid fa-bullhorn"></i> Announcements
-</a>
-</aside>
+        </a>
+
+
+        <a href="teacher-management.html">
+
+            <i class="fa-solid fa-chalkboard-user"></i>
+
+            Teachers Management
+
+        </a>
+
+
+        <a href="classes-sections.html">
+
+            <i class="fa-solid fa-school"></i>
+
+            Classes & Sections
+
+        </a>
+
+
+        <a href="#">
+
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+            Fees Management
+
+        </a>
+
+
+        <a href="attendance-management.html" class="menu-card">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            <span>Attendance</span>
+
+        </a>
+
+
+        <a href="marks-report.html" class="menu-card">
+
+            <i class="fa-solid fa-graduation-cap"></i>
+
+            <span>Marks Report</span>
+
+        </a>
+
+
+        <a href="announcement-management.html">
+
+            <i class="fa-solid fa-bullhorn"></i>
+
+            Announcements
+
+        </a>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
 
     <main class="content">
-      <div class="top-bar">
-    <h2>Student Management</h2>
 
-    <button class="add-btn">
-        + Add New Student
-    </button>
-</div>
 
-<div class="cards">
-    <div class="card">
-        <h4>Total Students</h4>
-        <p id="totalStudents">0</p>
-        
-    </div>
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
 
-    <div class="card">
-        <h4>Boys</h4>
-        <p id="boysCount">0</p>
-      
-    </div>
+        <div class="top-bar">
 
-    <div class="card">
-        <h4>Girls</h4>
-        <p id="girlsCount">0</p>
-        
-    </div>
+            <h2>Student Management</h2>
 
-    <div class="card">
-        <h4>New Admissions</h4>
-        <p id="newAdmissionsCount">0</p>
-        
-    </div>
-</div>
-<div class="filters">
-  <select id="classFilter">
-    <option>All Classes</option>
-    <option>5</option>
-    <option>6</option>
-    <option>7</option>
-    
-  </select>
 
-  <select id="sectionFilter">
-    <option>All Sections</option>
-    <option>A</option>
-    <option>B</option>
-  </select>
+            <button type="button" class="add-btn">
 
-  <select id="genderFilter">
-    <option>All Genders</option>
-    <option>Male</option>
-    <option>Female</option>
-  </select>
- 
+                <i class="fa-solid fa-plus"></i>
 
-  <input id="searchInput" type="text" placeholder="Search by name, roll no, admission no">
-</div>
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>S.No</th>
-                <th>Photo</th>
-                <th>Name</th>
-                <th>Admission No</th>
-                <th>Class-Section</th>
-                <th>Roll No</th>
-                <th>Gender</th>
-                <th>DOB</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+                Add New Student
 
-        <tbody id="studentTableBody">
-</tbody>
-            
-    </table>
-</div>
-<div id="studentModal" class="modal">
+            </button>
 
-  <div class="modal-content">
+        </div>
 
-    <div class="modal-header">
-      <h2>Add New Student</h2>
-      <span class="close-btn">&times;</span>
-    </div>
 
-   <form class="student-form">
 
-  <h3>Student Details</h3>
+        <!-- =================================================
+             DASHBOARD CARDS
+        ================================================== -->
 
-<input id="fullName" type="text" placeholder="Student Name">
-<input id="admissionNo" type="text" placeholder="Admission No">
-<input id="rollNo" type="text" placeholder="Roll No">
-<input id="dateOfBirth" type="date">
+        <div class="cards">
 
-  <select id="gender">
-    <option>Select Gender</option>
-    <option>Male</option>
-    <option>Female</option>
-  </select>
 
-<input id="bloodGroup" type="text" placeholder="Blood Group">
-<input id="nationality" type="text" placeholder="Nationality">
-<input id="motherTongue" type="text" placeholder="Mother Tongue">
-<input id="religion" type="text" placeholder="Religion">
-<input id="firstLanguage" type="text" placeholder="First Language">
-<input id="secondLanguage" type="text" placeholder="Second Language">
-<input id="thirdLanguage" type="text" placeholder="Third Language">
+            <div class="card">
 
-  <select id="className">
-    <option>Select Class</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-  </select>
+                <h4>Total Students</h4>
 
-  <select id="section">
-    <option>Select Section</option>
-    <option>A</option>
-    <option>B</option>
-    <option>C</option>
-  </select>
+                <p id="totalStudents">0</p>
 
-  <textarea id="currentAddress" placeholder="Current Residential Address"></textarea>
+            </div>
 
-  <h3>Parent Details</h3>
 
-<input id="fatherName" type="text" placeholder="Father Name">
-<input id="fatherQualification" type="text" placeholder="Father Qualification">
-<input id="fatherCompany" type="text" placeholder="Father Company Name">
-<input id="fatherOccupation" type="text" placeholder="Father Occupation">
+            <div class="card">
 
-<input id="motherName" type="text" placeholder="Mother Name">
-<input id="motherCompany" type="text" placeholder="Mother Company Name">
-<input id="motherOccupation" type="text" placeholder="Mother Occupation">
+                <h4>Boys</h4>
 
-  <h3>Attachment Details</h3>
+                <p id="boysCount">0</p>
 
-  <label>Student Photo</label>
-  <input type="file" accept="image/*">
+            </div>
 
-  <label>Father Photo</label>
-  <input type="file" accept="image/*">
 
-  <label>Mother Photo</label>
-  <input type="file" accept="image/*">
+            <div class="card">
 
-  <button type="submit" class="submit-btn">Save Student</button>
+                <h4>Girls</h4>
 
-</form>
+                <p id="girlsCount">0</p>
 
-  </div>
+            </div>
 
-</div>
-      
+
+            <div class="card">
+
+                <h4>New Admissions</h4>
+
+                <p id="newAdmissionsCount">0</p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FILTERS
+        ================================================== -->
+
+        <div class="filters">
+
+
+            <select id="classFilter">
+
+                <option>All Classes</option>
+
+                <option>Pre KG</option>
+
+                <option>LKG</option>
+
+                <option>UKG</option>
+
+                <option>1</option>
+
+                <option>2</option>
+
+                <option>3</option>
+
+                <option>4</option>
+
+                <option>5</option>
+
+                <option>6</option>
+
+                <option>7</option>
+
+                <option>8</option>
+
+                <option>9</option>
+
+                <option>10</option>
+
+                <option>11</option>
+
+                <option>12</option>
+
+            </select>
+
+
+
+            <select id="sectionFilter">
+
+                <option>All Sections</option>
+
+                <option>A</option>
+
+                <option>B</option>
+
+                <option>C</option>
+
+                <option>D</option>
+
+                <option>E</option>
+
+            </select>
+
+
+
+            <select id="genderFilter">
+
+                <option>All Genders</option>
+
+                <option>Male</option>
+
+                <option>Female</option>
+
+                <option>Other</option>
+
+            </select>
+
+
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search by name, roll no, admission no">
+
+        </div>
+
+
+
+        <!-- =================================================
+             STUDENT TABLE
+        ================================================== -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>S.No</th>
+
+                        <th>Photo</th>
+
+                        <th>Name</th>
+
+                        <th>Admission No</th>
+
+                        <th>Class-Section</th>
+
+                        <th>Roll No</th>
+
+                        <th>Gender</th>
+
+                        <th>DOB</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="studentTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ADD / EDIT STUDENT MODAL
+        ================================================== -->
+
+        <div id="studentModal" class="modal">
+
+
+            <div class="modal-content">
+
+
+                <div class="modal-header">
+
+                    <h2>Add New Student</h2>
+
+                    <span class="close-btn">&times;</span>
+
+                </div>
+
+
+
+                <form class="student-form">
+
+
+                    <!-- =====================================
+                         STUDENT DETAILS
+                    ====================================== -->
+
+                    <h3>Student Details</h3>
+
+
+                    <label for="fullName">
+
+                        Student Name
+
+                    </label>
+
+                    <input
+                        id="fullName"
+                        type="text"
+                        placeholder="Full Name with Initial"
+                        required>
+
+
+                    <label for="admissionNo">
+
+                        Admission Number
+
+                    </label>
+
+                    <input
+                        id="admissionNo"
+                        type="text"
+                        placeholder="e.g. ADM000001">
+
+
+                    <label for="rollNo">
+
+                        Roll Number
+
+                    </label>
+
+                    <input
+                        id="rollNo"
+                        type="text"
+                        placeholder="e.g. 20265001">
+
+
+                    <label for="dateOfBirth">
+
+                        Date of Birth
+
+                    </label>
+
+                    <input
+                        id="dateOfBirth"
+                        type="date">
+
+
+                    <label for="gender">
+
+                        Gender
+
+                    </label>
+
+                    <select id="gender">
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+
+                    <!-- =====================================
+                         BLOOD GROUP
+                    ====================================== -->
+
+                    <label for="bloodGroup">
+
+                        Blood Group
+
+                    </label>
+
+                    <select id="bloodGroup">
+
+                        <option value="">
+                            Select Blood Group
+                        </option>
+
+                        <option value="A+">A+</option>
+
+                        <option value="A-">A-</option>
+
+                        <option value="B+">B+</option>
+
+                        <option value="B-">B-</option>
+
+                        <option value="AB+">AB+</option>
+
+                        <option value="AB-">AB-</option>
+
+                        <option value="O+">O+</option>
+
+                        <option value="O-">O-</option>
+
+                    </select>
+
+
+                    <label for="nationality">
+
+                        Nationality
+
+                    </label>
+
+                    <input
+                        id="nationality"
+                        type="text"
+                        placeholder="e.g. Indian">
+
+
+                    <label for="motherTongue">
+
+                        Mother Tongue
+
+                    </label>
+
+                    <input
+                        id="motherTongue"
+                        type="text"
+                        placeholder="e.g. Tamil">
+
+
+                    <label for="religion">
+
+                        Religion
+
+                    </label>
+
+                    <input
+                        id="religion"
+                        type="text"
+                        placeholder="e.g. Hindu">
+
+
+                    <label for="firstLanguage">
+
+                        First Language
+
+                    </label>
+
+                    <input
+                        id="firstLanguage"
+                        type="text"
+                        placeholder="e.g. English">
+
+
+                    <label for="secondLanguage">
+
+                        Second Language
+
+                    </label>
+
+                    <input
+                        id="secondLanguage"
+                        type="text"
+                        placeholder="e.g. Tamil">
+
+
+                    <label for="thirdLanguage">
+
+                        Third Language
+
+                    </label>
+
+                    <input
+                        id="thirdLanguage"
+                        type="text"
+                        placeholder="Optional">
+
+
+                    <!-- =====================================
+                         CLASS & SECTION
+                    ====================================== -->
+
+                    <label for="className">
+
+                        Class
+
+                    </label>
+
+                    <select id="className">
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        <option>Pre KG</option>
+
+                        <option>LKG</option>
+
+                        <option>UKG</option>
+
+                        <option>1</option>
+
+                        <option>2</option>
+
+                        <option>3</option>
+
+                        <option>4</option>
+
+                        <option>5</option>
+
+                        <option>6</option>
+
+                        <option>7</option>
+
+                        <option>8</option>
+
+                        <option>9</option>
+
+                        <option>10</option>
+
+                        <option>11</option>
+
+                        <option>12</option>
+
+                    </select>
+
+
+                    <label for="section">
+
+                        Section
+
+                    </label>
+
+                    <select id="section">
+
+                        <option value="">
+                            Select Section
+                        </option>
+
+                        <option>A</option>
+
+                        <option>B</option>
+
+                        <option>C</option>
+
+                        <option>D</option>
+
+                        <option>E</option>
+
+                    </select>
+
+
+
+                    <!-- =====================================
+                         ADDRESS DETAILS
+                    ====================================== -->
+
+                    <h3>Address Details</h3>
+
+
+                    <label for="currentAddress">
+
+                        Current Residential Address
+
+                    </label>
+
+                    <textarea
+                        id="currentAddress"
+                        rows="4"
+                        placeholder="Enter Complete Residential Address"></textarea>
+
+
+                    <label for="city">
+
+                        City
+
+                    </label>
+
+                    <input
+                        id="city"
+                        type="text"
+                        placeholder="e.g. Chennai">
+
+
+                    <label for="state">
+
+                        State
+
+                    </label>
+
+                    <input
+                        id="state"
+                        type="text"
+                        placeholder="e.g. Tamil Nadu">
+
+
+                    <!-- IMPORTANT:
+                         JS uses cityPincode
+                    -->
+
+                    <label for="cityPincode">
+
+                        City Pincode
+
+                    </label>
+
+                    <input
+                        id="cityPincode"
+                        type="text"
+                        maxlength="6"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}"
+                        placeholder="Enter 6-digit Pincode">
+
+
+
+                    <!-- =====================================
+                         FATHER DETAILS
+                    ====================================== -->
+
+                    <h3>Father Details</h3>
+
+
+                    <label for="fatherName">
+
+                        Father's Name
+
+                    </label>
+
+                    <input
+                        id="fatherName"
+                        type="text"
+                        placeholder="Full Name">
+
+
+                    <label for="fatherQualification">
+
+                        Father's Qualification
+
+                    </label>
+
+                    <input
+                        id="fatherQualification"
+                        type="text"
+                        placeholder="e.g. B.E., MBA">
+
+
+                    <label for="fatherCompany">
+
+                        Father's Company
+
+                    </label>
+
+                    <input
+                        id="fatherCompany"
+                        type="text"
+                        placeholder="Company Name">
+
+
+                    <label for="fatherOccupation">
+
+                        Father's Occupation
+
+                    </label>
+
+                    <input
+                        id="fatherOccupation"
+                        type="text"
+                        placeholder="e.g. Software Engineer">
+
+
+
+                    <!-- =====================================
+                         MOTHER DETAILS
+                    ====================================== -->
+
+                    <h3>Mother Details</h3>
+
+
+                    <label for="motherName">
+
+                        Mother's Name
+
+                    </label>
+
+                    <input
+                        id="motherName"
+                        type="text"
+                        placeholder="Full Name">
+
+
+                    <label for="motherQualification">
+
+                        Mother's Qualification
+
+                    </label>
+
+                    <input
+                        id="motherQualification"
+                        type="text"
+                        placeholder="e.g. B.Sc., M.Com">
+
+
+                    <label for="motherCompany">
+
+                        Mother's Company
+
+                    </label>
+
+                    <input
+                        id="motherCompany"
+                        type="text"
+                        placeholder="Company Name">
+
+
+                    <label for="motherOccupation">
+
+                        Mother's Occupation
+
+                    </label>
+
+                    <input
+                        id="motherOccupation"
+                        type="text"
+                        placeholder="e.g. Teacher">
+
+
+
+                    <!-- =====================================
+                         ATTACHMENTS
+                    ====================================== -->
+
+                    <h3>Attachment Details</h3>
+
+
+                    <label for="studentPhotoFile">
+
+                        Student Photo
+
+                    </label>
+
+                    <input
+                        id="studentPhotoFile"
+                        type="file"
+                        accept="image/*">
+
+
+                    <label for="fatherPhotoFile">
+
+                        Father Photo
+
+                    </label>
+
+                    <input
+                        id="fatherPhotoFile"
+                        type="file"
+                        accept="image/*">
+
+
+                    <label for="motherPhotoFile">
+
+                        Mother Photo
+
+                    </label>
+
+                    <input
+                        id="motherPhotoFile"
+                        type="file"
+                        accept="image/*">
+
+
+
+                    <!-- =====================================
+                         SAVE BUTTON
+                    ====================================== -->
+
+                    <button
+                        type="submit"
+                        class="submit-btn">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Student
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             VIEW STUDENT DETAILS MODAL
+        ================================================== -->
+
+        <div id="viewStudentModal" class="modal">
+
+
+            <div class="modal-content view-modal-content">
+
+
+                <div class="modal-header">
+
+                    <h2>
+
+                        <i class="fa-solid fa-user-graduate"></i>
+
+                        Student Details
+
+                    </h2>
+
+
+                    <span class="close-view">
+
+                        &times;
+
+                    </span>
+
+                </div>
+
+
+
+                <!--
+                    JavaScript will generate
+                    all student information here.
+                -->
+
+                <div id="studentDetailsContent">
+
+                </div>
+
+
+
+                <!-- =========================================
+                     DELETE BUTTON
+                ========================================== -->
+
+                <div class="view-delete-area">
+
+                    <button
+                        type="button"
+                        id="deleteStudentBtn"
+                        class="delete-btn">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                        Delete Student
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
     </main>
-  </div>
 
-  <script src="student-management.js"></script>
+</div>
+
+
+
+<script src="student-management.js"></script>
+
 </body>
+
 </html>
