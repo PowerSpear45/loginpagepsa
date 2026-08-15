@@ -22,7 +22,9 @@ public class Teacher {
     private String phone;
     private String joiningDate;
     private String address;
-    private String photo;
+    @Lob
+@Column(columnDefinition = "TEXT")
+private String photo;
     private String status;
 
     public Integer getTeacherId() {
