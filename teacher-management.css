@@ -488,3 +488,215 @@ td img{
 .main-content{
     padding-top:18px;
 }
+/* =========================
+   Input Placeholders
+========================= */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #888;
+    opacity: 1;
+}
+
+
+/* =========================
+   Teacher ID
+========================= */
+
+#teacherId {
+    background: #f3f4f6;
+    color: #555;
+    cursor: not-allowed;
+}
+
+.input-note {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #777;
+}
+
+
+/* =========================
+   Teacher Photo Upload
+========================= */
+
+.photo-upload-group {
+    grid-column: span 2;
+}
+
+.photo-upload-container {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-top: 5px;
+}
+
+
+/* Photo Preview */
+
+.photo-preview {
+    width: 110px;
+    height: 110px;
+    border-radius: 12px;
+    border: 2px dashed #b8ccec;
+    background: #f4f6fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+#photoPlaceholder {
+    font-size: 40px;
+    color: #9aa5b5;
+}
+
+
+/* Upload Button */
+
+.upload-photo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #23437a;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.upload-photo-btn:hover {
+    background: #18345f;
+}
+
+
+/* Photo Note */
+
+.photo-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #777;
+    line-height: 1.5;
+}
+
+
+/* Responsive */
+
+@media (max-width: 800px) {
+
+    .photo-upload-group {
+        grid-column: span 1;
+    }
+
+    .photo-upload-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+/* =========================
+   TEACHER PHOTO UPLOAD
+========================= */
+
+.photo-upload-container{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:#fafafa;
+}
+
+.photo-preview{
+    width:90px;
+    height:90px;
+    border-radius:8px;
+    overflow:hidden;
+    background:#e9edf3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.photo-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:none;
+}
+
+#photoPlaceholder{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#8a94a6;
+    font-size:30px;
+}
+
+.photo-upload-controls{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.upload-photo-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:9px 15px;
+    background:#1d3766;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.upload-photo-btn:hover{
+    background:#294a84;
+}
+
+.photo-note{
+    margin:0;
+    font-size:11px;
+    color:#777;
+    line-height:1.5;
+}
+
+.input-note{
+    margin-top:5px;
+    font-size:11px;
+    color:#777;
+}
+
+
+/* Default photo in table */
+
+.default-teacher-photo{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#e9edf3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#7c8798;
+    font-size:18px;
+}

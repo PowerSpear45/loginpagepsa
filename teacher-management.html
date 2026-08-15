@@ -182,89 +182,212 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h2>Add New Teacher</h2>
+        <h2 id="teacherModalTitle">Add New Teacher</h2>
         <span class="close-btn" id="closeTeacherModal">&times;</span>
       </div>
 
       <form id="teacherForm">
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Teacher Name</label>
-            <input type="text" id="teacherName" required>
-          </div>
+  <div class="form-grid">
 
-          <div class="form-group">
-            <label>Teacher ID</label>
-            <input type="text" id="teacherId" required>
-          </div>
+    <!-- Teacher Name -->
+    <div class="form-group">
+      <label>Teacher Name</label>
+      <input
+        type="text"
+        id="teacherName"
+        placeholder="Enter teacher name"
+        required
+      >
+    </div>
 
-          <div class="form-group">
-            <label>Gender</label>
-            <select id="gender" required>
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
 
-          <div class="form-group">
-            <label>Department</label>
-            <select id="department" required>
-              <option value="">Select Department</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Science">Science</option>
-              <option value="Social Science">Social Science</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="English">English</option>
-            </select>
-          </div>
+    <!-- Teacher ID -->
+    <div class="form-group">
+      <label>Teacher ID</label>
+      <input
+        type="text"
+        id="teacherId"
+        placeholder="Automatically generated"
+        readonly
+      >
+      <small class="input-note">
+        Teacher ID will be generated automatically
+      </small>
+    </div>
 
-          <div class="form-group">
-            <label>Subject</label>
-            <input type="text" id="subject" required>
-          </div>
 
-          <div class="form-group">
-            <label>Qualification</label>
-            <input type="text" id="qualification" placeholder="M.Sc., B.Ed">
-          </div>
+    <!-- Gender -->
+    <div class="form-group">
+      <label>Gender</label>
+      <select id="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </div>
 
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="email">
-          </div>
 
-          <div class="form-group">
-            <label>Phone Number</label>
-            <input type="text" id="phone">
-          </div>
+    <!-- Department -->
+    <div class="form-group">
+      <label>Department</label>
+      <select id="department" required>
+        <option value="">Select Department</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Science">Science</option>
+        <option value="Social Science">Social Science</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="English">English</option>
+      </select>
+    </div>
 
-          <div class="form-group">
-            <label>Joining Date</label>
-            <input type="date" id="joiningDate">
-          </div>
 
-          <div class="form-group">
-            <label>Status</label>
-            <select id="status">
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
+    <!-- Subject -->
+    <div class="form-group">
+      <label>Subject</label>
+      <input
+        type="text"
+        id="subject"
+        placeholder="Enter subject taught"
+        required
+      >
+    </div>
 
-          <div class="form-group full-width">
-            <label>Address</label>
-            <textarea id="address" rows="3"></textarea>
+
+    <!-- Qualification -->
+    <div class="form-group">
+      <label>Qualification</label>
+      <input
+        type="text"
+        id="qualification"
+        placeholder="e.g. M.Sc., B.Ed"
+      >
+    </div>
+
+
+    <!-- Email -->
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter email address"
+      >
+    </div>
+
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input
+        type="text"
+        id="phone"
+        placeholder="Enter 10-digit phone number"
+        maxlength="10"
+      >
+    </div>
+
+
+    <!-- Joining Date -->
+    <div class="form-group">
+      <label>Joining Date</label>
+      <input
+        type="date"
+        id="joiningDate"
+      >
+    </div>
+
+
+    <!-- Status -->
+    <div class="form-group">
+      <label>Status</label>
+      <select id="status">
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+    </div>
+
+
+    <!-- Teacher Photo -->
+    <div class="form-group photo-upload-group">
+
+      <label>Teacher Photo</label>
+
+      <div class="photo-upload-container">
+
+        <div class="photo-preview">
+          <img
+            id="teacherPhotoPreview"
+            src=""
+            alt="Teacher Photo Preview"
+          >
+
+          <div id="photoPlaceholder">
+            <i class="fa-solid fa-user"></i>
           </div>
         </div>
 
-        <div class="modal-actions">
-          <button type="button" class="cancel-btn" id="cancelTeacherBtn">Cancel</button>
-          <button type="submit" class="submit-btn">Save Teacher</button>
+        <div class="photo-upload-controls">
+
+          <label for="teacherPhoto" class="upload-photo-btn">
+            <i class="fa-solid fa-camera"></i>
+            Add Photo
+          </label>
+
+          <input
+            type="file"
+            id="teacherPhoto"
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+          >
+
+          <p class="photo-note">
+            JPG, PNG or WEBP<br>
+            Recommended size: 300 × 300 px
+          </p>
+
         </div>
 
-      </form>
+      </div>
+
+    </div>
+
+
+    <!-- Address -->
+    <div class="form-group full-width">
+      <label>Address</label>
+
+      <textarea
+        id="address"
+        rows="3"
+        placeholder="Enter teacher address"
+      ></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- Buttons -->
+  <div class="modal-actions">
+
+    <button
+      type="button"
+      class="cancel-btn"
+      id="cancelTeacherBtn"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="submit"
+      class="submit-btn"
+    >
+      Save Teacher
+    </button>
+
+  </div>
+
+</form>
     </div>
   </div>
 
