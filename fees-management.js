@@ -3,6 +3,14 @@ const API_URL = "https://loginpagepsabackend.onrender.com/api/fees";
 let feesData = [];
 let currentPage = 1;
 const rowsPerPage = 5;
+// =========================================================
+// STUDENT API
+// =========================================================
+
+const STUDENT_API =
+    "https://loginpagepsabackend.onrender.com/api/students";
+
+let allStudents = [];
 
 // =============================
 // DOM ELEMENTS
@@ -24,6 +32,248 @@ const viewModal = document.getElementById("viewModal");
 
 const collectModal = document.getElementById("collectModal");
 const collectForm = document.getElementById("collectForm");
+
+// =========================================================
+// FEE FORM STUDENT DROPDOWNS
+// =========================================================
+
+const feeClassSelect =
+    document.getElementById("className");
+
+const feeSectionSelect =
+    document.getElementById("section");
+
+const feeStudentSelect =
+    document.getElementById("studentName");
+
+    // =========================================================
+// LOAD STUDENTS FOR FEE FORM
+// =========================================================
+
+async function loadStudentsForFeeForm() {
+
+    try {
+
+        const response =
+            await fetch(STUDENT_API);
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load students"
+            );
+
+        }
+
+        allStudents =
+            await response.json();
+
+        console.log(
+            "Students loaded for Fees:",
+            allStudents
+        );
+
+        populateFeeClassDropdown();
+
+    } catch (error) {
+
+        console.error(
+            "Error loading students for Fees:",
+            error
+        );
+
+        alert(
+            "Unable to load student information."
+        );
+
+    }
+}
+// =========================================================
+// POPULATE CLASS DROPDOWN
+// =========================================================
+
+function populateFeeClassDropdown() {
+
+    feeClassSelect.innerHTML = `
+        <option value="">Select Class</option>
+    `;
+
+    const classes =
+        [...new Set(
+            allStudents
+                .map(student => student.className)
+                .filter(className => className)
+        )];
+
+    classes.sort((a, b) =>
+        String(a).localeCompare(
+            String(b),
+            undefined,
+            { numeric: true }
+        )
+    );
+
+    classes.forEach(className => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            className;
+
+        option.textContent =
+            className;
+
+        feeClassSelect.appendChild(
+            option
+        );
+
+    });
+
+}
+// =========================================================
+// CLASS CHANGE
+// =========================================================
+
+feeClassSelect.addEventListener(
+    "change",
+    function () {
+
+        const selectedClass =
+            this.value;
+
+        feeSectionSelect.innerHTML = `
+            <option value="">Select Section</option>
+        `;
+
+        feeStudentSelect.innerHTML = `
+            <option value="">Select Student</option>
+        `;
+
+        feeSectionSelect.disabled =
+            true;
+
+        feeStudentSelect.disabled =
+            true;
+
+        if (!selectedClass) {
+
+            return;
+
+        }
+
+        const sections =
+            [...new Set(
+                allStudents
+                    .filter(
+                        student =>
+                            student.className ===
+                            selectedClass
+                    )
+                    .map(
+                        student =>
+                            student.section
+                    )
+                    .filter(
+                        section =>
+                            section
+                    )
+            )];
+
+        sections.sort();
+
+        sections.forEach(section => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                section;
+
+            option.textContent =
+                section;
+
+            feeSectionSelect.appendChild(
+                option
+            );
+
+        });
+
+        feeSectionSelect.disabled =
+            false;
+
+    }
+);
+// =========================================================
+// SECTION CHANGE
+// =========================================================
+
+feeSectionSelect.addEventListener(
+    "change",
+    function () {
+
+        const selectedClass =
+            feeClassSelect.value;
+
+        const selectedSection =
+            this.value;
+
+        feeStudentSelect.innerHTML = `
+            <option value="">Select Student</option>
+        `;
+
+        feeStudentSelect.disabled =
+            true;
+
+        if (
+            !selectedClass ||
+            !selectedSection
+        ) {
+
+            return;
+
+        }
+
+        const students =
+            allStudents.filter(
+                student =>
+                    student.className ===
+                        selectedClass
+                    &&
+                    student.section ===
+                        selectedSection
+            );
+
+        students.sort(
+            (a, b) =>
+                String(a.fullName || "")
+                    .localeCompare(
+                        String(b.fullName || "")
+                    )
+        );
+
+        students.forEach(student => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                student.fullName;
+
+            option.textContent =
+                student.fullName;
+
+            feeStudentSelect.appendChild(
+                option
+            );
+
+        });
+
+        feeStudentSelect.disabled =
+            false;
+
+    }
+);
 
 
 // =============================
@@ -1197,3 +1447,5 @@ async function loadFeesFromAPI() {
 loadTodayDate();
 
 loadFeesFromAPI();
+
+loadStudentsForFeeForm();
