@@ -1,0 +1,607 @@
+```css
+/* =========================================================
+   TEACHER HOME / DASHBOARD
+   Power Public School
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6fa;
+    color: #222;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 220px;
+    height: 100vh;
+    background: #91abd9;
+    border-right: 1px solid #6f8fca;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+
+/* School Name */
+
+.school-title {
+    height: 42px;
+    background: #2f5d9f;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: bold;
+    border-bottom: 1px solid #244c86;
+}
+
+.school-logo {
+    width: 25px;
+    height: 25px;
+    margin-right: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+
+/* Sidebar Menu */
+
+.sidebar-menu {
+    padding: 10px 7px;
+}
+
+.menu-item {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 9px;
+    margin-bottom: 3px;
+    color: #111;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 4px;
+    transition: 0.2s ease;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.menu-item.active {
+    background: #dce7f8;
+    color: #163e76;
+    font-weight: bold;
+    box-shadow: inset 3px 0 0 #2f5d9f;
+}
+
+
+/* Date Box */
+
+.date-box {
+    margin: auto 10px 12px;
+    padding: 9px;
+    background: #2f5d9f;
+    color: white;
+    border-radius: 7px;
+    border: 1px solid #244c86;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.date-icon {
+    font-size: 19px;
+}
+
+.date-label {
+    font-size: 9px;
+    opacity: 0.9;
+}
+
+.date-value {
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.day-value {
+    font-size: 9px;
+    margin-top: 2px;
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content {
+    margin-left: 220px;
+    min-height: 100vh;
+    padding: 0 18px 25px;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.top-bar {
+    height: 68px;
+    background: white;
+    border-bottom: 1px solid #d5dce7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-icon {
+    font-size: 25px;
+}
+
+.page-title h1 {
+    font-size: 18px;
+    color: #222;
+    margin-bottom: 2px;
+}
+
+.page-title p {
+    font-size: 10px;
+    color: #777;
+}
+
+
+/* Teacher Profile */
+
+.teacher-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.teacher-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #dce7f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: 1px solid #b8c9e5;
+}
+
+.teacher-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 7px;
+}
+
+.teacher-info strong {
+    font-size: 11px;
+    color: #222;
+}
+
+.teacher-info span {
+    font-size: 9px;
+    color: #777;
+    margin-top: 2px;
+}
+
+.logout-btn {
+    border: 1px solid #c76d42;
+    background: #f3a36e;
+    color: #4d2411;
+    border-radius: 4px;
+    padding: 7px 12px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #ee9257;
+}
+
+
+/* =========================================================
+   WELCOME SECTION
+   ========================================================= */
+
+.welcome-section {
+    background: white;
+    border: 1px solid #d5dce7;
+    border-radius: 7px;
+    margin-top: 14px;
+    padding: 15px 18px;
+}
+
+.welcome-section h2 {
+    font-size: 17px;
+    color: #234b82;
+    margin-bottom: 5px;
+}
+
+.welcome-section p {
+    font-size: 11px;
+    color: #777;
+}
+
+
+/* =========================================================
+   DASHBOARD CARDS
+   ========================================================= */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.dashboard-card {
+    height: 82px;
+    background: white;
+    border: 1px solid #c7d0df;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 12px;
+    transition: 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    background: #e6edf9;
+}
+
+.classes-icon {
+    background: #e4edf9;
+}
+
+.students-icon {
+    background: #e7f3e8;
+}
+
+.attendance-icon {
+    background: #f2eafa;
+}
+
+.homework-icon {
+    background: #fff0df;
+}
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-details span {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.card-details strong {
+    font-size: 21px;
+    color: #222;
+}
+
+
+/* =========================================================
+   LOWER DASHBOARD GRID
+   ========================================================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+
+/* Dashboard Panel */
+
+.dashboard-panel {
+    background: white;
+    border: 1px solid #d0d7e3;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.panel-header {
+    height: 57px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px;
+    border-bottom: 1px solid #e1e5eb;
+}
+
+.panel-header h3 {
+    font-size: 13px;
+    color: #222;
+    margin-bottom: 3px;
+}
+
+.panel-header p {
+    font-size: 9px;
+    color: #888;
+}
+
+.panel-icon {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   SCHEDULE
+   ========================================================= */
+
+.schedule-list {
+    padding: 5px 12px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+.schedule-time {
+    width: 65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #e0e4ea;
+}
+
+.schedule-time strong {
+    font-size: 12px;
+    color: #315c98;
+}
+
+.schedule-time span {
+    font-size: 8px;
+    color: #888;
+    margin-top: 2px;
+}
+
+.schedule-details {
+    display: flex;
+    flex-direction: column;
+    padding-left: 14px;
+}
+
+.schedule-details strong {
+    font-size: 11px;
+    color: #333;
+}
+
+.schedule-details span {
+    font-size: 9px;
+    color: #777;
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   ANNOUNCEMENTS
+   ========================================================= */
+
+.announcement-list {
+    padding: 4px 12px;
+}
+
+.announcement-item {
+    display: flex;
+    gap: 10px;
+    padding: 11px 2px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.announcement-item:last-child {
+    border-bottom: none;
+}
+
+.announcement-icon {
+    width: 29px;
+    height: 29px;
+    background: #e9eff9;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.announcement-item strong {
+    font-size: 10px;
+    color: #333;
+}
+
+.announcement-item p {
+    font-size: 9px;
+    color: #777;
+    line-height: 1.4;
+    margin: 3px 0;
+}
+
+.announcement-item span {
+    font-size: 8px;
+    color: #999;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+.quick-actions {
+    margin-top: 14px;
+    background: white;
+    border: 1px solid #d0d7e3;
+    border-radius: 7px;
+    padding: 13px;
+}
+
+.quick-actions h3 {
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.quick-action-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.quick-action-container button {
+    height: 42px;
+    background: #eef3fa;
+    border: 1px solid #c8d4e7;
+    border-radius: 5px;
+    color: #234b82;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 10px;
+    transition: 0.2s ease;
+}
+
+.quick-action-container button:hover {
+    background: #dce7f8;
+    border-color: #9fb5d8;
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .main-content {
+        margin-left: 190px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quick-action-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 750px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .menu-item {
+        width: auto;
+    }
+
+    .date-box {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 0 10px 20px;
+    }
+
+    .top-bar {
+        height: auto;
+        padding: 10px 5px;
+        gap: 10px;
+    }
+
+    .teacher-info {
+        display: none;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-action-container {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title h1 {
+        font-size: 15px;
+    }
+
+    .welcome-section {
+        padding: 12px;
+    }
+}
+```

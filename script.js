@@ -32,34 +32,47 @@ loginForm.addEventListener("submit", async function(event) {
     };
 
     try {
-        const response = await fetch("https://loginpagepsabackend.onrender.com/api/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(loginData)
-        });
+        const response = await fetch(
+            "https://loginpagepsabackend.onrender.com/api/auth/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(loginData)
+            }
+        );
 
         const result = await response.json();
 
         if (result.success) {
+
             localStorage.setItem("userRole", result.role);
 
             if (result.role === "ADMIN") {
+
                 window.location.href = "admin-home.html";
+
             } else if (result.role === "TEACHER") {
-                window.location.href = "teacher-dashboard.html";
+
+                window.location.href = "teacher-home.html";
+
             } else if (result.role === "STUDENT") {
+
                 window.location.href = "student-dashboard.html";
+
             } else if (result.role === "PARENT") {
+
                 window.location.href = "parent-dashboard.html";
             }
 
         } else {
+
             errorMessage.textContent = result.message;
         }
 
     } catch (error) {
+
         errorMessage.textContent = "Server error. Please try again.";
         console.error(error);
     }

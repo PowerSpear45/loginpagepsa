@@ -1,0 +1,415 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard - Power Public School</title>
+
+    <link rel="stylesheet" href="teacher-home.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="school-title">
+            <div class="school-logo">
+                🏫
+            </div>
+            <span>Power Public School</span>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="teacher-home.html" class="menu-item active">
+                🏠
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📚
+                <span>My Classes</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📝
+                <span>Marks Entry</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📅
+                <span>Attendance</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📖
+                <span>Homework</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📢
+                <span>Announcements</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                👤
+                <span>Profile</span>
+            </a>
+
+        </nav>
+
+        <!-- Today's Date -->
+        <div class="date-box">
+            <div class="date-icon">📅</div>
+
+            <div>
+                <div class="date-label">Today's Date</div>
+                <div class="date-value">16 Aug 2026</div>
+                <div class="day-value">Sunday</div>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-content">
+
+        <!-- Top Bar -->
+        <header class="top-bar">
+
+            <div class="page-title">
+                <span class="title-icon">🏠</span>
+                <div>
+                    <h1>Teacher Dashboard</h1>
+                    <p>Power Public School</p>
+                </div>
+            </div>
+
+            <div class="teacher-profile">
+
+                <div class="teacher-avatar">
+                    👨‍🏫
+                </div>
+
+                <div class="teacher-info">
+                    <strong>Teacher Name</strong>
+                    <span>Teacher</span>
+                </div>
+
+                <button class="logout-btn" onclick="logout()">
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= WELCOME ================= -->
+        <section class="welcome-section">
+
+            <h2>Welcome, Teacher! 👋</h2>
+
+            <p>
+                Here's a quick overview of your classes and today's activities.
+            </p>
+
+        </section>
+
+
+        <!-- ================= DASHBOARD CARDS ================= -->
+        <section class="dashboard-cards">
+
+            <!-- My Classes -->
+            <div class="dashboard-card">
+
+                <div class="card-icon classes-icon">
+                    📚
+                </div>
+
+                <div class="card-details">
+                    <span>My Classes</span>
+                    <strong>3</strong>
+                </div>
+
+            </div>
+
+
+            <!-- Students -->
+            <div class="dashboard-card">
+
+                <div class="card-icon students-icon">
+                    👨‍🎓
+                </div>
+
+                <div class="card-details">
+                    <span>Total Students</span>
+                    <strong>96</strong>
+                </div>
+
+            </div>
+
+
+            <!-- Attendance -->
+            <div class="dashboard-card">
+
+                <div class="card-icon attendance-icon">
+                    📊
+                </div>
+
+                <div class="card-details">
+                    <span>Today's Attendance</span>
+                    <strong>92%</strong>
+                </div>
+
+            </div>
+
+
+            <!-- Homework -->
+            <div class="dashboard-card">
+
+                <div class="card-icon homework-icon">
+                    📖
+                </div>
+
+                <div class="card-details">
+                    <span>Pending Homework</span>
+                    <strong>4</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= LOWER CONTENT ================= -->
+        <section class="dashboard-grid">
+
+
+            <!-- ================= TODAY'S SCHEDULE ================= -->
+            <div class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Today's Schedule</h3>
+                        <p>Your classes for today</p>
+                    </div>
+
+                    <span class="panel-icon">🕘</span>
+
+                </div>
+
+
+                <div class="schedule-list">
+
+                    <div class="schedule-item">
+
+                        <div class="schedule-time">
+                            <strong>09:00</strong>
+                            <span>AM</span>
+                        </div>
+
+                        <div class="schedule-details">
+                            <strong>Class 5 - B</strong>
+                            <span>Mathematics</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="schedule-item">
+
+                        <div class="schedule-time">
+                            <strong>10:00</strong>
+                            <span>AM</span>
+                        </div>
+
+                        <div class="schedule-details">
+                            <strong>Class 6 - A</strong>
+                            <span>Mathematics</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="schedule-item">
+
+                        <div class="schedule-time">
+                            <strong>11:30</strong>
+                            <span>AM</span>
+                        </div>
+
+                        <div class="schedule-details">
+                            <strong>Class 7 - B</strong>
+                            <span>Mathematics</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="schedule-item">
+
+                        <div class="schedule-time">
+                            <strong>02:00</strong>
+                            <span>PM</span>
+                        </div>
+
+                        <div class="schedule-details">
+                            <strong>Class 8 - A</strong>
+                            <span>Mathematics</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ANNOUNCEMENTS ================= -->
+            <div class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Recent Announcements</h3>
+                        <p>Latest school updates</p>
+                    </div>
+
+                    <span class="panel-icon">📢</span>
+
+                </div>
+
+
+                <div class="announcement-list">
+
+                    <div class="announcement-item">
+
+                        <div class="announcement-icon">
+                            📌
+                        </div>
+
+                        <div>
+                            <strong>Staff Meeting</strong>
+
+                            <p>
+                                Staff meeting will be held tomorrow at 3:30 PM.
+                            </p>
+
+                            <span>Today</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="announcement-item">
+
+                        <div class="announcement-icon">
+                            📅
+                        </div>
+
+                        <div>
+                            <strong>Unit Test</strong>
+
+                            <p>
+                                Unit test schedule has been updated.
+                            </p>
+
+                            <span>Yesterday</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="announcement-item">
+
+                        <div class="announcement-icon">
+                            🏫
+                        </div>
+
+                        <div>
+                            <strong>School Event</strong>
+
+                            <p>
+                                Annual sports day preparations have started.
+                            </p>
+
+                            <span>2 days ago</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= QUICK ACTIONS ================= -->
+        <section class="quick-actions">
+
+            <h3>Quick Actions</h3>
+
+            <div class="quick-action-container">
+
+                <button onclick="openAttendance()">
+                    📅
+                    <span>Take Attendance</span>
+                </button>
+
+                <button onclick="openMarks()">
+                    📝
+                    <span>Enter Marks</span>
+                </button>
+
+                <button onclick="openHomework()">
+                    📖
+                    <span>Add Homework</span>
+                </button>
+
+                <button onclick="openAnnouncements()">
+                    📢
+                    <span>View Announcements</span>
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+
+        function logout() {
+            window.location.href = "login.html";
+        }
+
+        function openAttendance() {
+            window.location.href = "teacher-attendance.html";
+        }
+
+        function openMarks() {
+            window.location.href = "teacher-marks.html";
+        }
+
+        function openHomework() {
+            window.location.href = "teacher-homework.html";
+        }
+
+        function openAnnouncements() {
+            window.location.href = "teacher-announcements.html";
+        }
+
+    </script>
+
+</body>
+</html>
+```

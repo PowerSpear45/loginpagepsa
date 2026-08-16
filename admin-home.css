@@ -333,3 +333,20 @@ body {
   font-size: 18px !important;
   width: 24px !important;
 }
+.school-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.school-brand img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+}
+
+.school-brand span {
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+}
