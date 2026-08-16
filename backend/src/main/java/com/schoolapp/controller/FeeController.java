@@ -4,6 +4,7 @@ import com.schoolapp.entity.Fee;
 import com.schoolapp.service.FeeService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,18 @@ public class FeeController {
     }
 
     @PutMapping("/{id}/collect")
-    public Fee collectPayment(@PathVariable Long id, @RequestBody Map<String, Double> request) {
-        Double amount = request.get("amount");
-        return feeService.collectPayment(id, amount);
+    public Fee collectPayment(
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> request) {
+
+        Double amount = Double.valueOf(
+                request.get("amount").toString()
+        );
+
+        LocalDate paymentDate = LocalDate.parse(
+                request.get("paymentDate").toString()
+        );
+
+        return feeService.collectPayment(id, amount, paymentDate);
     }
 }

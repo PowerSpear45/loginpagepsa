@@ -21,11 +21,11 @@ public class Fee {
 
     private LocalDate dueDate;
 
+    private LocalDate paymentDate;
+
     private Double totalAmount;
 
     private Double paidAmount;
-
-    private String photoUrl;
 
     public Fee() {
     }
@@ -78,6 +78,14 @@ public class Fee {
         this.dueDate = dueDate;
     }
 
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
     public Double getTotalAmount() {
         return totalAmount;
     }
@@ -94,32 +102,30 @@ public class Fee {
         this.paidAmount = paidAmount;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
     @Transient
     public Double getPendingAmount() {
+        if (totalAmount == null) {
+            return 0.0;
+        }
+
+        if (paidAmount == null) {
+            return totalAmount;
+        }
+
         return totalAmount - paidAmount;
     }
 
     @Transient
     public String getStatus() {
 
-        if (paidAmount == null || totalAmount == null)
+        if (paidAmount == null || paidAmount == 0) {
             return "Pending";
+        }
 
-        if (paidAmount.equals(totalAmount))
+        if (totalAmount != null && paidAmount.equals(totalAmount)) {
             return "Paid";
-
-        if (paidAmount == 0)
-            return "Pending";
+        }
 
         return "Partial";
     }
-
 }

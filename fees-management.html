@@ -192,22 +192,34 @@
 <!-- Collect/Edit Fee Modal -->
 <div class="modal" id="feeModal">
   <div class="modal-content">
+
     <span class="close-btn" onclick="closeFeeModal()">&times;</span>
 
     <h2 id="modalTitle">Collect New Fee</h2>
 
     <form id="feeForm">
+
       <input type="hidden" id="feeId" />
 
-      <label>Student Name</label>
-      <input type="text" id="studentName" required />
-
+      <!-- Class -->
       <label>Class</label>
-      <input type="text" id="className" required />
+      <select id="className" required>
+        <option value="">Select Class</option>
+      </select>
 
+      <!-- Section -->
       <label>Section</label>
-      <input type="text" id="section" required />
+      <select id="section" required disabled>
+        <option value="">Select Section</option>
+      </select>
 
+      <!-- Student -->
+      <label>Student Name</label>
+      <select id="studentName" required disabled>
+        <option value="">Select Student</option>
+      </select>
+
+      <!-- Fee Type -->
       <label>Fee Type</label>
       <select id="feeType" required>
         <option value="">Select Fee Type</option>
@@ -217,19 +229,40 @@
         <option value="Books Fee">Books Fee</option>
       </select>
 
+      <!-- Due Date -->
       <label>Due Date</label>
       <input type="date" id="dueDate" required />
 
+      <!-- Total Fees -->
       <label>Total Fees</label>
-      <input type="number" id="totalAmount" required />
+      <input
+        type="number"
+        id="totalAmount"
+        min="0"
+        required
+      />
 
+      <!-- Paid Amount -->
       <label>Paid Amount</label>
-      <input type="number" id="paidAmount" required />
+      <input
+        type="number"
+        id="paidAmount"
+        min="0"
+        value="0"
+        required
+      />
 
-      <label>Student Photo URL</label>
-      <input type="text" id="photoUrl" />
+      <!-- Payment Date -->
+      <label>Date of Payment</label>
+      <input
+        type="date"
+        id="paymentDate"
+      />
 
-      <button type="submit" class="save-btn">Save Fee</button>
+      <button type="submit" class="save-btn">
+        Save Fee
+      </button>
+
     </form>
   </div>
 </div>
@@ -260,24 +293,23 @@
       <input type="text" id="collectPendingAmount" readonly />
 
       <label>Amount Received</label>
-      <input type="number" id="collectAmount" required />
+      <input
+        type="number"
+        id="collectAmount"
+        min="1"
+        required
+      />
 
       <label>Payment Date</label>
-      <input type="date" id="paymentDate" required />
+      <input
+        type="date"
+        id="collectPaymentDate"
+        required
+      />
 
-      <label>Payment Mode</label>
-      <select id="paymentMode" required>
-        <option value="">Select Mode</option>
-        <option value="Cash">Cash</option>
-        <option value="UPI">UPI</option>
-        <option value="Card">Card</option>
-        <option value="Bank Transfer">Bank Transfer</option>
-      </select>
-
-      <label>Remarks</label>
-      <input type="text" id="paymentRemarks" placeholder="Optional" />
-
-      <button type="submit" class="save-btn">Collect Payment</button>
+      <button type="submit" class="save-btn">
+        Collect Payment
+      </button>
     </form>
   </div>
 </div>
