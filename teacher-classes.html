@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Classes - Power Public School</title>
+
+    <link rel="stylesheet" href="teacher-classes.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="school-title">
+            <div class="school-logo">
+                🏫
+            </div>
+
+            <span>Power Public School</span>
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="teacher-home.html" class="menu-item">
+                🏠
+                <span>Dashboard</span>
+            </a>
+
+            <a href="teacher-classes.html" class="menu-item active">
+                📚
+                <span>My Classes</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📝
+                <span>Marks Entry</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📅
+                <span>Attendance</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📖
+                <span>Homework</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                📢
+                <span>Announcements</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                👤
+                <span>Profile</span>
+            </a>
+
+        </nav>
+
+
+        <!-- ================= TODAY'S DATE ================= -->
+        
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================= TOP BAR ================= -->
+
+        <header class="top-bar">
+
+            <div class="page-title">
+
+                <span class="title-icon">
+                    📚
+                </span>
+
+                <div>
+
+                    <h1>
+                        My Classes
+                    </h1>
+
+                    <p>
+                        Classes assigned to you
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= TEACHER PROFILE ================= -->
+
+            <div class="teacher-profile">
+
+                <div class="teacher-avatar">
+                    👨‍🏫
+                </div>
+
+                <div class="teacher-info">
+
+                    <strong>
+                        Teacher Name
+                    </strong>
+
+                    <span>
+                        Teacher
+                    </span>
+
+                </div>
+
+                <button
+                    class="logout-btn"
+                    onclick="logout()">
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PAGE INTRO ================= -->
+
+        <section class="page-intro">
+
+            <div>
+
+                <h2>
+                    My Classes
+                </h2>
+
+                <p>
+                    View the classes and subjects assigned to you.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SUMMARY CARDS ================= -->
+
+        <section class="summary-cards">
+
+
+            <!-- TOTAL CLASSES -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon classes-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Classes
+                    </span>
+
+                    <strong>
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL STUDENTS -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon students-icon">
+                    👨‍🎓
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Students
+                    </span>
+
+                    <strong>
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUBJECTS -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon subjects-icon">
+                    📖
+                </div>
+
+                <div>
+
+                    <span>
+                        Subjects
+                    </span>
+
+                    <strong>
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CLASSES SECTION ================= -->
+
+        <section class="classes-section">
+
+
+            <!-- SECTION HEADER -->
+
+            <div class="section-header">
+
+                <div>
+
+                    <h3>
+                        Assigned Classes
+                    </h3>
+
+                    <p>
+                        Your currently assigned classes
+                    </p>
+
+                </div>
+
+
+                <div class="class-count">
+                    0 Classes
+                </div>
+
+            </div>
+
+
+            <!-- ================= CLASS TABLE ================= -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                Class
+                            </th>
+
+                            <th>
+                                Section
+                            </th>
+
+                            <th>
+                                Subject
+                            </th>
+
+                            <th>
+                                Students
+                            </th>
+
+                            <th>
+                                Class Teacher
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <!--
+                        JavaScript will load the real
+                        data from the backend here.
+                    -->
+
+                    <tbody>
+
+                        <!-- Data loaded by teacher-classes.js -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="teacher-classes.js"></script>
+
+</body>
+
+</html>

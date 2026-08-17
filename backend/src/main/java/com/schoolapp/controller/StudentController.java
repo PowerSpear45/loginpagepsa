@@ -34,6 +34,18 @@ public class StudentController {
         return studentRepository.findAll();
 
     }
+    // =========================================================
+// GET STUDENTS BY CLASS AND SECTION
+// =========================================================
+
+@GetMapping("/class/{className}/section/{section}")
+public List<Student> getStudentsByClassAndSection(
+        @PathVariable String className,
+        @PathVariable String section) {
+
+    return studentRepository
+            .findByClassNameAndSection(className, section);
+}
 
 
     // =========================================================

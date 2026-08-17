@@ -20,6 +20,7 @@ public class ClassSection {
     @Column(name = "class_teacher")
     private String classTeacher;
 
+
     public Long getId() {
         return id;
     }
@@ -39,6 +40,7 @@ public class ClassSection {
     public String getClassTeacher() {
         return classTeacher;
     }
+
 
     public void setId(Long id) {
         this.id = id;

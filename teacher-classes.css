@@ -1,0 +1,558 @@
+```css
+/* =========================================================
+   TEACHER MY CLASSES
+   Power Public School
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6fa;
+    color: #222;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 220px;
+    height: 100vh;
+    background: #91abd9;
+    border-right: 1px solid #6f8fca;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.school-title {
+    height: 42px;
+    background: #2f5d9f;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: bold;
+    border-bottom: 1px solid #244c86;
+}
+
+.school-logo {
+    width: 25px;
+    height: 25px;
+    margin-right: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   SIDEBAR MENU
+   ========================================================= */
+
+.sidebar-menu {
+    padding: 10px 7px;
+}
+
+.menu-item {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 9px;
+    margin-bottom: 3px;
+    color: #111;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 4px;
+    transition: 0.2s ease;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.menu-item.active {
+    background: #dce7f8;
+    color: #163e76;
+    font-weight: bold;
+    box-shadow: inset 3px 0 0 #2f5d9f;
+}
+
+
+/* =========================================================
+   DATE BOX
+   ========================================================= */
+
+.date-box {
+    margin: auto 10px 12px;
+    padding: 9px;
+    background: #2f5d9f;
+    color: white;
+    border-radius: 7px;
+    border: 1px solid #244c86;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.date-icon {
+    font-size: 19px;
+}
+
+.date-label {
+    font-size: 9px;
+    opacity: 0.9;
+}
+
+.date-value {
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.day-value {
+    font-size: 9px;
+    margin-top: 2px;
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content {
+    margin-left: 220px;
+    min-height: 100vh;
+    padding: 0 18px 25px;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.top-bar {
+    height: 68px;
+    background: white;
+    border-bottom: 1px solid #d5dce7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-icon {
+    font-size: 25px;
+}
+
+.page-title h1 {
+    font-size: 18px;
+    color: #222;
+    margin-bottom: 2px;
+}
+
+.page-title p {
+    font-size: 10px;
+    color: #777;
+}
+
+
+/* =========================================================
+   TEACHER PROFILE
+   ========================================================= */
+
+.teacher-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.teacher-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #dce7f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: 1px solid #b8c9e5;
+}
+
+.teacher-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 7px;
+}
+
+.teacher-info strong {
+    font-size: 11px;
+    color: #222;
+}
+
+.teacher-info span {
+    font-size: 9px;
+    color: #777;
+    margin-top: 2px;
+}
+
+.logout-btn {
+    border: 1px solid #c76d42;
+    background: #f3a36e;
+    color: #4d2411;
+    border-radius: 4px;
+    padding: 7px 12px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #ee9257;
+}
+
+
+/* =========================================================
+   PAGE INTRO
+   ========================================================= */
+
+.page-intro {
+    background: white;
+    border: 1px solid #d5dce7;
+    border-radius: 7px;
+    margin-top: 14px;
+    padding: 15px 18px;
+}
+
+.page-intro h2 {
+    font-size: 17px;
+    color: #234b82;
+    margin-bottom: 5px;
+}
+
+.page-intro p {
+    font-size: 11px;
+    color: #777;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.summary-card {
+    min-height: 82px;
+    background: white;
+    border: 1px solid #c7d0df;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 12px;
+    transition: 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.summary-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.classes-icon {
+    background: #e4edf9;
+}
+
+.students-icon {
+    background: #e7f3e8;
+}
+
+.subjects-icon {
+    background: #f2eafa;
+}
+
+.summary-card span {
+    display: block;
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.summary-card strong {
+    display: block;
+    font-size: 21px;
+    color: #222;
+}
+
+
+/* =========================================================
+   CLASSES SECTION
+   ========================================================= */
+
+.classes-section {
+    background: white;
+    border: 1px solid #d0d7e3;
+    border-radius: 7px;
+    margin-top: 14px;
+    overflow: hidden;
+}
+
+.section-header {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e1e5eb;
+}
+
+.section-header h3 {
+    font-size: 13px;
+    color: #222;
+    margin-bottom: 3px;
+}
+
+.section-header p {
+    font-size: 9px;
+    color: #888;
+}
+
+.class-count {
+    background: #e8eef8;
+    color: #315c98;
+    border: 1px solid #c9d6e9;
+    border-radius: 12px;
+    padding: 5px 10px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+}
+
+thead {
+    background: #eef3fa;
+}
+
+th {
+    height: 38px;
+    padding: 7px 10px;
+    text-align: left;
+    color: #31527f;
+    font-size: 9px;
+    font-weight: bold;
+    border-bottom: 1px solid #d5dce7;
+    white-space: nowrap;
+}
+
+td {
+    height: 55px;
+    padding: 8px 10px;
+    color: #555;
+    font-size: 10px;
+    border-bottom: 1px solid #edf0f4;
+    white-space: nowrap;
+}
+
+tbody tr:hover {
+    background: #f8faff;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+td strong {
+    color: #333;
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SECTION BADGE
+   ========================================================= */
+
+.section-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    background: #e7eef9;
+    color: #315c98;
+    border: 1px solid #c6d4e8;
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   STUDENT COUNT
+   ========================================================= */
+
+.student-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    padding: 4px 7px;
+    background: #edf5ed;
+    color: #39703d;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   VIEW STUDENTS BUTTON
+   ========================================================= */
+
+.view-btn {
+    background: #e3edf9;
+    border: 1px solid #b8cbe5;
+    color: #28558e;
+    border-radius: 4px;
+    padding: 7px 11px;
+    font-size: 9px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.view-btn:hover {
+    background: #d3e2f5;
+    border-color: #9fb8d9;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .main-content {
+        margin-left: 190px;
+    }
+
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .menu-item {
+        width: auto;
+    }
+
+    .date-box {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 0 10px 20px;
+    }
+
+    .top-bar {
+        height: auto;
+        min-height: 68px;
+        padding: 10px 5px;
+        gap: 10px;
+    }
+
+    .teacher-info {
+        display: none;
+    }
+
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .page-title h1 {
+        font-size: 15px;
+    }
+
+    .page-intro {
+        padding: 12px;
+    }
+
+    .section-header {
+        padding: 10px;
+    }
+
+    .class-count {
+        display: none;
+    }
+}
+```
