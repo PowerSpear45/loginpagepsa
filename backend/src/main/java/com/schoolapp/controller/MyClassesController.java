@@ -1,4 +1,4 @@
-```java
+
 package com.schoolapp.controller;
 
 import com.schoolapp.entity.ClassSection;
@@ -25,5 +25,5 @@ public class MyClassesController {
         return classSectionRepository.findByClassTeacher(teacherId);
     }
 }
-```
+
 

@@ -18,7 +18,7 @@ public class ClassSection {
     private Integer strength;
 
     @Column(name = "class_teacher")
-    private String classTeacher;
+    private Integer classTeacher;
 
 
     public Long getId() {
