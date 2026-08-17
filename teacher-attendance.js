@@ -41,21 +41,16 @@ const teacherNameEl =
 /* =====================================================
    TEACHER ID
    ===================================================== */
+// =====================================================
+// TEACHER ID
+// =====================================================
 
-const teacherId =
-    localStorage.getItem("teacherId");
+// For this project, Attendance is currently assigned
+// to a single teacher.
+const teacherId = 1;
 
 
-if (!teacherId) {
 
-    alert(
-        "Teacher session not found. Please login again."
-    );
-
-    window.location.href =
-        "login.html";
-
-}
 
 
 /* =====================================================
