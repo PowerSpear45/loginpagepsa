@@ -22,7 +22,7 @@ public class MyClassesController {
             @PathVariable Integer teacherId) {
 
         return classSectionRepository
-                .findByClassTeacher(String.valueOf(teacherId));
+                .findByClassTeacher(teacherId);
     }
 }
 
