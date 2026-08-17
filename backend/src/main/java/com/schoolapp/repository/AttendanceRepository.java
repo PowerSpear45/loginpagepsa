@@ -10,22 +10,18 @@ import java.util.Optional;
 
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer> {
 
-    // ===== Existing Dashboard Method =====
     @Query(value = """
-        SELECT IFNULL(
+        SELECT COALESCE(
             ROUND(
-                SUM(CASE WHEN status = 'PRESENT' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),
+                COUNT(*) FILTER (WHERE status = 'PRESENT') * 100.0 / NULLIF(COUNT(*), 0),
                 1
             ),
             0
         )
         FROM attendance
-        WHERE attendance_date = CURDATE()
+        WHERE attendance_date = CURRENT_DATE
         """, nativeQuery = true)
     Double getTodayAttendancePercentage();
-
-
-    // ===== Attendance Page Methods =====
 
     List<Attendance> findByAttendanceDate(LocalDate attendanceDate);
 

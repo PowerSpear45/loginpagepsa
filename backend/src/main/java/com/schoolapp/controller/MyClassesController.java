@@ -1,4 +1,3 @@
-
 package com.schoolapp.controller;
 
 import com.schoolapp.entity.ClassSection;
@@ -22,7 +21,8 @@ public class MyClassesController {
     public List<ClassSection> getTeacherClasses(
             @PathVariable Integer teacherId) {
 
-        return classSectionRepository.findByClassTeacher(teacherId);
+        return classSectionRepository
+                .findByClassTeacher(String.valueOf(teacherId));
     }
 }
 

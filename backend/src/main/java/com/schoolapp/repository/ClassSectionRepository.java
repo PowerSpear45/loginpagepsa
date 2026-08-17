@@ -8,4 +8,5 @@ import java.util.List;
 public interface ClassSectionRepository extends JpaRepository<ClassSection, Long> {
 
     List<ClassSection> findByClassTeacher(Integer teacherId);
+
 }
