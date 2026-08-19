@@ -1,0 +1,418 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+    color: #111827;
+    min-height: 100vh;
+}
+
+.page {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* =========================== SIDEBAR =========================== */
+.sidebar {
+    width: 250px;
+    background: #b8ccec;
+    padding: 0 0 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.school-header {
+    background: #1f3f6d;
+    color: #ffffff;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.school-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.school-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.sidebar-menu {
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #111827;
+    text-decoration: none;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.menu-item i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover {
+    background: #d7e5fb;
+    font-weight: 700;
+}
+
+.menu-item.active {
+    background: #ffffff;
+    font-weight: 700;
+    color: #1f3f6d;
+    border-left: 5px solid #1f3f6d;
+}
+
+.sidebar-date {
+    margin: auto 12px 18px 12px;
+    background: #1f3f6d;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px;
+}
+
+.sidebar-date span {
+    font-size: 12px;
+    color: #29d3ff;
+    font-weight: 700;
+}
+
+.sidebar-date h3 {
+    font-size: 16px;
+    margin-top: 4px;
+    font-weight: 700;
+}
+
+/* =========================== MAIN CONTENT =========================== */
+.content {
+    flex: 1;
+    padding: 22px 28px;
+    overflow-x: auto;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-title h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.teacher-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.teacher-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #d7e5fb;
+    display: grid;
+    place-items: center;
+    color: #1f3f6d;
+}
+
+/* =========================== FILTERS =========================== */
+.filter-panel {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.form-group select,
+.form-group input {
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 13px;
+    color: #111827;
+    background: #ffffff;
+    outline: none;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: #1f3f6d;
+    box-shadow: 0 0 0 2px rgba(31, 63, 109, 0.15);
+}
+
+/* =========================== SUMMARY CARDS =========================== */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.summary-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+}
+
+.summary-icon.students { background: #e0edff; color: #1d4ed8; }
+.summary-icon.entered { background: #dcfce7; color: #15803d; }
+.summary-icon.pending { background: #ffedd5; color: #c2410c; }
+
+.summary-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.summary-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.summary-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* =========================== TABLE =========================== */
+.table-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.max-marks {
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+thead {
+    background: #f9fafb;
+}
+
+th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    color: #1f2937;
+}
+
+tbody tr:hover {
+    background: #f8fbff;
+}
+
+.student-name {
+    font-weight: 600;
+    color: #111827;
+}
+
+.marks-input {
+    width: 90px;
+    height: 34px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    outline: none;
+}
+
+.marks-input:focus {
+    border-color: #1f3f6d;
+    box-shadow: 0 0 0 2px rgba(31, 63, 109, 0.15);
+}
+
+.marks-input.invalid {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+/* Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-entered { background: #dcfce7; color: #15803d; }
+.status-pending { background: #ffedd5; color: #c2410c; }
+
+/* Buttons */
+.save-row-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #1f3f6d;
+    transition: 0.2s;
+}
+
+.save-row-btn:hover {
+    background: #1f3f6d;
+    color: #ffffff;
+}
+
+.table-actions-bar {
+    padding: 14px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid #e5e7eb;
+    background: #fafafa;
+}
+
+.btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid transparent;
+}
+
+.btn-clear {
+    background: #ffffff;
+    border-color: #d1d5db;
+    color: #374151;
+}
+
+.btn-clear:hover {
+    background: #f3f4f6;
+}
+
+.btn-save {
+    background: #1f3f6d;
+    color: #ffffff;
+}
+
+.btn-save:hover {
+    background: #152d4f;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.empty-message i {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .filter-panel {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

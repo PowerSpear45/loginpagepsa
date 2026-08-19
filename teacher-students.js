@@ -1,518 +1,442 @@
-const API_BASE_URL =
-    "https://loginpagepsabackend.onrender.com/api";
+const API_BASE = "https://loginpagepsabackend.onrender.com/api";
+const teacherId = localStorage.getItem("teacherId") || "1";
 
-let allStudents = [];
+let teacherClasses = [];
+let studentsData = [];
+let savedMarks = [];
+let maximumMarks = 100;
 
+document.addEventListener("DOMContentLoaded", () => {
+    setDefaultDate();
+    updateTodayDate();
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    loadStudents();
-
-    const searchInput =
-        document.getElementById("searchInput");
-
-    if (searchInput) {
-
-        searchInput.addEventListener(
-            "input",
-            function () {
-
-                filterStudents(
-                    searchInput.value.trim()
-                );
-
-            }
-        );
-
-    }
-
+    initEventListeners();
+    loadTeacherClasses();
 });
 
-
-/* =========================================================
-   LOAD STUDENTS
-   ========================================================= */
-
-async function loadStudents() {
-
-    const params =
-        new URLSearchParams(window.location.search);
-
-    const className =
-        params.get("class");
-
-    const section =
-        params.get("section");
-
-
-    if (!className || !section) {
-
-        showError(
-            "Class information is missing."
-        );
-
-        return;
+// Set default date to today
+function setDefaultDate() {
+    const examDateInput = document.getElementById("examDate");
+    if (examDateInput) {
+        const today = new Date().toISOString().split("T")[0];
+        examDateInput.value = today;
     }
+}
 
+// Update today's date in sidebar
+function updateTodayDate() {
+    const dateEl = document.getElementById("todayDate");
+    const dayEl = document.getElementById("todayDay");
+    const now = new Date();
 
-    updateClassInformation(
-        className,
-        section
-    );
+    if (dateEl) {
+        const options = { day: "2-digit", month: "short", year: "numeric" };
+        dateEl.textContent = now.toLocaleDateString("en-IN", options);
+    }
+    if (dayEl) {
+        dayEl.textContent = now.toLocaleDateString("en-IN", { weekday: "long" });
+    }
+}
 
+function updateDateTime() {
+    const timeEl = document.getElementById("currentTime");
+    if (timeEl) {
+        timeEl.textContent = new Date().toLocaleTimeString("en-IN");
+    }
+}
 
+// Event Listeners
+function initEventListeners() {
+    const classFilter = document.getElementById("classFilter");
+    const sectionFilter = document.getElementById("sectionFilter");
+    const subjectFilter = document.getElementById("subjectFilter");
+    const examFilter = document.getElementById("examFilter");
+    const examDate = document.getElementById("examDate");
+
+    classFilter.addEventListener("change", () => {
+        populateSectionFilter();
+        handleFilterChange();
+    });
+
+    sectionFilter.addEventListener("change", handleFilterChange);
+    subjectFilter.addEventListener("change", handleFilterChange);
+    examFilter.addEventListener("change", handleFilterChange);
+    if (examDate) examDate.addEventListener("change", handleFilterChange);
+}
+
+// Load classes assigned to teacher or fetch available classes from DB
+async function loadTeacherClasses() {
     try {
-
-        const response = await fetch(
-            `${API_BASE_URL}/students/class/${encodeURIComponent(className)}/section/${encodeURIComponent(section)}`
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to load students"
-            );
-
+        const res = await fetch(`${API_BASE}/teachers/${teacherId}/classes`);
+        if (res.ok) {
+            teacherClasses = await res.json();
         }
-
-
-        allStudents = await response.json();
-
-
-        updateSummary(allStudents);
-
-        displayStudents(allStudents);
-
-
-    } catch (error) {
-
-        console.error(
-            "Error loading students:",
-            error
-        );
-
-        showError(
-            "Unable to load students. Please try again."
-        );
-
+    } catch (err) {
+        console.warn("Could not fetch teacher classes directly:", err);
     }
 
+    // If teacher endpoint returned empty or failed, fetch all classes from students/sections
+    if (!teacherClasses || teacherClasses.length === 0) {
+        try {
+            const studentRes = await fetch(`${API_BASE}/students`);
+            if (studentRes.ok) {
+                const allStudents = await studentRes.json();
+                const uniqueCombos = [];
+                allStudents.forEach(s => {
+                    const cName = s.className || s.class_name;
+                    const sName = s.section;
+                    if (cName && !uniqueCombos.some(item => (item.className === cName && item.section === sName))) {
+                        uniqueCombos.push({ className: cName, section: sName });
+                    }
+                });
+                if (uniqueCombos.length > 0) {
+                    teacherClasses = uniqueCombos;
+                }
+            }
+        } catch (e) {
+            console.error("Fallback students query failed:", e);
+        }
+    }
+
+    // Default static fallback if database is not reachable / empty
+    if (!teacherClasses || teacherClasses.length === 0) {
+        teacherClasses = [
+            { className: "5", section: "A" },
+            { className: "5", section: "B" },
+            { className: "6", section: "A" },
+            { className: "6", section: "B" }
+        ];
+    }
+
+    populateClassFilter();
 }
 
+function populateClassFilter() {
+    const classFilter = document.getElementById("classFilter");
+    classFilter.innerHTML = `<option value="">Select Class</option>`;
 
-/* =========================================================
-   UPDATE CLASS INFORMATION
-   ========================================================= */
+    const uniqueClasses = [...new Set(teacherClasses.map(c => c.className || c.class_name))].filter(Boolean);
 
-function updateClassInformation(
-    className,
-    section
-) {
-
-    const classTitle =
-        document.getElementById("classTitle");
-
-    const classDescription =
-        document.getElementById("classDescription");
-
-    const pageSubtitle =
-        document.getElementById("pageSubtitle");
-
-
-    if (classTitle) {
-
-        classTitle.textContent =
-            `Class ${className} - Section ${section}`;
-
-    }
-
-
-    if (classDescription) {
-
-        classDescription.textContent =
-            `Students assigned to Class ${className}, Section ${section}.`;
-
-    }
-
-
-    if (pageSubtitle) {
-
-        pageSubtitle.textContent =
-            `Class ${className} - Section ${section}`;
-
-    }
-
+    uniqueClasses.forEach(cls => {
+        const option = document.createElement("option");
+        option.value = cls;
+        option.textContent = cls.toLowerCase().startsWith("class") ? cls : `Class ${cls}`;
+        classFilter.appendChild(option);
+    });
 }
 
+function populateSectionFilter() {
+    const classFilter = document.getElementById("classFilter");
+    const sectionFilter = document.getElementById("sectionFilter");
+    const selectedClass = classFilter.value;
 
-/* =========================================================
-   DISPLAY STUDENTS
-   ========================================================= */
+    sectionFilter.innerHTML = `<option value="">Select Section</option>`;
 
-function displayStudents(students) {
-
-    const tableBody =
-        document.getElementById(
-            "studentsTableBody"
-        );
-
-
-    if (!tableBody) {
+    if (!selectedClass) {
+        sectionFilter.disabled = true;
         return;
     }
 
+    const availableSections = teacherClasses
+        .filter(c => (c.className || c.class_name) == selectedClass)
+        .map(c => c.section)
+        .filter(Boolean);
+
+    const uniqueSections = availableSections.length > 0 ? [...new Set(availableSections)] : ["A", "B"];
+
+    uniqueSections.forEach(sec => {
+        const option = document.createElement("option");
+        option.value = sec;
+        option.textContent = `Section ${sec}`;
+        sectionFilter.appendChild(option);
+    });
+
+    sectionFilter.disabled = false;
+}
+
+// Triggered when dropdowns change
+async function handleFilterChange() {
+    const classVal = document.getElementById("classFilter").value;
+    const secVal = document.getElementById("sectionFilter").value;
+    const subVal = document.getElementById("subjectFilter").value;
+    const examVal = document.getElementById("examFilter").value;
+
+    if (classVal && secVal && subVal && examVal) {
+        await loadStudents(classVal, secVal);
+        await loadExistingMarks();
+        renderTable();
+    } else {
+        renderEmptyMessage("Please select Class, Section, Subject, and Exam to load students.");
+    }
+}
+
+// Fetch students for class and section
+async function loadStudents(className, section) {
+    try {
+        const res = await fetch(`${API_BASE}/students/class/${className}/section/${section}`);
+        if (res.ok) {
+            studentsData = await res.json();
+            return;
+        }
+    } catch (err) {
+        console.warn("Class-section endpoint failed, falling back to /api/students:", err);
+    }
+
+    // Fallback to /api/students
+    try {
+        const allRes = await fetch(`${API_BASE}/students`);
+        if (allRes.ok) {
+            const allStudents = await allRes.json();
+            studentsData = allStudents.filter(s => 
+                String(s.className || s.class_name) === String(className) && 
+                String(s.section) === String(section)
+            );
+        }
+    } catch (e) {
+        console.error("Failed to load students:", e);
+        studentsData = [];
+    }
+}
+
+// Load existing marks from backend
+async function loadExistingMarks() {
+    try {
+        const res = await fetch(`${API_BASE}/marks`);
+        if (res.ok) {
+            savedMarks = await res.json();
+        }
+    } catch (err) {
+        console.warn("Could not load marks:", err);
+        savedMarks = [];
+    }
+}
+
+// Render the Marks Table
+function renderTable() {
+    const tableBody = document.getElementById("studentMarksTableBody");
+    const actionsBar = document.getElementById("tableActionsBar");
+    const subVal = document.getElementById("subjectFilter").value;
+    const examVal = document.getElementById("examFilter").value;
 
     tableBody.innerHTML = "";
 
-
-    if (!students || students.length === 0) {
-
-        tableBody.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="7"
-                    class="empty-message">
-
-                    No students found in this class.
-
-                </td>
-
-            </tr>
-
-        `;
-
+    if (!studentsData || studentsData.length === 0) {
+        renderEmptyMessage("No students found in the selected Class & Section.");
+        if (actionsBar) actionsBar.style.display = "none";
+        updateSummary();
         return;
     }
 
+    studentsData.forEach((student, index) => {
+        const studentId = student.studentId || student.student_id;
+        const rollNo = student.rollNo || student.roll_no || "-";
+        const fullName = student.fullName || student.full_name || "Unknown";
 
-    students.forEach(
-        function (student, index) {
-
-            const row =
-                document.createElement("tr");
-
-
-            row.innerHTML = `
-
-                <td>
-                    ${index + 1}
-                </td>
-
-                <td>
-
-                    <div class="student-name">
-
-                        ${
-                            student.studentPhoto
-                            ?
-                            `<img
-                                src="${student.studentPhoto}"
-                                class="student-photo"
-                                alt="Student">`
-                            :
-                            `<div class="student-photo-placeholder">
-                                👨‍🎓
-                             </div>`
-                        }
-
-                        <strong>
-                            ${escapeHtml(
-                                student.fullName || "-"
-                            )}
-                        </strong>
-
-                    </div>
-
-                </td>
-
-                <td>
-                    ${escapeHtml(
-                        student.admissionNo || "-"
-                    )}
-                </td>
-
-                <td>
-                    ${escapeHtml(
-                        student.rollNo || "-"
-                    )}
-                </td>
-
-                <td>
-                    ${escapeHtml(
-                        student.gender || "-"
-                    )}
-                </td>
-
-                <td>
-                    ${
-                        student.dateOfBirth
-                        ?
-                        formatDate(
-                            student.dateOfBirth
-                        )
-                        :
-                        "-"
-                    }
-                </td>
-
-                <td>
-
-                    <span class="status-badge ${
-                        String(student.status || "")
-                            .toLowerCase() === "active"
-                            ? "active"
-                            : "inactive"
-                    }">
-
-                        ${escapeHtml(
-                            student.status || "-"
-                        )}
-
-                    </span>
-
-                </td>
-
-            `;
-
-
-            tableBody.appendChild(row);
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   SEARCH / FILTER
-   ========================================================= */
-
-function filterStudents(searchText) {
-
-    const search =
-        searchText.toLowerCase();
-
-
-    if (search === "") {
-
-        displayStudents(allStudents);
-
-        return;
-
-    }
-
-
-    const filteredStudents =
-        allStudents.filter(
-            function (student) {
-
-                return (
-
-                    String(
-                        student.fullName || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
-
-                    ||
-
-                    String(
-                        student.rollNo || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
-
-                    ||
-
-                    String(
-                        student.admissionNo || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
-
-                );
-
-            }
+        const existingRecord = savedMarks.find(m => 
+            (m.studentId === studentId || (m.student && m.student.studentId === studentId)) &&
+            (m.subject === subVal) &&
+            (m.examType === examVal || m.examName === examVal)
         );
 
+        const currentMark = existingRecord ? (existingRecord.marksObtained ?? existingRecord.marks_obtained ?? "") : "";
+        const isEntered = currentMark !== "";
 
-    displayStudents(
-        filteredStudents
-    );
-
-}
-
-
-/* =========================================================
-   SUMMARY
-   ========================================================= */
-
-function updateSummary(students) {
-
-    const total =
-        students.length;
-
-
-    const male =
-        students.filter(
-            function (student) {
-
-                return String(
-                    student.gender || ""
-                )
-                .toLowerCase() === "male";
-
-            }
-        ).length;
-
-
-    const female =
-        students.filter(
-            function (student) {
-
-                return String(
-                    student.gender || ""
-                )
-                .toLowerCase() === "female";
-
-            }
-        ).length;
-
-
-    document.getElementById(
-        "totalStudents"
-    ).textContent = total;
-
-
-    document.getElementById(
-        "maleStudents"
-    ).textContent = male;
-
-
-    document.getElementById(
-        "femaleStudents"
-    ).textContent = female;
-
-
-    document.getElementById(
-        "studentCount"
-    ).textContent =
-        `${total} ${
-            total === 1
-                ? "Student"
-                : "Students"
-        }`;
-
-}
-
-
-/* =========================================================
-   BACK
-   ========================================================= */
-
-function goBack() {
-
-    window.location.href =
-        "teacher-classes.html";
-
-}
-
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
-
-function logout() {
-
-    localStorage.removeItem(
-        "userRole"
-    );
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-/* =========================================================
-   DATE FORMAT
-   ========================================================= */
-
-function formatDate(dateString) {
-
-    const date =
-        new Date(dateString);
-
-
-    if (isNaN(date.getTime())) {
-
-        return dateString;
-
-    }
-
-
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
-
-}
-
-
-/* =========================================================
-   HTML SAFETY
-   ========================================================= */
-
-function escapeHtml(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   ERROR
-   ========================================================= */
-
-function showError(message) {
-
-    const tableBody =
-        document.getElementById(
-            "studentsTableBody"
-        );
-
-
-    if (!tableBody) {
-        return;
-    }
-
-
-    tableBody.innerHTML = `
-
-        <tr>
-
-            <td
-                colspan="7"
-                class="error-message">
-
-                ${escapeHtml(message)}
-
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td style="text-align: center;">${index + 1}</td>
+            <td class="roll-number">${rollNo}</td>
+            <td class="student-name">${fullName}</td>
+            <td style="text-align: center;">${maximumMarks}</td>
+            <td style="text-align: center;">
+                <input type="number" 
+                    class="marks-input" 
+                    id="mark_${studentId}" 
+                    min="0" 
+                    max="${maximumMarks}" 
+                    value="${currentMark}" 
+                    placeholder="Marks"
+                    oninput="validateInput(this, ${studentId})"
+                />
             </td>
+            <td style="text-align: center;" id="status_${studentId}">
+                <span class="status-badge ${isEntered ? 'status-entered' : 'status-pending'}">
+                    ${isEntered ? '<i class="fa-solid fa-check"></i> Entered' : '<i class="fa-solid fa-clock"></i> Pending'}
+                </span>
+            </td>
+            <td style="text-align: center;">
+                <button type="button" class="save-row-btn" title="Save" onclick="saveIndividualMark(${studentId})">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                </button>
+            </td>
+        `;
+        tableBody.appendChild(tr);
+    });
 
-        </tr>
-
-    `;
-
+    if (actionsBar) actionsBar.style.display = "flex";
+    updateSummary();
 }
+
+function renderEmptyMessage(msg) {
+    const tableBody = document.getElementById("studentMarksTableBody");
+    if (!tableBody) return;
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="7" class="empty-message">
+                <i class="fa-solid fa-clipboard-list"></i>
+                ${msg}
+            </td>
+        </tr>
+    `;
+    const actionsBar = document.getElementById("tableActionsBar");
+    if (actionsBar) actionsBar.style.display = "none";
+}
+
+function validateInput(input, studentId) {
+    const val = input.value.trim();
+    const statusCell = document.getElementById(`status_${studentId}`);
+
+    if (val === "") {
+        input.classList.remove("invalid");
+        if (statusCell) statusCell.innerHTML = `<span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Pending</span>`;
+    } else {
+        const num = Number(val);
+        if (num < 0 || num > maximumMarks || isNaN(num)) {
+            input.classList.add("invalid");
+        } else {
+            input.classList.remove("invalid");
+            if (statusCell) statusCell.innerHTML = `<span class="status-badge status-entered"><i class="fa-solid fa-check"></i> Entered</span>`;
+        }
+    }
+    updateSummary();
+}
+
+async function saveIndividualMark(studentId) {
+    const input = document.getElementById(`mark_${studentId}`);
+    if (!input) return;
+
+    const val = input.value.trim();
+    if (val === "" || isNaN(val) || Number(val) < 0 || Number(val) > maximumMarks) {
+        alert("Please enter a valid mark between 0 and " + maximumMarks);
+        input.focus();
+        return;
+    }
+
+    const payload = {
+        studentId: studentId,
+        subject: document.getElementById("subjectFilter").value,
+        examType: document.getElementById("examFilter").value,
+        examDate: document.getElementById("examDate").value,
+        maxMarks: maximumMarks,
+        marksObtained: Number(val)
+    };
+
+    try {
+        const res = await fetch(`${API_BASE}/marks`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            alert("Mark saved successfully!");
+            await loadExistingMarks();
+            renderTable();
+        } else {
+            alert("Failed to save mark. Please try again.");
+        }
+    } catch (err) {
+        console.error("Save error:", err);
+        alert("Error saving mark.");
+    }
+}
+
+async function saveAllMarks() {
+    const subVal = document.getElementById("subjectFilter").value;
+    const examVal = document.getElementById("examFilter").value;
+    const examDateVal = document.getElementById("examDate").value;
+
+    const promises = [];
+
+    studentsData.forEach(student => {
+        const studentId = student.studentId || student.student_id;
+        const input = document.getElementById(`mark_${studentId}`);
+        if (input && input.value.trim() !== "") {
+            const val = Number(input.value.trim());
+            if (val >= 0 && val <= maximumMarks) {
+                const payload = {
+                    studentId: studentId,
+                    subject: subVal,
+                    examType: examVal,
+                    examDate: examDateVal,
+                    maxMarks: maximumMarks,
+                    marksObtained: val
+                };
+                promises.push(
+                    fetch(`${API_BASE}/marks`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    })
+                );
+            }
+        }
+    });
+
+    if (promises.length === 0) {
+        alert("No marks entered to save.");
+        return;
+    }
+
+    try {
+        await Promise.all(promises);
+        alert("All marks saved successfully!");
+        await loadExistingMarks();
+        renderTable();
+    } catch (err) {
+        console.error("Error saving all marks:", err);
+        alert("Some marks could not be saved.");
+    }
+}
+
+function clearAllMarks() {
+    studentsData.forEach(student => {
+        const studentId = student.studentId || student.student_id;
+        const input = document.getElementById(`mark_${studentId}`);
+        if (input) {
+            input.value = "";
+            input.classList.remove("invalid");
+            const statusCell = document.getElementById(`status_${studentId}`);
+            if (statusCell) {
+                statusCell.innerHTML = `<span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Pending</span>`;
+            }
+        }
+    });
+    updateSummary();
+}
+
+function updateSummary() {
+    const totalStudents = studentsData.length;
+    let entered = 0;
+
+    studentsData.forEach(student => {
+        const studentId = student.studentId || student.student_id;
+        const input = document.getElementById(`mark_${studentId}`);
+        if (input && input.value.trim() !== "" && !input.classList.contains("invalid")) {
+            entered++;
+        }
+    });
+
+    const totalEl = document.getElementById("totalStudentsCount");
+    const enteredEl = document.getElementById("marksEnteredCount");
+    const pendingEl = document.getElementById("marksPendingCount");
+
+    if (totalEl) totalEl.textContent = totalStudents;
+    if (enteredEl) enteredEl.textContent = entered;
+    if (pendingEl) pendingEl.textContent = Math.max(0, totalStudents - entered);
+}
+
+window.saveIndividualMark = saveIndividualMark;
+window.saveAllMarks = saveAllMarks;
+window.clearAllMarks = clearAllMarks;
