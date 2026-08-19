@@ -4,9 +4,11 @@ import com.schoolapp.dto.MarkRequest;
 import com.schoolapp.entity.Mark;
 import com.schoolapp.service.MarkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -21,8 +23,8 @@ public class MarkController {
     public ResponseEntity<List<Mark>> getMarks(
             @RequestParam(required = false) String className,
             @RequestParam(required = false) String section,
-            @RequestParam(required = false) String examType) {
-        return ResponseEntity.ok(markService.getMarks(className, section, examType));
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate examDate) {
+        return ResponseEntity.ok(markService.getMarks(className, section, examDate));
     }
 
     @PostMapping
