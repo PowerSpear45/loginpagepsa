@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Public School - Announcements</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="teacher-announcements.css">
+</head>
+<body>
+    <div class="page">
+        <aside class="sidebar">
+            <div class="school-header">
+                <img src="school-logo.png.png" alt="School Logo" class="school-logo" onerror="this.style.display='none'">
+                <div class="school-name">Power Public School</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="teacher-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="teacher-classes.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>My Classes</span>
+                </a>
+                <a href="teacher-marks.html" class="menu-item">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Marks Entry</span>
+                </a>
+                <a href="teacher-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="teacher-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="teacher-announcements.html" class="menu-item active">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="teacher-students.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Students List</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-date">
+                <span id="todayDay">Today</span>
+                <h3 id="todayDate">-- --- ----</h3>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h2>Announcements & Circulars</h2>
+                </div>
+                <div class="top-bar-right">
+                    <button class="add-btn" onclick="openNewAnnouncementModal()">
+                        <i class="fa-solid fa-plus"></i> Post Announcement
+                    </button>
+                    <div class="teacher-info">
+                        <div class="teacher-avatar">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <span id="teacherHeaderName">Teacher</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-and-filter">
+                <div class="tab-group">
+                    <button class="tab-btn active" id="tabAll" onclick="switchTab('all')">
+                        <i class="fa-solid fa-layer-group"></i> All Circulars
+                    </button>
+                    <button class="tab-btn" id="tabAdmin" onclick="switchTab('admin')">
+                        <i class="fa-solid fa-shield-halved"></i> From Admin
+                    </button>
+                    <button class="tab-btn" id="tabTeacher" onclick="switchTab('teacher')">
+                        <i class="fa-solid fa-chalkboard-user"></i> My Posted Announcements
+                    </button>
+                </div>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search announcement title or keyword..." oninput="handleSearch()">
+                </div>
+            </div>
+
+            <div class="announcements-container" id="announcementsList">
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading notices & circulars...
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="announcementModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3>Create New Announcement</h3>
+                    <p class="modal-subtext">Broadcast a message to your assigned classes or all students</p>
+                </div>
+                <button class="close-btn" onclick="closeNewAnnouncementModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="announcementForm" onsubmit="handlePostAnnouncement(event)">
+                <div class="form-group">
+                    <label for="annTitle">Title / Subject *</label>
+                    <input type="text" id="annTitle" placeholder="e.g., Special Science Revision Class Tomorrow" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="targetAudience">Target Audience *</label>
+                        <select id="targetAudience" required onchange="handleAudienceTypeChange()">
+                            <option value="All Students">All Students</option>
+                            <option value="Specific Class">Specific Class & Section</option>
+                            <option value="Teachers">Teachers Only</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="classSelectGroup" style="display: none;">
+                        <label for="targetClassSection">Class & Section *</label>
+                        <select id="targetClassSection">
+                            <option value="Class 5 - A">Class 5 - A</option>
+                            <option value="Class 5 - B">Class 5 - B</option>
+                            <option value="Class 6 - A">Class 6 - A</option>
+                            <option value="Class 6 - B">Class 6 - B</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="annDescription">Announcement Content *</label>
+                    <textarea id="annDescription" rows="4" placeholder="Write full announcement details here..." required></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeNewAnnouncementModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publish Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="teacher-announcements.js"></script>
+</body>
+</html>
