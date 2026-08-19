@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Public School - Homework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="teacher-homework.css">
+</head>
+<body>
+    <div class="page">
+        <aside class="sidebar">
+            <div class="school-header">
+                <img src="school-logo.png.png" alt="School Logo" class="school-logo" onerror="this.style.display='none'">
+                <div class="school-name">Power Public School</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="teacher-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="teacher-classes.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>My Classes</span>
+                </a>
+                <a href="teacher-marks.html" class="menu-item">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Marks Entry</span>
+                </a>
+                <a href="teacher-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="teacher-homework.html" class="menu-item active">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="teacher-students.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Students List</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-date">
+                <span id="todayDay">Today</span>
+                <h3 id="todayDate">-- --- ----</h3>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h2>Homework Management</h2>
+                </div>
+                <div class="top-bar-right">
+                    <button class="add-btn" onclick="openCreateModal()">
+                        <i class="fa-solid fa-plus"></i> Assign New Homework
+                    </button>
+                    <div class="teacher-info">
+                        <div class="teacher-avatar">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <span>Teacher</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-panel">
+                <div class="form-group">
+                    <label for="classFilter">Class</label>
+                    <select id="classFilter">
+                        <option value="">All Classes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sectionFilter">Section</label>
+                    <select id="sectionFilter">
+                        <option value="">All Sections</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subjectFilter">Subject</label>
+                    <select id="subjectFilter">
+                        <option value="">All Subjects</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="English">English</option>
+                        <option value="Maths">Maths</option>
+                        <option value="Science">Science</option>
+                        <option value="Social">Social</option>
+                        <option value="Computer">Computer</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="table-header">
+                    <h2>Assigned Homework History</h2>
+                    <div class="hw-counter">Total: <strong id="totalHwCount">0</strong></div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center;">#</th>
+                                <th style="width: 220px;">TITLE & INSTRUCTIONS</th>
+                                <th style="width: 110px; text-align: center;">CLASS & SEC</th>
+                                <th style="width: 120px;">SUBJECT</th>
+                                <th style="width: 120px;">DUE DATE</th>
+                                <th style="width: 140px; text-align: center;">SUBMISSIONS</th>
+                                <th style="width: 130px; text-align: center;">QUESTION PDF</th>
+                                <th style="width: 130px; text-align: center;">ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="homeworkTableBody">
+                            <tr>
+                                <td colspan="8" class="empty-message">
+                                    <i class="fa-solid fa-book-open"></i>
+                                    Loading assigned homework...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="createModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Assign New Homework</h3>
+                <button class="close-btn" onclick="closeCreateModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="createHomeworkForm" onsubmit="handleCreateHomework(event)">
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Homework Title *</label>
+                        <input type="text" id="hwTitle" placeholder="e.g., Chapter 5 Trigonometry Exercise" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Class *</label>
+                        <select id="hwClass" required onchange="populateModalSections()">
+                            <option value="">Select Class</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Section *</label>
+                        <select id="hwSection" required>
+                            <option value="">Select Section</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <select id="hwSubject" required>
+                            <option value="">Select Subject</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="English">English</option>
+                            <option value="Maths">Maths</option>
+                            <option value="Science">Science</option>
+                            <option value="Social">Social</option>
+                            <option value="Computer">Computer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date *</label>
+                        <input type="date" id="hwDueDate" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description / Details</label>
+                    <textarea id="hwDescription" rows="3" placeholder="Enter assignment guidelines or instructions..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Question Paper (PDF)</label>
+                    <div class="file-upload-box">
+                        <input type="file" id="hwPdfFile" accept="application/pdf" onchange="previewFileName(this)">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span id="uploadStatusText">Click to upload Questions PDF</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publish Homework</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="submissionsModal">
+        <div class="modal-card wide">
+            <div class="modal-header">
+                <div>
+                    <h3 id="subModalTitle">Student Submissions</h3>
+                    <p class="modal-subtext" id="subModalDetails">Class 5 - B | Maths</p>
+                </div>
+                <button class="close-btn" onclick="closeSubmissionsModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align:center;">#</th>
+                            <th style="width: 110px;">ROLL NO</th>
+                            <th>STUDENT NAME</th>
+                            <th style="width: 140px;">SUBMITTED ON</th>
+                            <th style="width: 110px; text-align: center;">STATUS</th>
+                            <th style="width: 150px; text-align: center;">ANSWER SHEET</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="teacher-homework.js"></script>
+</body>
+</html>
