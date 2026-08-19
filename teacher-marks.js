@@ -647,6 +647,17 @@ function getMarkSelection() {
 
 async function loadExistingMarks() {
 
+    try {
+        const res = await fetch(`${API_BASE}/teacher/marks`);
+        if (res.ok) {
+            savedMarks = await res.json();
+        }
+    } catch (err) {
+        console.warn("Could not load marks:", err);
+        savedMarks = [];
+    }
+}
+
     const selection =
         getMarkSelection();
 
@@ -739,7 +750,11 @@ async function loadExistingMarks() {
 async function saveIndividualMark(
     studentId
 ) {
-
+     const res = await fetch(`${API_BASE}/teacher/marks`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
     const selection =
         getMarkSelection();
 
@@ -901,6 +916,13 @@ async function saveIndividualMark(
 
 async function saveAllMarks() {
 
+    promises.push(
+                    fetch(`${API_BASE}/teacher/marks`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    })
+                );
     const selection =
         getMarkSelection();
 
