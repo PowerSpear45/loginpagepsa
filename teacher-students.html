@@ -1,348 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Students - Power Public School</title>
-
+    <title>My Students - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="teacher-students.css">
 </head>
-
 <body>
 
-    <!-- ================= SIDEBAR ================= -->
-
     <aside class="sidebar">
-
         <div class="school-title">
-
-            <div class="school-logo">
-                🏫
-            </div>
-
+            <div class="school-logo">🏫</div>
             <span>Power Public School</span>
-
         </div>
 
-
         <nav class="sidebar-menu">
+    <a href="teacher-home.html" class="menu-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+    </a>
 
-            <a href="teacher-home.html" class="menu-item">
-                🏠
-                <span>Dashboard</span>
-            </a>
+    <a href="teacher-classes.html" class="menu-item">
+        <i class="fa-solid fa-book-open"></i>
+        <span>My Classes</span>
+    </a>
 
-            <a href="teacher-classes.html" class="menu-item active">
-                📚
-                <span>My Classes</span>
-            </a>
+    <a href="teacher-students.html" class="menu-item">
+        <i class="fa-solid fa-user-graduate"></i>
+        <span>My Students</span>
+    </a>
 
-            <a href="#" class="menu-item">
-                📝
-                <span>Marks Entry</span>
-            </a>
+    <a href="teacher-marks.html" class="menu-item">
+        <i class="fa-solid fa-file-pen"></i>
+        <span>Marks Entry</span>
+    </a>
 
-            <a href="#" class="menu-item">
-                📅
-                <span>Attendance</span>
-            </a>
+    <a href="teacher-attendance.html" class="menu-item">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Attendance</span>
+    </a>
 
-            <a href="teacher-homework.html" class="menu-item">
-    <i class="fa-solid fa-book"></i>
-    <span>Homework</span>
-</a>
+    <a href="teacher-homework.html" class="menu-item">
+        <i class="fa-solid fa-book"></i>
+        <span>Homework</span>
+    </a>
 
-            <a href="teacher-announcements.html" class="menu-item">
-    <i class="fa-solid fa-bullhorn"></i>
-    <span>Announcements</span>
-</a>
+    <a href="teacher-leaves.html" class="menu-item">
+        <i class="fa-solid fa-envelope-open-text"></i>
+        <span>Leave Letter</span>
+    </a>
 
-            <a href="teacher-profile.html" class="menu-item">
-    <i class="fa-solid fa-user-gear"></i>
-    <span>My Profile</span>
-</a>
+    <a href="teacher-announcements.html" class="menu-item">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span>Announcements</span>
+    </a>
 
-        </nav>
+    <a href="teacher-profile.html" class="menu-item">
+        <i class="fa-solid fa-user-gear"></i>
+        <span>My Profile</span>
+    </a>
+</nav>
 
-
-       
-
+        <div class="date-box">
+            <div class="date-icon">📅</div>
+            <div>
+                <div class="date-label">Today's Date</div>
+                <div class="date-value" id="currentDateVal">-- --- ----</div>
+                <div class="day-value" id="currentDayVal">--------</div>
+            </div>
+        </div>
     </aside>
-
-
-    <!-- ================= MAIN CONTENT ================= -->
 
     <main class="main-content">
 
-
-        <!-- TOP BAR -->
-
         <header class="top-bar">
-
             <div class="page-title">
-
-                <span class="title-icon">
-                    👨‍🎓
-                </span>
-
+                <span class="title-icon">👨‍🎓</span>
                 <div>
-
-                    <h1>
-                        My Students
-                    </h1>
-
-                    <p id="pageSubtitle">
-                        Students in your class
-                    </p>
-
+                    <h1>My Students</h1>
+                    <p id="pageSubtitle">Students enrolled in your selected class</p>
                 </div>
-
             </div>
-
-
-            <!-- TEACHER PROFILE -->
 
             <div class="teacher-profile">
-
-                <div class="teacher-avatar">
-                    👨‍🏫
-                </div>
-
+                <div class="teacher-avatar">👨‍🏫</div>
                 <div class="teacher-info">
-
-                    <strong>
-                        Teacher Name
-                    </strong>
-
-                    <span>
-                        Teacher
-                    </span>
-
+                    <strong id="teacherNameDisplay">Teacher Name</strong>
+                    <span id="teacherDeptDisplay">Teacher</span>
                 </div>
-
-                <button
-                    class="logout-btn"
-                    onclick="logout()">
-
-                    Logout
-
-                </button>
-
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
-
         </header>
 
-
-        <!-- ================= PAGE INTRO ================= -->
-
         <section class="page-intro">
-
             <div>
-
-                <h2 id="classTitle">
-                    Students
-                </h2>
-
-                <p id="classDescription">
-                    Loading students...
-                </p>
-
+                <h2 id="classTitle">Class Students Roster</h2>
+                <p id="classDescription">Showing students enrolled in Class -- Section --</p>
             </div>
-
-
-            <button
-                class="back-btn"
-                onclick="goBack()">
-
-                ← Back to My Classes
-
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i> Back to My Classes
             </button>
-
         </section>
-
-
-        <!-- ================= SUMMARY ================= -->
 
         <section class="summary-cards">
-
-
             <div class="summary-card">
-
-                <div class="summary-icon students-icon">
-                    👨‍🎓
-                </div>
-
+                <div class="summary-icon students-icon">👨‍🎓</div>
                 <div>
-
-                    <span>
-                        Total Students
-                    </span>
-
-                    <strong id="totalStudents">
-                        0
-                    </strong>
-
+                    <span>Total Students</span>
+                    <strong id="totalStudents">0</strong>
                 </div>
-
             </div>
 
-
             <div class="summary-card">
-
-                <div class="summary-icon">
-                    👨
-                </div>
-
+                <div class="summary-icon male-icon">👦</div>
                 <div>
-
-                    <span>
-                        Male Students
-                    </span>
-
-                    <strong id="maleStudents">
-                        0
-                    </strong>
-
+                    <span>Male Students</span>
+                    <strong id="maleStudents">0</strong>
                 </div>
-
             </div>
 
-
             <div class="summary-card">
-
-                <div class="summary-icon">
-                    👩
-                </div>
-
+                <div class="summary-icon female-icon">👧</div>
                 <div>
-
-                    <span>
-                        Female Students
-                    </span>
-
-                    <strong id="femaleStudents">
-                        0
-                    </strong>
-
+                    <span>Female Students</span>
+                    <strong id="femaleStudents">0</strong>
                 </div>
-
             </div>
-
         </section>
 
-
-        <!-- ================= STUDENTS SECTION ================= -->
-
         <section class="students-section">
-
-
             <div class="section-header">
-
                 <div>
-
-                    <h3>
-                        Student List
-                    </h3>
-
-                    <p>
-                        Students currently assigned to this class
-                    </p>
-
+                    <h3>Student Directory</h3>
+                    <p>All registered students in this section</p>
                 </div>
-
-                <div id="studentCount">
-                    0 Students
-                </div>
-
+                <div class="student-count" id="studentCount">0 Students</div>
             </div>
 
-
-            <!-- SEARCH -->
-
             <div class="search-container">
-
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input
                     type="text"
                     id="searchInput"
-                    placeholder="Search student by name, roll number or admission number...">
-
+                    onkeyup="filterStudentsTable()"
+                    placeholder="Search student by name, roll number, or admission number..."
+                >
             </div>
-
-
-            <!-- TABLE -->
 
             <div class="table-container">
-
                 <table>
-
                     <thead>
-
                         <tr>
-
-                            <th>
-                                #
-                            </th>
-
-                            <th>
-                                Student
-                            </th>
-
-                            <th>
-                                Admission No
-                            </th>
-
-                            <th>
-                                Roll No
-                            </th>
-
-                            <th>
-                                Gender
-                            </th>
-
-                            <th>
-                                Date of Birth
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
+                            <th style="width: 50px;">#</th>
+                            <th>Student</th>
+                            <th>Admission No</th>
+                            <th>Roll No</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>Status</th>
                         </tr>
-
                     </thead>
-
-
                     <tbody id="studentsTableBody">
-
                         <tr>
-
-                            <td
-                                colspan="7"
-                                class="loading">
-
-                                Loading students...
-
-                            </td>
-
+                            <td colspan="7" class="loading">Loading students...</td>
                         </tr>
-
                     </tbody>
-
                 </table>
-
             </div>
-
         </section>
 
     </main>
 
-
-    <!-- JAVASCRIPT -->
-
     <script src="teacher-students.js"></script>
-
 </body>
-
 </html>

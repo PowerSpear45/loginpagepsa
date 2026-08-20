@@ -1,453 +1,214 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Teacher Attendance</title>
-
-    <link
-        rel="stylesheet"
-        href="teacher-attendance.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Attendance - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="teacher-attendance.css">
 </head>
-
-
 <body>
 
-<div class="page">
-
-
-    <!-- =====================================================
-         SIDEBAR
-         ===================================================== -->
-
     <aside class="sidebar">
-
         <div class="school-title">
-
-            <i class="fa-solid fa-school"></i>
-
+            <div class="school-logo">🏫</div>
             <span>Power Public School</span>
-
         </div>
 
+        <nav class="sidebar-menu">
+            <a href="teacher-home.html" class="menu-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
 
-        <a href="teacher-dashboard.html">
+            <a href="teacher-classes.html" class="menu-item">
+                <i class="fa-solid fa-book-open"></i>
+                <span>My Classes</span>
+            </a>
 
-            <i class="fa-solid fa-house"></i>
+            <a href="teacher-students.html" class="menu-item">
+                <i class="fa-solid fa-user-graduate"></i>
+                <span>My Students</span>
+            </a>
 
-            Dashboard
+            <a href="teacher-marks.html" class="menu-item">
+                <i class="fa-solid fa-file-pen"></i>
+                <span>Marks Entry</span>
+            </a>
 
-        </a>
+            <a href="teacher-attendance.html" class="menu-item active">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
 
+            <a href="teacher-homework.html" class="menu-item">
+                <i class="fa-solid fa-book"></i>
+                <span>Homework</span>
+            </a>
 
-        <a href="teacher-my-classes.html">
+            <a href="teacher-leave.html" class="menu-item">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Leave Letter</span>
+            </a>
 
-            <i class="fa-solid fa-users"></i>
+            <a href="teacher-announcements.html" class="menu-item">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Announcements</span>
+            </a>
 
-            My Classes
+            <a href="teacher-profile.html" class="menu-item">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>My Profile</span>
+            </a>
+        </nav>
 
-        </a>
-
-
-        <a
-            href="teacher-attendance.html"
-            class="active"
-        >
-
-            <i class="fa-solid fa-calendar-check"></i>
-
-            Attendance
-
-        </a>
-        <a href="teacher-attendance.html">
-    <i class="fa-solid fa-calendar-check"></i>
-    Attendance
-</a>
-
-
-        <a href="teacher-marks.html">
-
-            <i class="fa-solid fa-graduation-cap"></i>
-
-            Marks
-
-        </a>
-
-
-        <a href="teacher-homework.html">
-
-            <i class="fa-solid fa-book"></i>
-
-            Homework
-
-        </a>
-        <a href="teacher-announcements.html" class="menu-item">
-    <i class="fa-solid fa-bullhorn"></i>
-    <span>Announcements</span>
-</a>
-
-
-        <a href="teacher-profile.html" class="menu-item">
-    <i class="fa-solid fa-user-gear"></i>
-    <span>My Profile</span>
-</a>
-
-
-
-    
- 
+        <div class="date-box">
+            <div class="date-icon">📅</div>
+            <div>
+                <div class="date-label">Today's Date</div>
+                <div class="date-value" id="currentDateVal">-- --- ----</div>
+                <div class="day-value" id="currentDayVal">--------</div>
+            </div>
+        </div>
     </aside>
 
+    <main class="main-content">
 
+        <header class="top-bar">
+            <div class="page-title">
+                <span class="title-icon">📊</span>
+                <div>
+                    <h1>Attendance Management</h1>
+                    <p>Mark and track daily classroom student attendance</p>
+                </div>
+            </div>
 
-    <!-- =====================================================
-         MAIN CONTENT
-         ===================================================== -->
+            <div class="teacher-profile">
+                <div class="teacher-avatar">👨‍🏫</div>
+                <div class="teacher-info">
+                    <strong id="teacherNameDisplay">Teacher</strong>
+                    <span id="teacherDeptDisplay">Faculty Member</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </header>
 
-    <main class="content">
-
-
-        <!-- TOP BAR -->
-
-        <div class="topbar">
-
+        <section class="page-intro">
             <div>
-
-                <h2>Attendance Management</h2>
-
-                <p id="teacherName">
-                    Teacher
-                </p>
-
+                <h2>Daily Attendance Tracker 📅</h2>
+                <p>Select your class, section, and date to mark student presence, absence, or leaves.</p>
             </div>
-
-
-            <div class="teacher-info">
-
-                <i class="fa-solid fa-clock"></i>
-
-                <span id="currentTime">
-                    --:--
-                </span>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             SUMMARY CARDS
-             ================================================= -->
+        </section>
 
         <section class="summary-cards">
-
-
-            <div class="card">
-
-                <div class="icon blue">
-
-                    <i class="fa-solid fa-users"></i>
-
+            <div class="summary-card">
+                <div class="summary-icon students-icon">👨‍🎓</div>
+                <div class="card-details">
+                    <span>Total Students</span>
+                    <strong id="totalStudents">0</strong>
                 </div>
-
-                <div>
-
-                    <p>Total Students</p>
-
-                    <span>Selected Class</span>
-
-                    <h3 id="totalStudents">
-                        0
-                    </h3>
-
-                </div>
-
             </div>
 
-
-
-            <div class="card">
-
-                <div class="icon green">
-
-                    <i class="fa-solid fa-user-check"></i>
-
+            <div class="summary-card">
+                <div class="summary-icon present-icon">✅</div>
+                <div class="card-details">
+                    <span>Present</span>
+                    <strong id="totalPresent" style="color: #15803d;">0</strong>
                 </div>
-
-                <div>
-
-                    <p>Present</p>
-
-                    <span>Selected Date</span>
-
-                    <h3 id="totalPresent">
-                        0
-                    </h3>
-
-                </div>
-
             </div>
 
-
-
-            <div class="card">
-
-                <div class="icon red">
-
-                    <i class="fa-solid fa-user-xmark"></i>
-
+            <div class="summary-card">
+                <div class="summary-icon absent-icon">❌</div>
+                <div class="card-details">
+                    <span>Absent</span>
+                    <strong id="totalAbsent" style="color: #b91c1c;">0</strong>
                 </div>
-
-                <div>
-
-                    <p>Absent</p>
-
-                    <span>Selected Date</span>
-
-                    <h3 id="totalAbsent">
-                        0
-                    </h3>
-
-                </div>
-
             </div>
 
-
-
-            <div class="card">
-
-                <div class="icon orange">
-
-                    <i class="fa-solid fa-clock"></i>
-
+            <div class="summary-card">
+                <div class="summary-icon late-icon">⏱️</div>
+                <div class="card-details">
+                    <span>Late Arrivals</span>
+                    <strong id="lateComers" style="color: #c2410c;">0</strong>
                 </div>
-
-                <div>
-
-                    <p>Late</p>
-
-                    <span>Selected Date</span>
-
-                    <h3 id="lateComers">
-                        0
-                    </h3>
-
-                </div>
-
             </div>
-
-
         </section>
 
-
-
-        <!-- =================================================
-             FILTERS
-             ================================================= -->
-
-        <section class="filters">
-
-
+        <section class="filters-card">
             <div class="filter-group">
-
-                <label>
-                    Class
-                </label>
-
+                <label for="classFilter">Class</label>
                 <select id="classFilter">
-
-                    <option value="All">
-                        All Classes
-                    </option>
-
+                    <option value="All">All Classes</option>
                 </select>
-
             </div>
 
-
-
             <div class="filter-group">
-
-                <label>
-                    Section
-                </label>
-
+                <label for="sectionFilter">Section</label>
                 <select id="sectionFilter">
-
-                    <option value="All">
-                        All Sections
-                    </option>
-
+                    <option value="All">All Sections</option>
                 </select>
-
             </div>
-
-
 
             <div class="filter-group">
-
-                <label>
-                    Date
-                </label>
-
-                <input
-                    type="date"
-                    id="attendanceDate"
-                >
-
+                <label for="attendanceDate">Attendance Date</label>
+                <input type="date" id="attendanceDate">
             </div>
 
-
-
-            <div class="filter-group">
-
-                <label>
-                    Search
-                </label>
-
-                <input
-                    type="text"
-                    id="rollSearch"
-                    placeholder="Roll No / Student Name"
-                >
-
+            <div class="filter-group flex-search">
+                <label for="rollSearch">Search Student</label>
+                <input type="text" id="rollSearch" placeholder="Search by name or roll number...">
             </div>
 
-
-
-            <button
-                id="saveAttendanceBtn"
-                class="save-btn"
-            >
-
-                <i class="fa-solid fa-floppy-disk"></i>
-
-                Save Attendance
-
+            <button id="saveAttendanceBtn" class="save-btn">
+                <i class="fa-solid fa-floppy-disk"></i> Save Attendance
             </button>
-
-
         </section>
 
-
-
-        <!-- =================================================
-             QUICK ACTIONS
-             ================================================= -->
-
-        <section class="quick-actions">
-
-            <button id="markAllPresent">
-
-                <i class="fa-solid fa-check"></i>
-
-                Mark All Present
-
-            </button>
-
-
-            <button id="markAllAbsent">
-
-                <i class="fa-solid fa-xmark"></i>
-
-                Mark All Absent
-
-            </button>
-
-        </section>
-
-
-
-        <!-- =================================================
-             ATTENDANCE TABLE
-             ================================================= -->
+        <div class="quick-actions-row">
+            <div class="quick-action-left">
+                <button id="markAllPresent" class="quick-btn present-btn">
+                    <i class="fa-solid fa-check-double"></i> Mark All Present
+                </button>
+                <button id="markAllAbsent" class="quick-btn absent-btn">
+                    <i class="fa-solid fa-xmark"></i> Mark All Absent
+                </button>
+            </div>
+            <div id="attendanceStatusNotice" class="status-notice">Ready to record attendance</div>
+        </div>
 
         <section class="attendance-box">
-
-
             <div class="section-header">
-
                 <div>
-
-                    <h3>
-                        Student Attendance
-                    </h3>
-
-                    <p>
-                        Mark attendance for the selected class and date.
-                    </p>
-
+                    <h3>Student Attendance Roster</h3>
+                    <p>Mark status individually using the dropdown selector</p>
                 </div>
-
+                <div class="count-badge" id="rosterCountBadge">0 Students</div>
             </div>
-
-
 
             <div class="table-container">
-
                 <table>
-
                     <thead>
-
-                    <tr>
-
-                        <th>S.No</th>
-
-                        <th>Roll No</th>
-
-                        <th>Photo</th>
-
-                        <th>Student Name</th>
-
-                        <th>Class</th>
-
-                        <th>Section</th>
-
-                        <th>Attendance Status</th>
-
-                    </tr>
-
+                        <tr>
+                            <th style="width: 50px;">S.No</th>
+                            <th style="width: 90px;">Roll No</th>
+                            <th>Student</th>
+                            <th>Class & Sec</th>
+                            <th style="width: 180px; text-align: center;">Attendance Status</th>
+                        </tr>
                     </thead>
-
-
-                    <tbody
-                        id="attendanceTableBody"
-                    >
-
+                    <tbody id="attendanceTableBody">
+                        <tr>
+                            <td colspan="5" class="loading-state">Loading assigned students...</td>
+                        </tr>
                     </tbody>
-
                 </table>
-
             </div>
-
-
         </section>
-
 
     </main>
 
-</div>
-
-
-<script src="teacher-attendance.js"></script>
-
+    <script src="teacher-attendance.js"></script>
 </body>
-
 </html>
+
 
