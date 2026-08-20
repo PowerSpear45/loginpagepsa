@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Public School - Leave Letter Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="teacher-leave-details.css">
+</head>
+<body>
+    <div class="page">
+        <aside class="sidebar">
+            <div class="school-header">
+                <img src="school-logo.png.png" alt="School Logo" class="school-logo" onerror="this.style.display='none'">
+                <div class="school-name">Power Public School</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="teacher-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="teacher-classes.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>My Classes</span>
+                </a>
+                <a href="teacher-marks.html" class="menu-item">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Marks Entry</span>
+                </a>
+                <a href="teacher-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="teacher-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="teacher-leaves.html" class="menu-item active">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Leave Letters</span>
+                </a>
+                <a href="teacher-announcements.html" class="menu-item">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="teacher-profile.html" class="menu-item">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="teacher-students.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Students List</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-date">
+                <span id="todayDay">Today</span>
+                <h3 id="todayDate">-- --- ----</h3>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h2>Leave Letter Details</h2>
+                    <div class="breadcrumb">
+                        <a href="teacher-leaves.html"><i class="fa-solid fa-arrow-left"></i> Back to Leave Requests</a>
+                    </div>
+                </div>
+                <div class="teacher-info">
+                    <div class="teacher-avatar">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <span id="teacherHeaderName">Teacher</span>
+                </div>
+            </div>
+
+            <div class="leave-layout">
+                <div class="left-col">
+                    <div class="card student-info-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-id-badge"></i> Student Information</h3>
+                        </div>
+                        <div class="student-profile-header">
+                            <img id="studentAvatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="Student Photo">
+                            <h4 id="studentFullName">Loading Student...</h4>
+                            <p id="studentRollNo">Roll No: -</p>
+                        </div>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-label">Class & Section:</span>
+                                <strong id="studentClassSection">-</strong>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Parent / Guardian:</span>
+                                <span id="studentParentName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Emergency Contact:</span>
+                                <span id="studentContact">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card action-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-gavel"></i> Quick Actions</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacherRemarks">Teacher Remarks (Optional)</label>
+                            <textarea id="teacherRemarks" rows="3" placeholder="Enter reason or remark for your decision..."></textarea>
+                        </div>
+                        <div class="action-buttons-grid">
+                            <button type="button" class="btn btn-approve" onclick="submitDecision('Approved')">
+                                <i class="fa-solid fa-circle-check"></i> Approve Leave
+                            </button>
+                            <button type="button" class="btn btn-reject" onclick="submitDecision('Declined')">
+                                <i class="fa-solid fa-circle-xmark"></i> Reject Leave
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-col">
+                    <div class="card letter-card">
+                        <div class="letter-top-row">
+                            <div class="title-meta">
+                                <h3>Leave Application</h3>
+                                <p class="applied-date" id="leaveAppliedDate">Applied on: --</p>
+                            </div>
+                            <span class="status-pill pending" id="leaveStatusBadge">
+                                <i class="fa-solid fa-hourglass-half"></i> <span id="leaveStatusText">Pending Review</span>
+                            </span>
+                        </div>
+
+                        <div class="leave-meta-grid">
+                            <div class="meta-box">
+                                <span class="meta-label">Leave Type</span>
+                                <strong id="leaveType">-</strong>
+                            </div>
+                            <div class="meta-box">
+                                <span class="meta-label">Leave Duration</span>
+                                <strong id="leaveDuration">-</strong>
+                            </div>
+                            <div class="meta-box">
+                                <span class="meta-label">Total Absence</span>
+                                <strong id="leaveDays">-</strong>
+                            </div>
+                        </div>
+
+                        <div class="letter-body-container">
+                            <div class="letter-section-heading">Reason for Leave</div>
+                            <div class="reason-letter-text" id="leaveReasonText">
+                                Loading application details...
+                            </div>
+                        </div>
+
+                        <div class="attachment-section" id="supportingDocBox" style="display: none;">
+                            <div class="letter-section-heading">Supporting Document</div>
+                            <div class="document-card">
+                                <div class="doc-icon">
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </div>
+                                <div class="doc-details">
+                                    <h4 id="attachmentFileName">Medical_Certificate.pdf</h4>
+                                    <p>Uploaded by Student</p>
+                                </div>
+                                <button type="button" class="btn btn-download" id="downloadDocBtn">
+                                    <i class="fa-solid fa-download"></i> Download Document
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="existing-remarks-box" id="existingRemarksSection" style="display:none;">
+                            <div class="letter-section-heading">Teacher Decision Remarks</div>
+                            <p id="existingRemarksText" class="remarks-display">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="teacher-leave-details.js"></script>
+</body>
+</html>

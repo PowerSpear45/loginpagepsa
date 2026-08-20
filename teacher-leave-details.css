@@ -1,0 +1,446 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+    color: #111827;
+    min-height: 100vh;
+}
+
+.page {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #b8ccec;
+    padding: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.school-header {
+    background: #1f3f6d;
+    color: #ffffff;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.school-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.school-name {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.sidebar-menu {
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #111827;
+    text-decoration: none;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.menu-item:hover {
+    background: #d7e5fb;
+    font-weight: 700;
+}
+
+.menu-item.active {
+    background: #ffffff;
+    font-weight: 700;
+    color: #1f3f6d;
+    border-left: 5px solid #1f3f6d;
+}
+
+.sidebar-date {
+    margin: auto 12px 18px 12px;
+    background: #1f3f6d;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px;
+}
+
+.sidebar-date span {
+    font-size: 12px;
+    color: #29d3ff;
+    font-weight: 700;
+}
+
+.sidebar-date h3 {
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    padding: 24px 28px;
+    max-width: calc(100vw - 240px);
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.page-title h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    font-size: 13px;
+    color: #1f87d7;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.teacher-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.teacher-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #d7e5fb;
+    display: grid;
+    place-items: center;
+    color: #1f3f6d;
+}
+
+/* Two Column Layout */
+.leave-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.card-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f3f6d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Left Column */
+.left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.student-profile-header {
+    text-align: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 14px;
+}
+
+.student-profile-header img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #d7e5fb;
+    margin-bottom: 8px;
+}
+
+.student-profile-header h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.student-profile-header p {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.info-label {
+    color: #64748b;
+    font-weight: 600;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.form-group textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 13px;
+    outline: none;
+    resize: vertical;
+}
+
+.form-group textarea:focus {
+    border-color: #1f3f6d;
+}
+
+.action-buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn {
+    height: 40px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-approve {
+    background: #15803d;
+    color: #ffffff;
+}
+
+.btn-approve:hover {
+    background: #166534;
+}
+
+.btn-reject {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.btn-reject:hover {
+    background: #b91c1c;
+}
+
+/* Right Column (Leave Letter) */
+.letter-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 18px;
+}
+
+.title-meta h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.applied-date {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-pill.pending { background: #ffedd5; color: #c2410c; }
+.status-pill.approved { background: #dcfce7; color: #15803d; }
+.status-pill.declined { background: #fee2e2; color: #b91c1c; }
+
+.leave-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.meta-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.meta-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #64748b;
+}
+
+.meta-box strong {
+    font-size: 13.5px;
+    color: #1e293b;
+}
+
+.letter-section-heading {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.reason-letter-text {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #334155;
+    white-space: pre-line;
+    margin-bottom: 22px;
+}
+
+/* Attachment Box */
+.attachment-section {
+    margin-bottom: 20px;
+}
+
+.document-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+.doc-icon {
+    font-size: 26px;
+    color: #ef4444;
+    margin-right: 14px;
+}
+
+.doc-details {
+    flex: 1;
+}
+
+.doc-details h4 {
+    font-size: 13.5px;
+    color: #111827;
+    font-weight: 700;
+}
+
+.doc-details p {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.btn-download {
+    background: #e0edff;
+    color: #1d4ed8;
+    padding: 0 14px;
+    font-size: 12px;
+}
+
+.btn-download:hover {
+    background: #d0e4ff;
+}
+
+.remarks-display {
+    background: #f1f5f9;
+    border-left: 4px solid #1f3f6d;
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: #1e293b;
+    font-style: italic;
+}
+
+@media (max-width: 992px) {
+    .leave-layout {
+        grid-template-columns: 1fr;
+    }
+}

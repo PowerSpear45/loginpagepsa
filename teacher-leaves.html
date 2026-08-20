@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Public School - Student Leave Requests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="teacher-leaves.css">
+</head>
+<body>
+    <div class="page">
+        <aside class="sidebar">
+            <div class="school-header">
+                <img src="school-logo.png.png" alt="School Logo" class="school-logo" onerror="this.style.display='none'">
+                <div class="school-name">Power Public School</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="teacher-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="teacher-classes.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>My Classes</span>
+                </a>
+                <a href="teacher-marks.html" class="menu-item">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Marks Entry</span>
+                </a>
+                <a href="teacher-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="teacher-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="teacher-leaves.html" class="menu-item active">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Leave Letters</span>
+                </a>
+                <a href="teacher-announcements.html" class="menu-item">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="teacher-profile.html" class="menu-item">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="teacher-students.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Students List</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-date">
+                <span id="todayDay">Today</span>
+                <h3 id="todayDate">-- --- ----</h3>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h2>Student Leave Applications</h2>
+                </div>
+                <div class="teacher-info">
+                    <div class="teacher-avatar">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <span id="teacherHeaderName">Teacher</span>
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-icon pending">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                    <div class="summary-info">
+                        <span class="summary-label">Pending Approval</span>
+                        <span class="summary-value" id="kpiPendingCount">0</span>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon approved">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="summary-info">
+                        <span class="summary-label">Approved</span>
+                        <span class="summary-value" id="kpiApprovedCount">0</span>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon declined">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div class="summary-info">
+                        <span class="summary-label">Declined</span>
+                        <span class="summary-value" id="kpiDeclinedCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-panel">
+                <div class="form-group">
+                    <label for="classFilter">Class</label>
+                    <select id="classFilter">
+                        <option value="">All Classes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sectionFilter">Section</label>
+                    <select id="sectionFilter">
+                        <option value="">All Sections</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="statusFilter">Status</label>
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="Pending">Pending Only</option>
+                        <option value="Approved">Approved Only</option>
+                        <option value="Declined">Declined Only</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="table-header">
+                    <h2>Leave Letters & Applications</h2>
+                    <div class="table-counter">Total: <strong id="totalCount">0</strong></div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center;">#</th>
+                                <th style="width: 100px;">ROLL NO</th>
+                                <th>STUDENT NAME</th>
+                                <th style="width: 110px; text-align: center;">CLASS & SEC</th>
+                                <th style="width: 130px;">LEAVE TYPE</th>
+                                <th style="width: 180px;">DURATION</th>
+                                <th style="width: 70px; text-align: center;">DAYS</th>
+                                <th style="width: 110px; text-align: center;">STATUS</th>
+                                <th style="width: 140px; text-align: center;">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveTableBody">
+                            <tr>
+                                <td colspan="9" class="empty-message">
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                    Loading leave applications...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="leaveDetailModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3>Leave Letter Review</h3>
+                    <p class="modal-subtext" id="modalStudentHeader">-</p>
+                </div>
+                <button class="close-btn" onclick="closeLeaveModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-body-content">
+                <div class="detail-row">
+                    <div>
+                        <span class="detail-label">Leave Type:</span>
+                        <strong id="modalLeaveType">-</strong>
+                    </div>
+                    <div>
+                        <span class="detail-label">Total Duration:</span>
+                        <span id="modalDuration">-</span>
+                    </div>
+                </div>
+
+                <div class="detail-box">
+                    <span class="detail-label">Reason Stated by Student / Parent:</span>
+                    <p id="modalReason" class="reason-text">-</p>
+                </div>
+
+                <div class="detail-box" id="attachmentContainer" style="display:none;">
+                    <span class="detail-label">Medical / Supporting Document:</span>
+                    <button class="btn btn-doc" id="downloadDocBtn">
+                        <i class="fa-solid fa-file-arrow-down"></i> Download Attached Document
+                    </button>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="teacherRemarksInput">Teacher Remarks (Optional):</label>
+                    <input type="text" id="teacherRemarksInput" placeholder="e.g., Medical cert verified / Exam absence permitted">
+                </div>
+            </div>
+
+            <div class="modal-footer" id="modalActions">
+                <button type="button" class="btn btn-decline" onclick="submitDecision('Declined')">
+                    <i class="fa-solid fa-xmark"></i> Decline
+                </button>
+                <button type="button" class="btn btn-approve" onclick="submitDecision('Approved')">
+                    <i class="fa-solid fa-check"></i> Approve Leave
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="teacher-leaves.js"></script>
+</body>
+</html>
