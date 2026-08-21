@@ -913,7 +913,48 @@ async function saveIndividualMark(
 /* =========================================================
    SAVE ALL MARKS
    ========================================================= */
+async function loadTeacherClasses() {
+    const classDropdown = document.getElementById("classFilter") || document.getElementById("classSelect") || document.getElementById("class");
+    if (!classDropdown) return;
 
+    try {
+        const response = await fetch(`${API_BASE}/teachers/${teacherId}/classes`);
+        if (response.ok) {
+            const classes = await response.json();
+            if (Array.isArray(classes) && classes.length > 0) {
+                populateClassDropdown(classes);
+                return;
+            }
+        }
+    } catch (err) {
+        console.warn("Could not load classes from backend, using default list", err);
+    }
+
+    // Default Fallback Classes if backend returns empty
+    const defaultClasses = [
+        { className: "5", section: "A" },
+        { className: "5", section: "B" },
+        { className: "6", section: "A" },
+        { className: "6", section: "B" }
+    ];
+    populateClassDropdown(defaultClasses);
+}
+
+function populateClassDropdown(classes) {
+    const classDropdown = document.getElementById("classFilter") || document.getElementById("classSelect") || document.getElementById("class");
+    if (!classDropdown) return;
+
+    // Get unique class names
+    const uniqueClasses = [...new Set(classes.map(c => c.className || c.class_name || c.class))];
+    
+    classDropdown.innerHTML = '<option value="">Select Class</option>';
+    uniqueClasses.forEach(cls => {
+        const opt = document.createElement("option");
+        opt.value = cls;
+        opt.textContent = `Class ${cls}`;
+        classDropdown.appendChild(opt);
+    });
+}
 async function saveAllMarks() {
 
     promises.push(
