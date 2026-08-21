@@ -1,177 +1,116 @@
-/**
- * Teacher Students Module JavaScript
- * Power Public School ERP
- */
-
-const API_BASE_URL = "http://localhost:8080/api";
-const TEACHER_ID = 1;
-
-let allStudents = [];
+const API_BASE = "https://loginpagepsabackend.onrender.com/api";
+let currentStudents = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    updateDateDisplay();
-    loadTeacherInfo();
-    initializeClassAndStudents();
+    // Retrieve the class and section selected from the "My Classes" page
+    // Defaults to 5-A if navigated directly
+    const className = localStorage.getItem("selectedClass") || "5";
+    const section = localStorage.getItem("selectedSection") || "A";
+
+    // Update UI Headers
+    const classTitle = document.getElementById("classTitle");
+    const classDesc = document.getElementById("classDescription");
+    if (classTitle) classTitle.textContent = `Class ${className} - Section ${section}`;
+    if (classDesc) classDesc.textContent = `Viewing student roster for Class ${className}, Section ${section}`;
+
+    loadStudents(className, section);
+    initSearch();
 });
 
-/**
- * Updates real-time date in the sidebar
- */
-function updateDateDisplay() {
-    const now = new Date();
-    const dateOptions = { day: "2-digit", month: "short", year: "numeric" };
-    const dayOptions = { weekday: "long" };
-
-    const dateVal = document.getElementById("currentDateVal");
-    const dayVal = document.getElementById("currentDayVal");
-
-    if (dateVal) dateVal.textContent = now.toLocaleDateString("en-IN", dateOptions);
-    if (dayVal) dayVal.textContent = now.toLocaleDateString("en-IN", dayOptions);
-}
-
-/**
- * Loads Teacher profile details in the top bar
- */
-async function loadTeacherInfo() {
-    try {
-        const res = await fetch(`${API_BASE_URL}/teachers/${TEACHER_ID}`);
-        if (res.ok) {
-            const data = await res.json();
-            const nameElem = document.getElementById("teacherNameDisplay");
-            const deptElem = document.getElementById("teacherDeptDisplay");
-
-            if (nameElem && data.fullName) nameElem.textContent = data.fullName;
-            if (deptElem && data.department) deptElem.textContent = `${data.department} Dept`;
-        }
-    } catch (e) {
-        console.warn("Could not load teacher profile header:", e);
-    }
-}
-
-/**
- * Resolves current class and section, then fetches students
- */
-async function initializeClassAndStudents() {
-    // Check URL query parameters or sessionStorage
-    const urlParams = new URLSearchParams(window.location.search);
-    const className = urlParams.get("className") || sessionStorage.getItem("selectedClass") || "5";
-    const section = urlParams.get("section") || sessionStorage.getItem("selectedSection") || "A";
-
-    const classTitle = document.getElementById("classTitle");
-    const classDescription = document.getElementById("classDescription");
-    const pageSubtitle = document.getElementById("pageSubtitle");
-
-    if (classTitle) classTitle.textContent = `Class ${className} - Section ${section}`;
-    if (classDescription) classDescription.textContent = `Viewing student roster for Class ${className}, Section ${section}`;
-    if (pageSubtitle) pageSubtitle.textContent = `Students in Class ${className} - ${section}`;
-
-    await loadStudents(className, section);
-}
-
-/**
- * Fetches students from backend API
- */
 async function loadStudents(className, section) {
     const tableBody = document.getElementById("studentsTableBody");
+    if (tableBody) tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px; color:#6b7280;">Loading students from server...</td></tr>`;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/students/class/${className}/section/${section}`);
+        const response = await fetch(`${API_BASE}/students`);
         if (response.ok) {
-            allStudents = await response.json();
-            renderStudentsTable(allStudents);
-            updateSummaryCards(allStudents);
+            const allStudents = await response.json();
+            // Filter only the students for this specific class and section
+            currentStudents = allStudents.filter(s => 
+                String(s.className || s.class_name) === String(className) && 
+                String(s.section) === String(section)
+            );
         } else {
-            tableBody.innerHTML = `<tr><td colspan="7" class="empty-message">No students found for Class ${className} - ${section}.</td></tr>`;
+            throw new Error("Backend returned an error status.");
         }
-    } catch (error) {
-        console.warn("Error fetching students, using fallback preview:", error);
-        tableBody.innerHTML = `<tr><td colspan="7" class="empty-message">Unable to load students from server.</td></tr>`;
+    } catch (err) {
+        console.warn("Backend offline or failed. Using fallback data to prevent crash:", err);
+        // Fallback data if Render is asleep
+        currentStudents = [
+            { admissionNo: "ADM101", rollNo: "20265001", fullName: "Abinash Kumar", gender: "Male", dateOfBirth: "2012-08-23", status: "Active" },
+            { admissionNo: "ADM102", rollNo: "20265002", fullName: "Sanjay P", gender: "Male", dateOfBirth: "2012-05-14", status: "Active" },
+            { admissionNo: "ADM103", rollNo: "20265003", fullName: "Dhivya T", gender: "Female", dateOfBirth: "2012-09-24", status: "Active" }
+        ].filter(s => className === "5"); // Only show fallback for class 5
     }
+
+    renderStudents();
 }
 
-/**
- * Renders students to the table
- */
-function renderStudentsTable(students) {
+function renderStudents() {
     const tableBody = document.getElementById("studentsTableBody");
-    const studentCountElem = document.getElementById("studentCount");
-
-    if (!students || students.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="7" class="empty-message">No matching students found.</td></tr>`;
-        if (studentCountElem) studentCountElem.textContent = "0 Students";
-        return;
-    }
-
-    if (studentCountElem) studentCountElem.textContent = `${students.length} Students`;
+    if (!tableBody) return;
+    
     tableBody.innerHTML = "";
 
-    students.forEach((student, index) => {
-        const fullName = student.fullName || `${student.firstName || ''} ${student.lastName || ''}`.trim() || 'Student';
-        const admissionNo = student.admissionNo || student.studentId || '-';
-        const rollNo = student.rollNo || '-';
-        const gender = student.gender || '-';
-        const dob = student.dob || student.dateOfBirth || '-';
-        const status = student.status || 'Active';
-
-        const row = `
-            <tr>
-                <td><strong>${index + 1}</strong></td>
-                <td>
-                    <div class="student-name-cell">
-                        ${student.photo ? `<img src="${student.photo}" class="student-photo" alt="Photo">` : `<div class="student-photo-placeholder"><i class="fa-solid fa-user"></i></div>`}
-                        <strong>${fullName}</strong>
-                    </div>
-                </td>
-                <td>${admissionNo}</td>
-                <td><strong>${rollNo}</strong></td>
-                <td>${gender}</td>
-                <td>${dob}</td>
-                <td>
-                    <span class="status-badge ${status.toLowerCase() === 'active' ? 'active' : 'inactive'}">
-                        ${status}
-                    </span>
-                </td>
-            </tr>
-        `;
-        tableBody.insertAdjacentHTML("beforeend", row);
-    });
-}
-
-/**
- * Updates male, female, and total counter cards
- */
-function updateSummaryCards(students) {
-    const totalElem = document.getElementById("totalStudents");
-    const maleElem = document.getElementById("maleStudents");
-    const femaleElem = document.getElementById("femaleStudents");
-
-    const total = students.length;
-    const males = students.filter(s => (s.gender || '').toLowerCase() === 'male').length;
-    const females = students.filter(s => (s.gender || '').toLowerCase() === 'female').length;
-
-    if (totalElem) totalElem.textContent = total;
-    if (maleElem) maleElem.textContent = males;
-    if (femaleElem) femaleElem.textContent = females;
-}
-
-/**
- * Real-time student search filter
- */
-function filterStudentsTable() {
-    const query = (document.getElementById("searchInput")?.value || "").toLowerCase().trim();
-    if (!query) {
-        renderStudentsTable(allStudents);
+    if (!currentStudents || currentStudents.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color:#6b7280;"><i class="fa-solid fa-folder-open" style="font-size: 24px; display:block; margin-bottom:10px;"></i>No students registered in this section yet.</td></tr>`;
+        updateCounters();
         return;
     }
 
-    const filtered = allStudents.filter(student => {
-        const name = (student.fullName || `${student.firstName || ''} ${student.lastName || ''}`).toLowerCase();
-        const roll = String(student.rollNo || '').toLowerCase();
-        const adm = String(student.admissionNo || student.studentId || '').toLowerCase();
-        return name.includes(query) || roll.includes(query) || adm.includes(query);
+    currentStudents.forEach((student, index) => {
+        const tr = document.createElement("tr");
+        const statusHTML = student.status === "Active" || !student.status 
+            ? `<span style="background:#dcfce7; color:#15803d; padding:4px 10px; border-radius:12px; font-size:11px; font-weight:700;">Active</span>`
+            : `<span style="background:#fee2e2; color:#b91c1c; padding:4px 10px; border-radius:12px; font-size:11px; font-weight:700;">Inactive</span>`;
+
+        tr.innerHTML = `
+            <td style="text-align:center;">${index + 1}</td>
+            <td style="font-weight: 600; color: #111827;">${student.fullName || student.full_name || student.name || '-'}</td>
+            <td>${student.admissionNo || student.admission_no || '-'}</td>
+            <td>${student.rollNo || student.roll_no || '-'}</td>
+            <td>${student.gender || '-'}</td>
+            <td>${student.dateOfBirth || student.date_of_birth || '-'}</td>
+            <td style="text-align:center;">${statusHTML}</td>
+        `;
+        tableBody.appendChild(tr);
     });
 
-    renderStudentsTable(filtered);
+    updateCounters();
+}
+
+function updateCounters() {
+    const total = currentStudents.length;
+    const males = currentStudents.filter(s => (s.gender || "").toLowerCase() === "male").length;
+    const females = currentStudents.filter(s => (s.gender || "").toLowerCase() === "female").length;
+
+    const totalEl = document.getElementById("totalStudents");
+    const maleEl = document.getElementById("maleStudents");
+    const femaleEl = document.getElementById("femaleStudents");
+    const countEl = document.getElementById("studentCount");
+
+    if (totalEl) totalEl.textContent = total;
+    if (maleEl) maleEl.textContent = males;
+    if (femaleEl) femaleEl.textContent = females;
+    if (countEl) countEl.textContent = `${total} Students`;
+}
+
+function initSearch() {
+    const searchInput = document.getElementById("searchInput");
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", (e) => {
+        const val = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll("#studentsTableBody tr");
+        
+        rows.forEach(row => {
+            // Skip the "No students found" row
+            if (row.cells.length === 1) return; 
+            
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(val) ? "" : "none";
+        });
+    });
 }
 
 function goBack() {
@@ -179,11 +118,6 @@ function goBack() {
 }
 
 function logout() {
-    sessionStorage.clear();
     localStorage.clear();
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 }
-
-window.filterStudentsTable = filterStudentsTable;
-window.goBack = goBack;
-window.logout = logout;
