@@ -9,6 +9,7 @@
 </head>
 <body>
 
+    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="school-title">
             <div class="school-logo">🏫</div>
@@ -46,7 +47,7 @@
                 <span>Homework</span>
             </a>
 
-            <a href="teacher-leave.html" class="menu-item">
+            <a href="teacher-leaves.html" class="menu-item">
                 <i class="fa-solid fa-envelope-open-text"></i>
                 <span>Leave Letter</span>
             </a>
@@ -72,8 +73,10 @@
         </div>
     </aside>
 
+    <!-- MAIN CONTENT -->
     <main class="main-content">
 
+        <!-- TOP BAR -->
         <header class="top-bar">
             <div class="page-title">
                 <span class="title-icon">📊</span>
@@ -84,15 +87,16 @@
             </div>
 
             <div class="teacher-profile">
-                <div class="teacher-avatar">👨‍🏫</div>
-                <div class="teacher-info">
-                    <strong id="teacherNameDisplay">Teacher</strong>
-                    <span id="teacherDeptDisplay">Faculty Member</span>
+                <div class="teacher-avatar">
+                    <img id="teacherProfilePic" src="https://ui-avatars.com/api/?name=Teacher&background=e8f0fe&color=1f3f6d" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </div>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <div class="teacher-info">
+                    <strong id="teacherNameDisplay">Loading Name...</strong>
+                </div>
             </div>
         </header>
 
+        <!-- PAGE INTRO -->
         <section class="page-intro">
             <div>
                 <h2>Daily Attendance Tracker 📅</h2>
@@ -100,6 +104,7 @@
             </div>
         </section>
 
+        <!-- SUMMARY CARDS -->
         <section class="summary-cards">
             <div class="summary-card">
                 <div class="summary-icon students-icon">👨‍🎓</div>
@@ -134,6 +139,7 @@
             </div>
         </section>
 
+        <!-- FILTERS -->
         <section class="filters-card">
             <div class="filter-group">
                 <label for="classFilter">Class</label>
@@ -164,23 +170,12 @@
             </button>
         </section>
 
-        <div class="quick-actions-row">
-            <div class="quick-action-left">
-                <button id="markAllPresent" class="quick-btn present-btn">
-                    <i class="fa-solid fa-check-double"></i> Mark All Present
-                </button>
-                <button id="markAllAbsent" class="quick-btn absent-btn">
-                    <i class="fa-solid fa-xmark"></i> Mark All Absent
-                </button>
-            </div>
-            <div id="attendanceStatusNotice" class="status-notice">Ready to record attendance</div>
-        </div>
-
+        <!-- ATTENDANCE TABLE -->
         <section class="attendance-box">
             <div class="section-header">
                 <div>
                     <h3>Student Attendance Roster</h3>
-                    <p>Mark status individually using the dropdown selector</p>
+                    <p>Mark status individually using the action selector</p>
                 </div>
                 <div class="count-badge" id="rosterCountBadge">0 Students</div>
             </div>
@@ -193,12 +188,13 @@
                             <th style="width: 90px;">Roll No</th>
                             <th>Student</th>
                             <th>Class & Sec</th>
-                            <th style="width: 180px; text-align: center;">Attendance Status</th>
+                            <th style="text-align: center; width: 140px;">Status</th>
+                            <th style="width: 160px; text-align: center;">Mark Attendance</th>
                         </tr>
                     </thead>
                     <tbody id="attendanceTableBody">
                         <tr>
-                            <td colspan="5" class="loading-state">Loading assigned students...</td>
+                            <td colspan="6" class="loading-state">Loading assigned students...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -210,5 +206,3 @@
     <script src="teacher-attendance.js"></script>
 </body>
 </html>
-
-

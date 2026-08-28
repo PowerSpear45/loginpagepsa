@@ -98,7 +98,7 @@ body {
     background: #d7e5fb;
     color: #1f3f6d;
     font-weight: 700;
-    box-shadow: inset 4px 0 0 #1f3f6d;
+    
 }
 
 .menu-item.active i {
@@ -582,3 +582,144 @@ tbody tr:last-child td {
         display: none;
     }
 }
+ /* Modal Styles for View/Edit */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .student-modal {
+            background: #ffffff;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+        .modal-header {
+            padding: 18px 24px;
+            background: #1f3f6d;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .modal-header h3 {
+            font-size: 16px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .close-modal-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .close-modal-btn:hover {
+            color: #ffffff;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+        }
+        .form-group input, .form-group select {
+            height: 38px;
+            padding: 0 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #1e293b;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #1f87d7;
+            box-shadow: 0 0 0 3px rgba(31, 135, 215, 0.15);
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+        .btn-cancel {
+            padding: 8px 18px;
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-save {
+            padding: 8px 18px;
+            background: #1f3f6d;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-save:hover {
+            background: #1f87d7;
+        }
+        .action-view-btn {
+            background: #e6f0fa;
+            color: #1f87d7;
+            border: 1px solid #bfdbfe;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+        .action-view-btn:hover {
+            background: #1f87d7;
+            color: #ffffff;
+        }

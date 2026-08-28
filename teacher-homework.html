@@ -60,6 +60,14 @@
         <i class="fa-solid fa-user-gear"></i>
         <span>My Profile</span>
     </a>
+    <div class="date-box">
+        <div class="date-icon">📅</div>
+        <div>
+            <div class="date-label">Today's Date</div>
+            <div class="date-value" id="currentDateVal">-- --- ----</div>
+            <div class="day-value" id="currentDayVal">--------</div>
+        </div>
+    </div>
 </nav>
 
             
@@ -74,12 +82,15 @@
                     <button class="add-btn" onclick="openCreateModal()">
                         <i class="fa-solid fa-plus"></i> Assign New Homework
                     </button>
-                    <div class="teacher-info">
-                        <div class="teacher-avatar">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <span>Teacher</span>
-                    </div>
+                    <div class="teacher-profile">
+        <div class="teacher-avatar">
+            <img id="teacherProfilePic" src="https://ui-avatars.com/api/?name=Teacher&background=e8f0fe&color=1f3f6d" alt="Profile">
+        </div>
+        <div class="teacher-info">
+            <strong id="teacherNameDisplay">Loading Name...</strong>
+        </div>
+    </div>
+        
                 </div>
             </div>
 

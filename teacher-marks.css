@@ -1,7 +1,7 @@
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -9,187 +9,163 @@ body {
     background: #f4f7fb;
     color: #111827;
     min-height: 100vh;
-}
-
-.page {
     display: flex;
-    min-height: 100vh;
-    width: 100%;
 }
 
-/* =========================== SIDEBAR =========================== */
+/* SIDEBAR */
 .sidebar {
-    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 100vh;
     background: #b8ccec;
-    padding: 0 0 20px;
-    position: relative;
+    border-right: 1px solid #a3bede;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
+    z-index: 100;
+    padding: 0 0 20px;
 }
 
-.school-header {
+.school-title {
+    height: 58px;
     background: #1f3f6d;
     color: #ffffff;
-    padding: 16px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 2px solid #0f2749;
 }
 
 .school-logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    object-fit: contain;
-}
-
-.school-name {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
+    font-size: 20px;
+    margin-right: 10px;
 }
 
 .sidebar-menu {
-    padding: 16px 0;
+    padding: 14px 10px;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    flex: 1;
+    overflow-y: auto;
 }
 
 .menu-item {
+    height: 42px;
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #111827;
+    padding: 0 14px;
+    color: #192235;
     text-decoration: none;
-    padding: 12px 18px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
+    border-radius: 6px;
     transition: 0.2s;
 }
 
 .menu-item i {
-    font-size: 16px;
-    width: 20px;
+    font-size: 15px;
+    width: 18px;
     text-align: center;
+    color: #1d1f46;
 }
 
 .menu-item:hover {
     background: #d7e5fb;
-    font-weight: 700;
+    color: #1f3f6d;
+    font-weight: 600;
 }
 
 .menu-item.active {
-    background: #ffffff;
+    background: #d7e5fb;
+    color: #2b2551;
     font-weight: 700;
-    color: #1f3f6d;
-    border-left: 5px solid #1f3f6d;
+    
 }
 
-.sidebar-date {
-    margin: auto 12px 18px 12px;
+/* SIDEBAR DATE BOX */
+.date-box {
+    margin: auto 12px 10px;
     background: #1f3f6d;
     color: #ffffff;
-    padding: 12px 16px;
-    border-radius: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #0f2749;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.sidebar-date span {
-    font-size: 12px;
-    color: #29d3ff;
-    font-weight: 700;
-}
+.date-icon { font-size: 24px; }
+.date-label { font-size: 10px; text-transform: uppercase; color: #b8ccec; }
+.date-value { font-size: 13px; font-weight: 700; color: #ffffff; margin-top: 2px; }
+.day-value { font-size: 10px; color: #e2ebf7; margin-top: 1px; }
 
-.sidebar-date h3 {
-    font-size: 16px;
-    margin-top: 4px;
-    font-weight: 700;
-}
-
-/* =========================== MAIN CONTENT =========================== */
-.content {
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 240px;
     flex: 1;
-    padding: 22px 28px;
-    overflow-x: auto;
+    padding: 0 24px 30px;
+    background: #f4f7fb;
+    min-height: 100vh;
 }
 
+/* TOP BAR */
 .top-bar {
+    height: 70px;
+    background: #ffffff;
+    border-bottom: 1px solid #dce4ee;
+    margin: 0 -24px 20px -24px;
+    padding: 0 24px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
 }
 
-.page-title h2 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #111827;
-}
+.page-title { display: flex; align-items: center; gap: 12px; }
+.title-icon { font-size: 24px; }
+.page-title h1 { font-size: 18px; font-weight: 700; color: #1f3f6d; }
+.page-title p { font-size: 11px; color: #64748b; margin-top: 2px; }
 
-.teacher-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-}
+.teacher-profile { display: flex; align-items: center; gap: 12px; }
+.teacher-avatar { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #cbd7ea; overflow: hidden; }
+.teacher-info strong { font-size: 13px; color: #1e293b; }
 
-.teacher-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #d7e5fb;
-    display: grid;
-    place-items: center;
-    color: #1f3f6d;
-}
-
-/* =========================== FILTERS =========================== */
-.filter-panel {
+/* FILTERS */
+.filters-bar {
     background: #ffffff;
-    border-radius: 8px;
-    padding: 18px 20px;
+    border: 1px solid #dce4ee;
+    border-radius: 10px;
+    padding: 16px 20px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-group label {
-    font-size: 12px;
-    font-weight: 700;
-    color: #374151;
-}
-
-.form-group select,
-.form-group input {
+.filter-group { display: flex; flex-direction: column; gap: 5px; }
+.filter-group label { font-size: 11px; font-weight: 700; color: #475569; }
+.form-select {
     height: 38px;
-    border: 1px solid #d1d5db;
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
     border-radius: 6px;
-    padding: 0 10px;
-    font-size: 13px;
-    color: #111827;
-    background: #ffffff;
+    font-size: 12px;
+    color: #1e293b;
     outline: none;
+    background: #ffffff;
+}
+.form-select:focus {
+    border-color: #1f87d7;
+    box-shadow: 0 0 0 3px rgba(31, 135, 215, 0.15);
 }
 
-.form-group select:focus,
-.form-group input:focus {
-    border-color: #1f3f6d;
-    box-shadow: 0 0 0 2px rgba(31, 63, 109, 0.15);
-}
-
-/* =========================== SUMMARY CARDS =========================== */
-.summary-grid {
+/* SUMMARY CARDS */
+.summary-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
@@ -198,221 +174,107 @@ body {
 
 .summary-card {
     background: #ffffff;
-    border-radius: 8px;
-    padding: 16px 20px;
+    border: 1px solid #dce4ee;
+    border-radius: 10px;
+    padding: 16px;
     display: flex;
     align-items: center;
-    gap: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    gap: 14px;
 }
 
 .summary-icon {
     width: 48px;
     height: 48px;
-    border-radius: 8px;
-    display: grid;
-    place-items: center;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 20px;
 }
 
-.summary-icon.students { background: #e0edff; color: #1d4ed8; }
-.summary-icon.entered { background: #dcfce7; color: #15803d; }
-.summary-icon.pending { background: #ffedd5; color: #c2410c; }
+.total-icon { background: #e0edff; color: #1d4ed8; }
+.entered-icon { background: #dcfce7; color: #15803d; }
+.pending-icon { background: #ffedd5; color: #c2410c; }
 
-.summary-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
+.summary-card span { font-size: 11px; color: #64748b; font-weight: 500; }
+.summary-card strong { font-size: 22px; font-weight: 700; color: #1e293b; }
 
-.summary-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #6b7280;
-}
-
-.summary-value {
-    font-size: 22px;
-    font-weight: 700;
-    color: #111827;
-}
-
-/* =========================== TABLE =========================== */
-.table-card {
+/* TABLE */
+.marks-table-section {
     background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border: 1px solid #dce4ee;
+    border-radius: 10px;
     overflow: hidden;
 }
 
-.table-header {
-    padding: 16px 20px;
+.section-header {
+    height: 54px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #e5e7eb;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #edf2f7;
+    background: #fafbfc;
 }
 
-.table-header h2 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #111827;
-}
+.section-header h3 { font-size: 14px; color: #1f3f6d; font-weight: 700; }
+.max-marks-badge { font-size: 12px; color: #64748b; }
+.max-marks-badge strong { color: #1f3f6d; }
 
-.max-marks {
-    font-size: 13px;
-    color: #4b5563;
-}
-
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-}
-
-thead {
-    background: #f9fafb;
-}
-
+.table-container { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 750px; }
+thead { background: #f8fafc; }
 th {
+    height: 44px;
+    padding: 0 16px;
     text-align: left;
-    padding: 12px 16px;
-    font-size: 12px;
+    color: #1f3f6d;
+    font-size: 11px;
     font-weight: 700;
-    color: #374151;
-    border-bottom: 1px solid #e5e7eb;
+    text-transform: uppercase;
+    border-bottom: 1px solid #dce4ee;
 }
-
 td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #f3f4f6;
-    vertical-align: middle;
-    color: #1f2937;
+    height: 52px;
+    padding: 0 16px;
+    color: #334155;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f4f8;
 }
-
-tbody tr:hover {
-    background: #f8fbff;
-}
-
-.student-name {
-    font-weight: 600;
-    color: #111827;
-}
+tbody tr:hover { background: #f8fbff; }
 
 .marks-input {
-    width: 90px;
-    height: 34px;
+    width: 80px;
+    height: 32px;
     border: 1px solid #cbd5e1;
-    border-radius: 5px;
+    border-radius: 6px;
     text-align: center;
     font-size: 13px;
     font-weight: 600;
     outline: none;
 }
+.marks-input:focus { border-color: #1f87d7; }
 
-.marks-input:focus {
-    border-color: #1f3f6d;
-    box-shadow: 0 0 0 2px rgba(31, 63, 109, 0.15);
-}
-
-.marks-input.invalid {
-    border-color: #ef4444;
-    background-color: #fef2f2;
-}
-
-/* Badges */
 .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
     padding: 4px 10px;
     border-radius: 12px;
     font-size: 11px;
     font-weight: 700;
+    display: inline-block;
 }
-
 .status-entered { background: #dcfce7; color: #15803d; }
-.status-pending { background: #ffedd5; color: #c2410c; }
+.status-pending { background: #fee2e2; color: #b91c1c; }
 
-/* Buttons */
-.save-row-btn {
-    width: 32px;
-    height: 32px;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-    border-radius: 6px;
-    cursor: pointer;
-    color: #1f3f6d;
-    transition: 0.2s;
-}
-
-.save-row-btn:hover {
+.save-btn-row {
     background: #1f3f6d;
     color: #ffffff;
-}
-
-.table-actions-bar {
-    padding: 14px 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    border-top: 1px solid #e5e7eb;
-    background: #fafafa;
-}
-
-.btn {
-    height: 36px;
-    padding: 0 16px;
+    border: none;
     border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
+    padding: 6px 12px;
+    font-size: 11px;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid transparent;
+    cursor: pointer;
 }
+.save-btn-row:hover { background: #1f87d7; }
 
-.btn-clear {
-    background: #ffffff;
-    border-color: #d1d5db;
-    color: #374151;
-}
-
-.btn-clear:hover {
-    background: #f3f4f6;
-}
-
-.btn-save {
-    background: #1f3f6d;
-    color: #ffffff;
-}
-
-.btn-save:hover {
-    background: #152d4f;
-}
-
-.empty-message {
-    text-align: center;
-    padding: 40px 20px;
-    color: #9ca3af;
-    font-size: 14px;
-}
-
-.empty-message i {
-    font-size: 28px;
-    display: block;
-    margin-bottom: 10px;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .filter-panel {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+.empty-message { text-align: center; padding: 30px !important; color: #64748b; }

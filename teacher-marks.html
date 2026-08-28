@@ -3,202 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Public School - Marks Entry</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Marks Entry - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="teacher-marks.css">
 </head>
 <body>
-    <div class="page">
-        <aside class="sidebar">
-            <div class="school-header">
-                
-                <div class="school-name">Power Public School</div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="school-title">
+            <div class="school-logo">🏫</div>
+            <span>Power Public School</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="teacher-home.html" class="menu-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="teacher-classes.html" class="menu-item">
+                <i class="fa-solid fa-book-open"></i>
+                <span>My Classes</span>
+            </a>
+            <a href="teacher-students.html" class="menu-item">
+                <i class="fa-solid fa-user-graduate"></i>
+                <span>My Students</span>
+            </a>
+            <a href="teacher-marks.html" class="menu-item active">
+                <i class="fa-solid fa-file-pen"></i>
+                <span>Marks Entry</span>
+            </a>
+            <a href="teacher-attendance.html" class="menu-item">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
+            <a href="teacher-homework.html" class="menu-item">
+                <i class="fa-solid fa-book"></i>
+                <span>Homework</span>
+            </a>
+            <a href="teacher-leaves.html" class="menu-item">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Leave Letter</span>
+            </a>
+            <a href="teacher-announcements.html" class="menu-item">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Announcements</span>
+            </a>
+            <a href="teacher-profile.html" class="menu-item">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>My Profile</span>
+            </a>
+        </nav>
+
+        <!-- RESTORED DATE BOX -->
+        <div class="date-box">
+            <div class="date-icon">📅</div>
+            <div>
+                <div class="date-label">Today's Date</div>
+                <div class="date-value" id="currentDateVal">-- --- ----</div>
+                <div class="day-value" id="currentDayVal">--------</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR (MATCHING TEACHER HOME) -->
+        <header class="top-bar">
+            <div class="page-title">
+                <span class="title-icon">📝</span>
+                <div>
+                    <h1>Marks Entry</h1>
+                    <p>Enter and manage student examination records</p>
+                </div>
             </div>
 
-            <nav class="sidebar-menu">
-    <a href="teacher-home.html" class="menu-item">
-        <i class="fa-solid fa-house"></i>
-        <span>Dashboard</span>
-    </a>
-
-    <a href="teacher-classes.html" class="menu-item">
-        <i class="fa-solid fa-book-open"></i>
-        <span>My Classes</span>
-    </a>
-
-    <a href="teacher-students.html" class="menu-item">
-        <i class="fa-solid fa-user-graduate"></i>
-        <span>My Students</span>
-    </a>
-
-    <a href="teacher-marks.html" class="menu-item">
-        <i class="fa-solid fa-file-pen"></i>
-        <span>Marks Entry</span>
-    </a>
-
-    <a href="teacher-attendance.html" class="menu-item">
-        <i class="fa-solid fa-calendar-check"></i>
-        <span>Attendance</span>
-    </a>
-
-    <a href="teacher-homework.html" class="menu-item">
-        <i class="fa-solid fa-book"></i>
-        <span>Homework</span>
-    </a>
-
-    <a href="teacher-leaves.html" class="menu-item">
-        <i class="fa-solid fa-envelope-open-text"></i>
-        <span>Leave Letter</span>
-    </a>
-
-    <a href="teacher-announcements.html" class="menu-item">
-        <i class="fa-solid fa-bullhorn"></i>
-        <span>Announcements</span>
-    </a>
-
-    <a href="teacher-profile.html" class="menu-item">
-        <i class="fa-solid fa-user-gear"></i>
-        <span>My Profile</span>
-    </a>
-</nav>
-
-            
-        </aside>
-
-        <main class="content">
-            <div class="top-bar">
-                <div class="page-title">
-                    <h2>Marks Entry</h2>
+           <div class="teacher-profile">
+                <div class="teacher-avatar">
+                    <img id="teacherProfilePic" src="https://ui-avatars.com/api/?name=Teacher&background=e8f0fe&color=1f3f6d" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </div>
                 <div class="teacher-info">
-                    <div class="teacher-avatar">
-                        <i class="fa-solid fa-user-tie"></i>
-                    </div>
-                    <span>Teacher</span>
+                    <strong id="teacherNameDisplay">Loading Name...</strong>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- FILTERS (ALL AS DEFAULT, NO DATE FILTER) -->
+        <section class="filters-bar">
+            <div class="filter-group">
+                <label for="classFilter">Class</label>
+                <select id="classFilter" class="form-select">
+                    <option value="All">All Classes</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="sectionFilter">Section</label>
+                <select id="sectionFilter" class="form-select">
+                    <option value="All">All Sections</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="subjectFilter">Subject</label>
+                <select id="subjectFilter" class="form-select">
+                    <option value="All">All Subjects</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Science">Science</option>
+                    <option value="English">English</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Social">Social</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="examFilter">Exam Type</label>
+                <select id="examFilter" class="form-select">
+                    <option value="All">All Exams</option>
+                    <option value="Unit Test 1">Unit Test 1</option>
+                    <option value="Quarterly Exam">Quarterly Exam</option>
+                    <option value="Half Yearly Exam">Half Yearly Exam</option>
+                    <option value="Annual Exam">Annual Exam</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- SUMMARY STATS -->
+        <section class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-icon total-icon"><i class="fa-solid fa-users"></i></div>
+                <div>
+                    <span>Total Students</span>
+                    <strong id="totalStudentsCount">0</strong>
                 </div>
             </div>
 
-            <div class="filter-panel">
-                <div class="form-group">
-                    <label for="classFilter">Class</label>
-                    <select id="classFilter">
-                        <option value="">Select Class</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="sectionFilter">Section</label>
-                    <select id="sectionFilter" disabled>
-                        <option value="">Select Section</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="subjectFilter">Subject</label>
-                    <select id="subjectFilter">
-                        <option value="">Select Subject</option>
-                        <option value="Tamil">Tamil</option>
-                        <option value="English">English</option>
-                        <option value="Maths">Maths</option>
-                        <option value="Science">Science</option>
-                        <option value="Social">Social</option>
-                        <option value="Computer">Computer</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="examFilter">Exam Type</label>
-                    <select id="examFilter">
-                        <option value="">Select Exam</option>
-                        <option value="Quarterly Exam">Quarterly Exam</option>
-                        <option value="Half Yearly Exam">Half Yearly Exam</option>
-                        <option value="Annual Exam">Annual Exam</option>
-                        <option value="Unit Test 1">Unit Test 1</option>
-                        <option value="Unit Test 2">Unit Test 2</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="examDate">Exam Date</label>
-                    <input type="date" id="examDate">
+            <div class="summary-card">
+                <div class="summary-icon entered-icon"><i class="fa-solid fa-check"></i></div>
+                <div>
+                    <span>Marks Entered</span>
+                    <strong id="marksEnteredCount">0</strong>
                 </div>
             </div>
 
-            <div class="summary-grid">
-                <div class="summary-card">
-                    <div class="summary-icon students">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <div class="summary-info">
-                        <span class="summary-label">Total Students</span>
-                        <span class="summary-value" id="totalStudentsCount">0</span>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-icon entered">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
-                    <div class="summary-info">
-                        <span class="summary-label">Marks Entered</span>
-                        <span class="summary-value" id="marksEnteredCount">0</span>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-icon pending">
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-                    <div class="summary-info">
-                        <span class="summary-label">Pending</span>
-                        <span class="summary-value" id="marksPendingCount">0</span>
-                    </div>
+            <div class="summary-card">
+                <div class="summary-icon pending-icon"><i class="fa-solid fa-clock"></i></div>
+                <div>
+                    <span>Pending</span>
+                    <strong id="marksPendingCount">0</strong>
                 </div>
             </div>
+        </section>
 
-            <div class="table-card">
-                <div class="table-header">
-                    <h2>Student Marks</h2>
-                    <div class="max-marks">
-                        Maximum Marks: <strong id="maxMarksDisplay">100</strong>
-                    </div>
-                </div>
-
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width: 60px; text-align: center;">S.NO</th>
-                                <th style="width: 120px;">ROLL NO</th>
-                                <th>STUDENT NAME</th>
-                                <th style="width: 130px; text-align: center;">MAX MARKS</th>
-                                <th style="width: 150px; text-align: center;">MARKS OBTAINED</th>
-                                <th style="width: 120px; text-align: center;">STATUS</th>
-                                <th style="width: 90px; text-align: center;">ACTION</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentMarksTableBody">
-                            <tr>
-                                <td colspan="7" class="empty-message">
-                                    <i class="fa-solid fa-clipboard-list"></i>
-                                    Please select Class, Section, Subject, and Exam to load students.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="table-actions-bar" id="tableActionsBar" style="display: none;">
-                    <button type="button" class="btn btn-clear" onclick="clearAllMarks()">
-                        <i class="fa-solid fa-rotate-left"></i> Clear All
-                    </button>
-                    <button type="button" class="btn btn-save" onclick="saveAllMarks()">
-                        <i class="fa-solid fa-floppy-disk"></i> Save All Marks
-                    </button>
-                </div>
+        <!-- TABLE SECTION -->
+        <section class="marks-table-section">
+            <div class="section-header">
+                <h3>Student Marks</h3>
+                <div class="max-marks-badge">Maximum Marks: <strong>100</strong></div>
             </div>
-        </main>
-    </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center;">S.No</th>
+                            <th>Roll No</th>
+                            <th>Student Name</th>
+                            <th>Class & Sec</th>
+                            <th style="text-align: center;">Max Marks</th>
+                            <th style="text-align: center;">Marks Obtained</th>
+                            <th style="text-align: center;">Status</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentMarksTableBody">
+                        <tr>
+                            <td colspan="8" class="empty-message">Loading marks data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
 
     <script src="teacher-marks.js"></script>
 </body>

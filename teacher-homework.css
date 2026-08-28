@@ -453,3 +453,72 @@ tbody tr:hover {
 
 .status-submitted { background: #dcfce7; color: #15803d; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
 .status-missing { background: #fee2e2; color: #b91c1c; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+/* Sidebar Date Box */
+.date-box {
+    margin: auto 12px 14px;
+    background: #1f3f6d;
+    color: #ffffff;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #0f2749;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.date-icon {
+    font-size: 24px;
+}
+
+.date-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #b8ccec;
+}
+
+.date-value {
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 2px;
+    color: #ffffff;
+}
+
+.day-value {
+    font-size: 10px;
+    color: #e2ebf7;
+    margin-top: 1px;
+}
+
+/* Top Right Teacher Profile */
+.teacher-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.teacher-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e8f0fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #cbd7ea;
+    overflow: hidden;
+}
+
+.teacher-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.teacher-info strong {
+    font-size: 13px;
+    color: #1e293b;
+    font-weight: 700;
+}

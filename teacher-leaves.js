@@ -1,3 +1,8 @@
+/**
+ * Teacher Leaves Module
+ * Power Public School ERP
+ */
+
 const API_BASE = "https://loginpagepsabackend.onrender.com/api";
 const teacherId = localStorage.getItem("teacherId") || "1";
 
@@ -28,27 +33,32 @@ async function loadTeacherInfo() {
         const res = await fetch(`${API_BASE}/teachers/${teacherId}`);
         if (res.ok) {
             const data = await res.json();
-            const nameEl = document.getElementById("teacherHeaderName");
-            if (nameEl) nameEl.textContent = data.fullName || data.full_name || "Teacher";
+            const nameEl = document.getElementById("teacherNameDisplay");
+            const picEl = document.getElementById("teacherProfilePic");
+            const fullName = data.fullName || data.full_name || "Abinash Kumar";
+
+            if (nameEl) nameEl.textContent = fullName;
+            if (picElem) {
+                picElem.src = data.photoUrl || data.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=e8f0fe&color=1f3f6d`;
+            }
         }
     } catch (e) {
-        console.warn(e);
+        console.warn("Could not load teacher profile header:", e);
     }
 }
 
 function initFilters() {
-    document.getElementById("classFilter").addEventListener("change", renderTable);
-    document.getElementById("sectionFilter").addEventListener("change", renderTable);
-    document.getElementById("statusFilter").addEventListener("change", renderTable);
+    document.getElementById("classFilter")?.addEventListener("change", renderTable);
+    document.getElementById("sectionFilter")?.addEventListener("change", renderTable);
+    document.getElementById("statusFilter")?.addEventListener("change", renderTable);
 }
 
-// Load classes assigned to teacher
 async function loadClasses() {
     try {
         const res = await fetch(`${API_BASE}/teachers/${teacherId}/classes`);
         if (res.ok) teacherClasses = await res.json();
     } catch (e) {
-        console.warn(e);
+        console.warn("Classes fallback active:", e);
     }
 
     if (!teacherClasses || teacherClasses.length === 0) {
@@ -61,30 +71,30 @@ async function loadClasses() {
 
     const classFilter = document.getElementById("classFilter");
     const sectionFilter = document.getElementById("sectionFilter");
-    const uniqueClasses = [...new Set(teacherClasses.map(c => c.className || c.class_name))];
-    const uniqueSections = [...new Set(teacherClasses.map(c => c.section))];
+    if (!classFilter || !sectionFilter) return;
+
+    const uniqueClasses = [...new Set(teacherClasses.map(c => String(c.className || c.class_name)))];
+    const uniqueSections = [...new Set(teacherClasses.map(c => String(c.section)))];
 
     uniqueClasses.forEach(c => classFilter.insertAdjacentHTML("beforeend", `<option value="${c}">Class ${c}</option>`));
     uniqueSections.forEach(s => sectionFilter.insertAdjacentHTML("beforeend", `<option value="${s}">Section ${s}</option>`));
 }
 
-// Load student dictionary for mapping names
 async function loadStudents() {
     try {
         const res = await fetch(`${API_BASE}/students`);
         if (res.ok) {
             const list = await res.json();
             list.forEach(s => {
-                const id = s.studentId || s.student_id;
+                const id = Number(s.studentId || s.student_id || s.id);
                 studentsMap[id] = s;
             });
         }
     } catch (e) {
-        console.warn("Using default student mapping");
+        console.warn("Using default student mapping fallback");
     }
 }
 
-// Fetch leaves from database
 async function loadLeaves() {
     try {
         const res = await fetch(`${API_BASE}/leaves`);
@@ -92,31 +102,31 @@ async function loadLeaves() {
             allLeaveRequests = await res.json();
         }
     } catch (err) {
-        console.warn("Using sample leave applications");
+        console.warn("Using sample leave applications:", err);
         allLeaveRequests = [
             {
                 leaveId: 1,
-                studentId: 1,
+                studentId: 101,
                 className: "5",
                 section: "B",
                 leaveType: "Sick Leave",
-                fromDate: "2026-08-22",
-                toDate: "2026-08-23",
+                fromDate: "2026-08-27",
+                toDate: "2026-08-28",
                 totalDays: 2,
-                reason: "Suffering from high fever and severe cold. Doctor recommended complete rest.",
+                reason: "Suffering from fever and cold. Doctor advised two days bed rest.",
                 status: "Pending"
             },
             {
                 leaveId: 2,
-                studentId: 2,
+                studentId: 102,
                 className: "5",
                 section: "B",
                 leaveType: "Family Function",
-                fromDate: "2026-08-25",
-                toDate: "2026-08-25",
+                fromDate: "2026-08-29",
+                toDate: "2026-08-29",
                 totalDays: 1,
-                reason: "Attending elder brother's marriage ceremony out of town.",
-                status: "Pending"
+                reason: "Attending cousin's wedding ceremony out of station.",
+                status: "Approved"
             }
         ];
     }
@@ -124,21 +134,23 @@ async function loadLeaves() {
 }
 
 function renderTable() {
-    const classVal = document.getElementById("classFilter").value;
-    const secVal = document.getElementById("sectionFilter").value;
-    const statusVal = document.getElementById("statusFilter").value;
+    const classVal = document.getElementById("classFilter")?.value || "";
+    const secVal = document.getElementById("sectionFilter")?.value || "";
+    const statusVal = document.getElementById("statusFilter")?.value || "";
 
     const filtered = allLeaveRequests.filter(req => {
-        return (!classVal || req.className === classVal) &&
-               (!secVal || req.section === secVal) &&
-               (!statusVal || req.status === statusVal);
+        const cMatch = !classVal || String(req.className) === classVal;
+        const sMatch = !secVal || String(req.section) === secVal;
+        const stMatch = !statusVal || req.status === statusVal;
+        return cMatch && sMatch && stMatch;
     });
 
     const tbody = document.getElementById("leaveTableBody");
-    const totalEl = document.getElementById("totalCount");
-    if (totalEl) totalEl.textContent = filtered.length;
-    tbody.innerHTML = "";
+    const totalEl = document.getElementById("totalCountBadge");
+    if (totalEl) totalEl.textContent = `${filtered.length} Total`;
+    if (!tbody) return;
 
+    tbody.innerHTML = "";
     updateKpis();
 
     if (filtered.length === 0) {
@@ -155,9 +167,9 @@ function renderTable() {
 
     filtered.forEach((req, idx) => {
         const student = studentsMap[req.studentId] || {};
-        const fullName = student.fullName || student.full_name || `Student #${req.studentId}`;
+        const fullName = student.fullName || student.full_name || student.name || `Student #${req.studentId}`;
         const rollNo = student.rollNo || student.roll_no || "-";
-        const statusClass = req.status.toLowerCase();
+        const statusClass = (req.status || "pending").toLowerCase();
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -167,7 +179,7 @@ function renderTable() {
             <td style="text-align: center;"><span class="badge-tag">Class ${req.className} - ${req.section}</span></td>
             <td>${req.leaveType}</td>
             <td>${req.fromDate} to ${req.toDate}</td>
-            <td style="text-align: center;">${req.totalDays} day(s)</td>
+            <td style="text-align: center;">${req.totalDays || 1} day(s)</td>
             <td style="text-align: center;">
                 <span class="status-badge ${statusClass}">
                     ${req.status === 'Approved' ? '<i class="fa-solid fa-circle-check"></i>' : req.status === 'Declined' ? '<i class="fa-solid fa-circle-xmark"></i>' : '<i class="fa-solid fa-clock"></i>'}
@@ -192,25 +204,60 @@ function updateKpis() {
         else p++;
     });
 
-    document.getElementById("kpiPendingCount").textContent = p;
-    document.getElementById("kpiApprovedCount").textContent = a;
-    document.getElementById("kpiDeclinedCount").textContent = d;
+    const pEl = document.getElementById("kpiPendingCount");
+    const aEl = document.getElementById("kpiApprovedCount");
+    const dEl = document.getElementById("kpiDeclinedCount");
+
+    if (pEl) pEl.textContent = p;
+    if (aEl) aEl.textContent = a;
+    if (dEl) dEl.textContent = d;
 }
 
-// Open Leave Review Modal
 function openLeaveModal(leaveId) {
-    window.location.href = `teacher-leave-details.html?id=${leaveId}`;
+    activeLeaveId = leaveId;
+    const req = allLeaveRequests.find(r => r.leaveId === leaveId);
+    if (!req) return;
+
+    const student = studentsMap[req.studentId] || {};
+    const fullName = student.fullName || student.full_name || student.name || `Student #${req.studentId}`;
+    const rollNo = student.rollNo || student.roll_no || "-";
+
+    document.getElementById("modalStudentHeader").textContent = `${fullName} (${rollNo}) - Class ${req.className} [${req.section}]`;
+    document.getElementById("modalLeaveType").textContent = req.leaveType;
+    document.getElementById("modalDuration").textContent = `${req.fromDate} to ${req.toDate} (${req.totalDays || 1} days)`;
+    document.getElementById("modalReason").textContent = req.reason || "No reason specified.";
+    document.getElementById("teacherRemarksInput").value = req.teacherRemarks || "";
+
+    document.getElementById("leaveDetailModal").classList.add("active");
 }
 
-    
+function closeLeaveModal() {
+    document.getElementById("leaveDetailModal").classList.remove("active");
+    activeLeaveId = null;
+}
 
-function downloadFile(base64Data, fileName) {
-    const link = document.createElement("a");
-    link.href = base64Data;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+async function submitDecision(newStatus) {
+    if (!activeLeaveId) return;
+
+    const req = allLeaveRequests.find(r => r.leaveId === activeLeaveId);
+    if (req) {
+        req.status = newStatus;
+        req.teacherRemarks = document.getElementById("teacherRemarksInput").value.trim();
+
+        try {
+            await fetch(`${API_BASE}/leaves/${activeLeaveId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(req)
+            });
+        } catch (e) {
+            console.warn("Updated leave locally:", e);
+        }
+
+        alert(`Leave request has been marked as ${newStatus}.`);
+        closeLeaveModal();
+        renderTable();
+    }
 }
 
 window.openLeaveModal = openLeaveModal;

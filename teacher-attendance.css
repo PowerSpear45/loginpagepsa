@@ -1,7 +1,6 @@
 /* =========================================================
    TEACHER ATTENDANCE STYLESHEET
    Power Public School ERP
-   Theme: Sidebar #b8ccec, Navy Accent #1f3f6d, Blue #1f87d7
    ========================================================= */
 
 * {
@@ -18,10 +17,7 @@ body {
     display: flex;
 }
 
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
-
+/* SIDEBAR */
 .sidebar {
     position: fixed;
     left: 0;
@@ -57,7 +53,6 @@ body {
     justify-content: center;
 }
 
-/* Sidebar Menu */
 .sidebar-menu {
     padding: 14px 10px;
     display: flex;
@@ -98,14 +93,8 @@ body {
     background: #d7e5fb;
     color: #1f3f6d;
     font-weight: 700;
-    box-shadow: inset 4px 0 0 #1f3f6d;
 }
 
-.menu-item.active i {
-    color: #1f3f6d;
-}
-
-/* Date Box */
 .date-box {
     margin: auto 12px 10px;
     background: #1f3f6d;
@@ -119,34 +108,12 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.date-icon {
-    font-size: 24px;
-}
+.date-icon { font-size: 24px; }
+.date-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #b8ccec; }
+.date-value { font-size: 13px; font-weight: 700; margin-top: 2px; color: #ffffff; }
+.day-value { font-size: 10px; color: #e2ebf7; margin-top: 1px; }
 
-.date-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #b8ccec;
-}
-
-.date-value {
-    font-size: 13px;
-    font-weight: 700;
-    margin-top: 2px;
-    color: #ffffff;
-}
-
-.day-value {
-    font-size: 10px;
-    color: #e2ebf7;
-    margin-top: 1px;
-}
-
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
-
+/* MAIN CONTENT */
 .main-content {
     margin-left: 240px;
     flex: 1;
@@ -155,10 +122,7 @@ body {
     background: #f4f7fb;
 }
 
-/* =========================================================
-   TOP BAR
-   ========================================================= */
-
+/* TOP BAR */
 .top-bar {
     height: 70px;
     background: #ffffff;
@@ -177,23 +141,10 @@ body {
     gap: 12px;
 }
 
-.title-icon {
-    font-size: 24px;
-}
+.title-icon { font-size: 24px; }
+.page-title h1 { font-size: 18px; font-weight: 700; color: #1f3f6d; }
+.page-title p { font-size: 11px; color: #64748b; margin-top: 2px; }
 
-.page-title h1 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1f3f6d;
-}
-
-.page-title p {
-    font-size: 11px;
-    color: #64748b;
-    margin-top: 2px;
-}
-
-/* Teacher Info */
 .teacher-profile {
     display: flex;
     align-items: center;
@@ -208,13 +159,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
     border: 1px solid #cbd7ea;
-}
-
-.teacher-info {
-    display: flex;
-    flex-direction: column;
 }
 
 .teacher-info strong {
@@ -222,32 +167,7 @@ body {
     color: #1e293b;
 }
 
-.teacher-info span {
-    font-size: 11px;
-    color: #64748b;
-}
-
-.logout-btn {
-    border: 1px solid #e05d44;
-    background: #fde8e4;
-    color: #c53017;
-    border-radius: 6px;
-    padding: 7px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.logout-btn:hover {
-    background: #e05d44;
-    color: #ffffff;
-}
-
-/* =========================================================
-   PAGE INTRO BANNER
-   ========================================================= */
-
+/* PAGE INTRO BANNER */
 .page-intro {
     background: linear-gradient(135deg, #ffffff 0%, #f0f5fc 100%);
     border: 1px solid #dce4ee;
@@ -257,21 +177,10 @@ body {
     border-left: 4px solid #1f87d7;
 }
 
-.page-intro h2 {
-    font-size: 17px;
-    color: #1f3f6d;
-    margin-bottom: 4px;
-}
+.page-intro h2 { font-size: 17px; color: #1f3f6d; margin-bottom: 4px; }
+.page-intro p { font-size: 12px; color: #64748b; }
 
-.page-intro p {
-    font-size: 12px;
-    color: #64748b;
-}
-
-/* =========================================================
-   SUMMARY CARDS
-   ========================================================= */
-
+/* SUMMARY CARDS */
 .summary-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -288,12 +197,6 @@ body {
     align-items: center;
     gap: 14px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.summary-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(31, 63, 109, 0.08);
 }
 
 .summary-icon {
@@ -327,10 +230,7 @@ body {
     color: #1e293b;
 }
 
-/* =========================================================
-   FILTERS SECTION
-   ========================================================= */
-
+/* FILTERS SECTION */
 .filters-card {
     background: #ffffff;
     border: 1px solid #dce4ee;
@@ -340,7 +240,7 @@ body {
     align-items: flex-end;
     gap: 14px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
@@ -373,7 +273,6 @@ body {
     outline: none;
     color: #1e293b;
     background: #ffffff;
-    transition: all 0.2s ease;
 }
 
 .filter-group select:focus,
@@ -400,73 +299,10 @@ body {
 
 .save-btn:hover {
     background: #176fb5;
-    transform: translateY(-1px);
     box-shadow: 0 3px 8px rgba(31, 135, 215, 0.25);
 }
 
-/* =========================================================
-   QUICK ACTIONS ROW
-   ========================================================= */
-
-.quick-actions-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.quick-action-left {
-    display: flex;
-    gap: 10px;
-}
-
-.quick-btn {
-    height: 34px;
-    border-radius: 6px;
-    padding: 0 14px;
-    font-size: 11px;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease;
-}
-
-.present-btn {
-    background: #eaf6ec;
-    border: 1px solid #bbf7d0;
-    color: #15803d;
-}
-
-.present-btn:hover {
-    background: #15803d;
-    color: #ffffff;
-}
-
-.absent-btn {
-    background: #fee2e2;
-    border: 1px solid #fecaca;
-    color: #b91c1c;
-}
-
-.absent-btn:hover {
-    background: #b91c1c;
-    color: #ffffff;
-}
-
-.status-notice {
-    font-size: 11px;
-    color: #64748b;
-    font-weight: 500;
-}
-
-/* =========================================================
-   ATTENDANCE BOX & TABLE
-   ========================================================= */
-
+/* ATTENDANCE TABLE */
 .attendance-box {
     background: #ffffff;
     border: 1px solid #dce4ee;
@@ -485,17 +321,8 @@ body {
     background: #fafbfc;
 }
 
-.section-header h3 {
-    font-size: 14px;
-    color: #1f3f6d;
-    font-weight: 700;
-}
-
-.section-header p {
-    font-size: 11px;
-    color: #8a99ad;
-    margin-top: 2px;
-}
+.section-header h3 { font-size: 14px; color: #1f3f6d; font-weight: 700; }
+.section-header p { font-size: 11px; color: #8a99ad; margin-top: 2px; }
 
 .count-badge {
     background: #edf4fc;
@@ -518,9 +345,7 @@ table {
     min-width: 700px;
 }
 
-thead {
-    background: #f8fafc;
-}
+thead { background: #f8fafc; }
 
 th {
     height: 44px;
@@ -542,15 +367,9 @@ td {
     border-bottom: 1px solid #f1f4f8;
 }
 
-tbody tr:hover {
-    background: #f8fbff;
-}
+tbody tr:hover { background: #f8fbff; }
 
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* Student Avatar in Table */
+/* Student Avatar Cell */
 .student-name-cell {
     display: flex;
     align-items: center;
@@ -577,7 +396,7 @@ tbody tr:last-child td {
     font-size: 13px;
 }
 
-/* Status Selector */
+/* Status Select Dropdown */
 .status-select {
     width: 130px;
     height: 34px;
@@ -587,29 +406,41 @@ tbody tr:last-child td {
     font-weight: 700;
     cursor: pointer;
     outline: none;
-    transition: all 0.2s ease;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+}
+
+/* Status Indicator Pill */
+.status-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 80px;
 }
 
 .status-present {
-    border: 1px solid #16a34a;
+    border: 1px solid #bbf7d0;
     color: #15803d;
     background: #dcfce7;
 }
 
 .status-absent {
-    border: 1px solid #dc2626;
+    border: 1px solid #fecaca;
     color: #b91c1c;
     background: #fee2e2;
 }
 
 .status-late {
-    border: 1px solid #ea580c;
+    border: 1px solid #fed7aa;
     color: #c2410c;
     background: #ffedd5;
 }
 
 .status-leave {
-    border: 1px solid #7c3aed;
+    border: 1px solid #ddd6fe;
     color: #6d28d9;
     background: #ede9fe;
 }
@@ -617,7 +448,7 @@ tbody tr:last-child td {
 .status-not-marked {
     border: 1px solid #cbd5e1;
     color: #64748b;
-    background: #f8fafc;
+    background: #f1f5f9;
 }
 
 .loading-state, .empty-state {
@@ -627,55 +458,17 @@ tbody tr:last-child td {
     font-size: 13px;
 }
 
-/* =========================================================
-   RESPONSIVE DESIGN
-   ========================================================= */
-
+/* RESPONSIVE */
 @media (max-width: 1080px) {
-    .summary-cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .summary-cards { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-    .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-    }
-    .sidebar-menu {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    .menu-item {
-        flex: 1 1 auto;
-    }
-    .date-box {
-        display: none;
-    }
-    .main-content {
-        margin-left: 0;
-        padding: 0 14px 20px;
-    }
-    .top-bar {
-        margin: 0 -14px 15px -14px;
-        padding: 0 14px;
-    }
-    .filters-card {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .save-btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 520px) {
-    .summary-cards {
-        grid-template-columns: 1fr;
-    }
-    .teacher-info {
-        display: none;
-    }
+    .sidebar { position: relative; width: 100%; height: auto; }
+    .sidebar-menu { flex-direction: row; flex-wrap: wrap; }
+    .date-box { display: none; }
+    .main-content { margin-left: 0; padding: 0 14px 20px; }
+    .top-bar { margin: 0 -14px 15px -14px; padding: 0 14px; }
+    .filters-card { flex-direction: column; align-items: stretch; }
+    .save-btn { width: 100%; justify-content: center; }
 }

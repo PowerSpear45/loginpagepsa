@@ -6,6 +6,7 @@
     <title>My Students - Power Public School</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="teacher-students.css">
+
 </head>
 <body>
 
@@ -16,51 +17,51 @@
         </div>
 
         <nav class="sidebar-menu">
-    <a href="teacher-home.html" class="menu-item">
-        <i class="fa-solid fa-house"></i>
-        <span>Dashboard</span>
-    </a>
+            <a href="teacher-home.html" class="menu-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
 
-    <a href="teacher-classes.html" class="menu-item">
-        <i class="fa-solid fa-book-open"></i>
-        <span>My Classes</span>
-    </a>
+            <a href="teacher-classes.html" class="menu-item">
+                <i class="fa-solid fa-book-open"></i>
+                <span>My Classes</span>
+            </a>
 
-    <a href="teacher-students.html" class="menu-item">
-        <i class="fa-solid fa-user-graduate"></i>
-        <span>My Students</span>
-    </a>
+            <a href="teacher-students.html" class="menu-item active">
+                <i class="fa-solid fa-user-graduate"></i>
+                <span>My Students</span>
+            </a>
 
-    <a href="teacher-marks.html" class="menu-item">
-        <i class="fa-solid fa-file-pen"></i>
-        <span>Marks Entry</span>
-    </a>
+            <a href="teacher-marks.html" class="menu-item">
+                <i class="fa-solid fa-file-pen"></i>
+                <span>Marks Entry</span>
+            </a>
 
-    <a href="teacher-attendance.html" class="menu-item">
-        <i class="fa-solid fa-calendar-check"></i>
-        <span>Attendance</span>
-    </a>
+            <a href="teacher-attendance.html" class="menu-item">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
 
-    <a href="teacher-homework.html" class="menu-item">
-        <i class="fa-solid fa-book"></i>
-        <span>Homework</span>
-    </a>
+            <a href="teacher-homework.html" class="menu-item">
+                <i class="fa-solid fa-book"></i>
+                <span>Homework</span>
+            </a>
 
-    <a href="teacher-leaves.html" class="menu-item">
-        <i class="fa-solid fa-envelope-open-text"></i>
-        <span>Leave Letter</span>
-    </a>
+            <a href="teacher-leaves.html" class="menu-item">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Leave Letter</span>
+            </a>
 
-    <a href="teacher-announcements.html" class="menu-item">
-        <i class="fa-solid fa-bullhorn"></i>
-        <span>Announcements</span>
-    </a>
+            <a href="teacher-announcements.html" class="menu-item">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Announcements</span>
+            </a>
 
-    <a href="teacher-profile.html" class="menu-item">
-        <i class="fa-solid fa-user-gear"></i>
-        <span>My Profile</span>
-    </a>
-</nav>
+            <a href="teacher-profile.html" class="menu-item">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>My Profile</span>
+            </a>
+        </nav>
 
         <div class="date-box">
             <div class="date-icon">📅</div>
@@ -84,12 +85,12 @@
             </div>
 
             <div class="teacher-profile">
-                <div class="teacher-avatar">👨‍🏫</div>
-                <div class="teacher-info">
-                    <strong id="teacherNameDisplay">Teacher Name</strong>
-                    <span id="teacherDeptDisplay">Teacher</span>
+                <div class="teacher-avatar">
+                    <img id="teacherProfilePic" src="https://ui-avatars.com/api/?name=Teacher&background=e8f0fe&color=1f3f6d" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </div>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <div class="teacher-info">
+                    <strong id="teacherNameDisplay">Loading Name...</strong>
+                </div>
             </div>
         </header>
 
@@ -157,13 +158,12 @@
                             <th>Admission No</th>
                             <th>Roll No</th>
                             <th>Gender</th>
-                            <th>Date of Birth</th>
-                            <th>Status</th>
+                            <th style="text-align: center; width: 100px;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="studentsTableBody">
                         <tr>
-                            <td colspan="7" class="loading">Loading students...</td>
+                            <td colspan="6" class="loading">Loading students...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -171,6 +171,62 @@
         </section>
 
     </main>
+
+    <!-- VIEW / EDIT STUDENT MODAL -->
+    <div id="studentModalOverlay" class="modal-overlay">
+        <div class="student-modal">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-user-pen"></i> Student Details & Edit</h3>
+                <button class="close-modal-btn" onclick="closeStudentModal()">&times;</button>
+            </div>
+            <form id="editStudentForm" onsubmit="saveStudentChanges(event)">
+                <div class="modal-body">
+                    <input type="hidden" id="modalStudentId">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Full Name</label>
+                            <input type="text" id="modalFullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Admission No</label>
+                            <input type="text" id="modalAdmissionNo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Roll No</label>
+                            <input type="text" id="modalRollNo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="modalGender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="modalStatus">
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Class</label>
+                            <input type="text" id="modalClassName" readonly style="background:#f1f5f9;">
+                        </div>
+                        <div class="form-group">
+                            <label>Section</label>
+                            <input type="text" id="modalSection" readonly style="background:#f1f5f9;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeStudentModal()">Cancel</button>
+                    <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="teacher-students.js"></script>
 </body>
