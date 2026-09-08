@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Attendance - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="student-attendance.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- TOP FULL-WIDTH HEADER -->
+        <header class="top-nav">
+            <div class="header-left">
+                <a href="student-home.html" class="back-btn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+                <div class="school-brand">
+                    <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Power Public School Logo">
+                    <div>
+                        <h1>Power Public School</h1>
+                        <p>Student Attendance History</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="student-profile-badge">
+                <div class="student-avatar-wrap">
+                    <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
+                </div>
+                <div class="student-meta">
+                    <strong id="studentName">Loading...</strong>
+                    <span>Class: <b id="studentClassSection">--</b> | Roll: <b id="studentRoll">--</b></span>
+                </div>
+                <button class="logout-btn" onclick="logoutStudent()">Logout</button>
+            </div>
+        </header>
+
+        <!-- MAIN CONTAINER -->
+        <main class="attendance-container">
+            <!-- 4 SUMMARY CARDS ON TOP -->
+            <section class="summary-cards">
+                <div class="card stat-percent">
+                    <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div class="card-info">
+                        <span>Overall Attendance</span>
+                        <strong id="statPercentage">Loading...</strong>
+                        <small id="statRemark">Active session record</small>
+                    </div>
+                </div>
+
+                <div class="card stat-present">
+                    <div class="card-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="card-info">
+                        <span>Total Present</span>
+                        <strong id="statPresentDays">0 Days</strong>
+                        <small>Attended regular classes</small>
+                    </div>
+                </div>
+
+                <div class="card stat-absent">
+                    <div class="card-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                    <div class="card-info">
+                        <span>Total Absent</span>
+                        <strong id="statAbsentDays">0 Days</strong>
+                        <small>Unapproved days absent</small>
+                    </div>
+                </div>
+
+                <div class="card stat-leave">
+                    <div class="card-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                    <div class="card-info">
+                        <span>Leave / Late</span>
+                        <strong id="statLeaveDays">0 Days</strong>
+                        <small>Approved leaves & late entries</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTROLS & FILTER BAR -->
+            <section class="filter-card">
+                <div class="filter-left">
+                    <div class="filter-group">
+                        <label for="monthFilter"><i class="fa-solid fa-filter"></i> Filter by Month</label>
+                        <select id="monthFilter" onchange="renderAttendanceTable()">
+                            <option value="ALL">All Recorded Dates</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="statusFilter"><i class="fa-solid fa-tag"></i> Filter Status</label>
+                        <select id="statusFilter" onchange="renderAttendanceTable()">
+                            <option value="ALL">All Statuses</option>
+                            <option value="PRESENT">Present</option>
+                            <option value="ABSENT">Absent</option>
+                            <option value="LATE">Late</option>
+                            <option value="LEAVE">Leave</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-right">
+                    <span class="count-badge" id="recordCountBadge">0 Total Days</span>
+                </div>
+            </section>
+
+            <!-- DAY-WISE ATTENDANCE TABLE -->
+            <section class="table-card">
+                <div class="table-header">
+                    <div>
+                        <h3>Day-Wise Classroom Attendance Log</h3>
+                        <p>Real-time attendance statuses entered by your class teacher</p>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">S.No</th>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Class & Section</th>
+                                <th style="text-align: center;">Status</th>
+                                <th>Teacher Verification</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTableBody">
+                            <tr>
+                                <td colspan="6" class="loading-state">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Loading attendance logs from database...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="student-attendance.js"></script>
+</body>
+</html>

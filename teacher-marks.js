@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function updateDateDisplay() {
     const now = new Date();
-    const dateVal = document.getElementById("currentDateVal");
-    const dayVal = document.getElementById("currentDayVal");
+    const dateVal = document.getElementById("currentDateVal") || document.getElementById("todayDate");
+    const dayVal = document.getElementById("currentDayVal") || document.getElementById("todayDay");
 
     if (dateVal) dateVal.textContent = now.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
     if (dayVal) dayVal.textContent = now.toLocaleDateString("en-IN", { weekday: "long" });
@@ -35,9 +35,10 @@ async function loadTeacherInfo() {
             const data = await res.json();
             const nameElem = document.getElementById("teacherNameDisplay");
             const picElem = document.getElementById("teacherProfilePic");
-            if (nameElem && data.fullName) nameElem.textContent = data.fullName;
+            const fullName = data.fullName || data.full_name || "Abinash Kumar";
+            if (nameElem) nameElem.textContent = fullName;
             if (picElem) {
-                picElem.src = data.photoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName || 'Teacher')}&background=e8f0fe&color=1f3f6d`;
+                picElem.src = data.photoUrl || data.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=e8f0fe&color=1f3f6d`;
             }
         }
     } catch (e) {
@@ -73,7 +74,7 @@ function populateClassDropdown() {
     if (!classFilter) return;
 
     classFilter.innerHTML = `<option value="All">All Classes</option>`;
-    const uniqueClasses = [...new Set(teacherClasses.map(c => c.className || c.class_name))];
+    const uniqueClasses = [...new Set(teacherClasses.map(c => String(c.className || c.class_name)))];
 
     uniqueClasses.forEach(cls => {
         const opt = document.createElement("option");
@@ -117,7 +118,6 @@ async function loadAllData() {
         console.warn("Student fetch error:", e);
     }
 
-    // Load saved marks directly from the Spring MarkController
     try {
         const marksRes = await fetch(`${API_BASE}/teacher/marks`);
         if (marksRes.ok) {
@@ -185,21 +185,25 @@ function renderTable() {
     let enteredCount = 0;
 
     filtered.forEach((student, index) => {
-        const sId = Number(student.studentId || student.student_id || student.id);
+        // Find accurate internal student_id
+        const sId = Number(student.studentId ?? student.student_id ?? student.id ?? (index + 1));
         const rollNo = student.rollNo || student.roll_no || "-";
         const fullName = student.fullName || student.full_name || student.name || "Student";
         const classSec = `Class ${student.className || student.class_name} - ${student.section}`;
 
-        // Schema match against Mark entity
+        // Match against Mark entity in MySQL 'marks' table
         const existing = savedMarks.find(m => {
-            const markStudentId = Number(m.studentId || m.student_id);
+            const markStudentId = Number(m.studentId ?? m.student_id ?? (m.student && (m.student.studentId || m.student.id)));
             if (markStudentId !== sId) return false;
 
-            const markSub = String(m.subject || "");
-            const markExam = String(m.examType || m.exam_type || m.examName || "");
+            const markSub = String(m.subject || "").trim().toLowerCase();
+            const markExam = String(m.examType || m.exam_type || m.examName || "").trim().toLowerCase();
 
-            const subjectMatch = (selectedSubject === "All" || markSub.toLowerCase() === selectedSubject.toLowerCase());
-            const examMatch = (selectedExam === "All" || markExam.toLowerCase() === selectedExam.toLowerCase());
+            const curSub = selectedSubject.trim().toLowerCase();
+            const curExam = selectedExam.trim().toLowerCase();
+
+            const subjectMatch = (curSub === "all" || markSub === curSub);
+            const examMatch = (curExam === "all" || markExam === curExam);
 
             return subjectMatch && examMatch;
         });
@@ -295,14 +299,12 @@ async function saveIndividualMark(studentId) {
         return;
     }
 
-    const todayDate = new Date().toISOString().split("T")[0];
     const subjectVal = document.getElementById("subjectFilter")?.value;
     const examVal = document.getElementById("examFilter")?.value;
-    
     const chosenSubject = (!subjectVal || subjectVal === "All") ? "Mathematics" : subjectVal;
     const chosenExam = (!examVal || examVal === "All") ? "Quarterly Exam" : examVal;
+    const todayDate = new Date().toISOString().split("T")[0];
 
-    // Strict alignment with Spring Boot MarkRequest DTO
     const payload = {
         studentId: Number(studentId),
         subject: chosenSubject,
@@ -322,14 +324,14 @@ async function saveIndividualMark(studentId) {
         if (res.ok) {
             const savedEntity = await res.json();
 
-            // Update in-memory state
+            // Update in-memory state so it persists immediately
             const existingIndex = savedMarks.findIndex(m => {
-                const mId = Number(m.studentId || m.student_id);
-                const mSub = String(m.subject || "");
-                const mExam = String(m.examType || m.exam_type || "");
+                const mId = Number(m.studentId ?? m.student_id);
+                const mSub = String(m.subject || "").toLowerCase();
+                const mExam = String(m.examType || m.exam_type || "").toLowerCase();
                 return mId === Number(studentId) && 
-                       mSub.toLowerCase() === chosenSubject.toLowerCase() &&
-                       mExam.toLowerCase() === chosenExam.toLowerCase();
+                       mSub === chosenSubject.toLowerCase() &&
+                       mExam === chosenExam.toLowerCase();
             });
 
             if (existingIndex > -1) {
@@ -341,13 +343,13 @@ async function saveIndividualMark(studentId) {
             alert("Mark saved successfully!");
             renderTable();
         } else {
-            const err = await res.text();
-            alert("Backend error: " + err);
+            const errText = await res.text();
+            console.error("Backend returned error:", errText);
+            alert("Failed to save mark to backend: " + errText);
         }
     } catch (err) {
         console.error("Save error:", err);
-        alert("Failed to connect to backend: " + err.message);
+        alert("Network Error: " + err.message);
     }
 }
-
 window.saveIndividualMark = saveIndividualMark;

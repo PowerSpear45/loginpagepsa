@@ -21,14 +21,22 @@ public class MarkController {
 
     @GetMapping
     public ResponseEntity<List<Mark>> getMarks(
-            @RequestParam(required = false) String className,
-            @RequestParam(required = false) String section,
+            @RequestParam(required = false) String subject,
+            @RequestParam(required = false) String examType,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate examDate) {
-        return ResponseEntity.ok(markService.getMarks(className, section, examDate));
+        return ResponseEntity.ok(markService.getMarks(subject, examType, examDate));
     }
 
     @PostMapping
     public ResponseEntity<Mark> saveMark(@RequestBody MarkRequest markRequest) {
         return ResponseEntity.ok(markService.saveMark(markRequest));
+    }
+
+    @PostMapping("/save-all")
+    public ResponseEntity<List<Mark>> saveAllMarks(@RequestBody List<MarkRequest> requests) {
+        List<Mark> marks = requests.stream()
+                .map(markService::saveMark)
+                .toList();
+        return ResponseEntity.ok(marks);
     }
 }

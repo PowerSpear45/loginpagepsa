@@ -4,6 +4,7 @@ import com.schoolapp.dto.MarkRequest;
 import com.schoolapp.entity.Mark;
 import com.schoolapp.repository.MarkRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,17 +18,13 @@ public class MarkService {
         this.markRepository = markRepository;
     }
 
-    /*
-     * Save or update marks for one student
-     */
+    @Transactional
     public Mark saveMark(MarkRequest request) {
+        LocalDate examDate = request.getExamDate() != null ? request.getExamDate() : LocalDate.now();
+        Integer maxMarks = request.getMaxMarks() != null ? request.getMaxMarks() : 100;
+        Integer marksObtained = request.getMarksObtained() != null ? request.getMarksObtained() : 0;
 
-        LocalDate examDate = request.getExamDate();
-
-        /*
-         * Check whether this student already has marks
-         * for the same subject, exam type and exam date.
-         */
+        // Find existing record by unique constraint (student_id, subject, exam_type, exam_date)
         Mark mark = markRepository
                 .findByStudentIdAndSubjectAndExamTypeAndExamDate(
                         request.getStudentId(),
@@ -37,50 +34,20 @@ public class MarkService {
                 )
                 .orElse(new Mark());
 
-        /*
-         * Set / update the mark information
-         */
         mark.setStudentId(request.getStudentId());
         mark.setSubject(request.getSubject());
         mark.setExamType(request.getExamType());
         mark.setExamDate(examDate);
-        mark.setMaxMarks(request.getMaxMarks());
-        mark.setMarksObtained(request.getMarksObtained());
+        mark.setMaxMarks(maxMarks);
+        mark.setMarksObtained(marksObtained);
 
-        /*
-         * If the record already exists, save() updates it.
-         * Otherwise, save() creates a new record.
-         */
         return markRepository.save(mark);
     }
 
-
-    /*
-     * Save marks for multiple students
-     */
-    public List<Mark> saveMarks(List<MarkRequest> requests) {
-
-        return requests.stream()
-                .map(this::saveMark)
-                .toList();
-    }
-
-
-    /*
-     * Get marks for a particular subject,
-     * exam type and exam date.
-     */
-    public List<Mark> getMarks(
-            String subject,
-            String examType,
-            LocalDate examDate
-    ) {
-
-        return markRepository
-                .findBySubjectAndExamTypeAndExamDate(
-                        subject,
-                        examType,
-                        examDate
-                );
+    public List<Mark> getMarks(String subject, String examType, LocalDate examDate) {
+        if (subject != null && examType != null && examDate != null) {
+            return markRepository.findBySubjectAndExamTypeAndExamDate(subject, examType, examDate);
+        }
+        return markRepository.findAll();
     }
 }

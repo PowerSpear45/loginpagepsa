@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="student-home.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- TOP FULL-WIDTH NAVIGATION BAR -->
+        <header class="top-nav">
+            <div class="school-brand">
+                <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Power Public School Logo">
+                <div>
+                    <h1>Power Public School</h1>
+                    <p>Student Academic Portal</p>
+                </div>
+            </div>
+
+            <div class="student-profile-badge">
+                <div class="student-avatar-wrap">
+                    <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
+                </div>
+                <div class="student-meta">
+                    <strong id="studentName">Loading...</strong>
+                    <span>Class: <b id="studentClassSection">--</b> | Roll No: <b id="studentRoll">--</b></span>
+            
+        </header>
+
+        <!-- DASHBOARD CONTAINER -->
+        <main class="dashboard-body">
+            <!-- 3 LIVE TOP STAT CARDS -->
+            <section class="summary-cards">
+                <div class="summary-card stat-attendance" onclick="location.href='student-attendance.html'">
+                    <div class="summary-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="card-details">
+                        <span>Attendance</span>
+                        <strong id="statAttendance">Loading...</strong>
+                        <small id="attendanceSubtext">Overall academic attendance</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-fees" onclick="location.href='student-fees.html'">
+                    <div class="summary-icon"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="card-details">
+                        <span>Fees Due</span>
+                        <strong id="statFeesDue">Loading...</strong>
+                        <small id="feeStatusSubtext">Active term balance</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-homework" onclick="location.href='student-homework.html'">
+                    <div class="summary-icon"><i class="fa-solid fa-book"></i></div>
+                    <div class="card-details">
+                        <span>Homework</span>
+                        <strong id="statHomeworkPending">Loading...</strong>
+                        <small id="homeworkSubtext">Pending submission</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6 NAVIGATION ACTION TILES -->
+            <section class="portal-grid">
+                <a href="student-homework.html" class="nav-tile nav-green">
+                    <div class="nav-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                    <div class="nav-info">
+                        <h3>Homework</h3>
+                        <p>Download tasks & submit completed answer sheets</p>
+                    </div>
+                </a>
+
+                <a href="student-leaves.html" class="nav-tile nav-yellow">
+                    <div class="nav-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                    <div class="nav-info">
+                        <h3>Leave Letter</h3>
+                        <p>Apply for student leaves & view teacher approval status</p>
+                    </div>
+                </a>
+
+                <a href="student-fees.html" class="nav-tile nav-orange">
+                    <div class="nav-icon"><i class="fa-solid fa-receipt"></i></div>
+                    <div class="nav-info">
+                        <h3>Fees Payment</h3>
+                        <p>View fee breakdown, pending dues & receipts</p>
+                    </div>
+                </a>
+
+                <a href="student-profile.html" class="nav-tile nav-blue">
+                    <div class="nav-icon"><i class="fa-solid fa-id-card"></i></div>
+                    <div class="nav-info">
+                        <h3>My Profile</h3>
+                        <p>View student records, parent biodata & contacts</p>
+                    </div>
+                </a>
+
+                <a href="student-announcements.html" class="nav-tile nav-purple">
+                    <div class="nav-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    <div class="nav-info">
+                        <h3>Announcements</h3>
+                        <p>Read circulars, events, and school notices</p>
+                    </div>
+                </a>
+
+                <a href="student-marks.html" class="nav-tile nav-rose">
+                    <div class="nav-icon"><i class="fa-solid fa-file-lines"></i></div>
+                    <div class="nav-info">
+                        <h3>Exam Marks</h3>
+                        <p>Check quarterly, mid-term marks & report card</p>
+                    </div>
+                </a>
+            </section>
+        </main>
+    </div>
+
+    <script src="student-home.js"></script>
+</body>
+</html>

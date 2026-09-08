@@ -1,0 +1,328 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+    background-color: #e9eff7;
+    background-image: 
+        radial-gradient(#c6d4e8 0.85px, transparent 0.85px), 
+        radial-gradient(#dce5f2 0.85px, #e9eff7 0.85px);
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
+    color: #0f172a;
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOP FULL-WIDTH HEADER */
+.top-nav {
+    height: 72px;
+    background: #ffffff;
+    border-bottom: 2px solid #cbd5e1;
+    padding: 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #1f3f6d;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #1f3f6d;
+    color: #ffffff;
+}
+
+.school-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.school-logo-img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.school-brand h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f3f6d;
+    line-height: 1.2;
+}
+
+.school-brand p {
+    font-size: 11.5px;
+    color: #64748b;
+}
+
+.student-profile-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    padding: 5px 12px 5px 8px;
+    border-radius: 40px;
+}
+
+.student-avatar-wrap img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1f3f6d;
+}
+
+.student-meta strong {
+    font-size: 13px;
+    color: #0f172a;
+    display: block;
+}
+
+.student-meta span {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.logout-btn {
+    border: 1px solid #f87171;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.logout-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* MAIN CONTENT */
+.attendance-container {
+    max-width: 1240px;
+    width: 100%;
+    margin: 26px auto 40px;
+    padding: 0 24px;
+}
+
+/* SUMMARY STAT CARDS */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stat-percent {
+    border-left: 5px solid #1f3f6d;
+    box-shadow: -4px 6px 12px rgba(31, 63, 109, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+}
+.stat-present {
+    border-left: 5px solid #16a34a;
+    box-shadow: -4px 6px 12px rgba(22, 163, 74, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+}
+.stat-absent {
+    border-left: 5px solid #dc2626;
+    box-shadow: -4px 6px 12px rgba(220, 38, 38, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+}
+.stat-leave {
+    border-left: 5px solid #d97706;
+    box-shadow: -4px 6px 12px rgba(217, 119, 6, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+}
+
+.card-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+.stat-percent .card-icon { background: #e8f0fe; color: #1f3f6d; }
+.stat-present .card-icon { background: #dcfce7; color: #16a34a; }
+.stat-absent .card-icon  { background: #fee2e2; color: #dc2626; }
+.stat-leave .card-icon   { background: #fef3c7; color: #d97706; }
+
+.card-info span { font-size: 12px; font-weight: 600; color: #64748b; }
+.card-info strong { font-size: 22px; color: #0f172a; display: block; margin: 2px 0 1px; }
+.card-info small { font-size: 11px; color: #94a3b8; }
+
+/* FILTERS */
+.filter-card {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.filter-left {
+    display: flex;
+    gap: 16px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.filter-group label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+.filter-group select {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: #1e293b;
+    outline: none;
+    background: #f8fafc;
+}
+
+.count-badge {
+    background: #e8f0fe;
+    color: #1f3f6d;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid #bfdbfe;
+}
+
+/* TABLE CARD */
+.table-card {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.table-header {
+    margin-bottom: 18px;
+}
+
+.table-header h3 {
+    font-size: 16px;
+    color: #1e293b;
+}
+
+.table-header p {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+.data-table td {
+    padding: 13px 14px;
+    font-size: 13px;
+    color: #1e293b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.data-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* BADGES FOR STATUSES */
+.badge-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.badge-present { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.badge-absent  { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+.badge-late    { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
+.badge-leave   { background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd; }
+
+.loading-state, .empty-state {
+    text-align: center !important;
+    padding: 30px !important;
+    color: #64748b;
+    font-size: 13.5px;
+}
+
+@media (max-width: 992px) {
+    .summary-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+    .top-nav { height: auto; padding: 14px; flex-direction: column; gap: 12px; }
+    .header-left { flex-direction: column; align-items: flex-start; gap: 10px; width: 100%; }
+    .summary-cards { grid-template-columns: 1fr; }
+    .filter-card { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
