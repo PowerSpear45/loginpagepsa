@@ -10,8 +10,8 @@ body {
     background-image: 
         radial-gradient(#c6d4e8 0.85px, transparent 0.85px), 
         radial-gradient(#dce5f2 0.85px, #e9eff7 0.85px);
-    background-size: 24px 24px;
-    background-position: 0 0, 12px 12px;
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
     color: #0f172a;
     min-height: 100vh;
 }
@@ -19,11 +19,14 @@ body {
 .page-container {
     display: flex;
     min-height: 100vh;
+    width: 100%;
 }
 
-/* SIDEBAR */
+/* =========================================================
+   COMPACT SIDEBAR
+   ========================================================= */
 .sidebar {
-    width: 240px;
+    width: 220px;
     background: #b8ccec;
     border-right: 1.5px solid #9db5db;
     position: fixed;
@@ -36,46 +39,46 @@ body {
 }
 
 .school-title {
-    height: 66px;
+    height: 56px;
     background: #1f3f6d;
     color: #ffffff;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    font-size: 14.5px;
+    padding: 0 14px;
+    font-size: 13.5px;
     font-weight: 700;
-    gap: 10px;
+    gap: 8px;
 }
 
 .school-logo-img {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
 }
 
 .sidebar-menu {
-    padding: 12px 8px;
+    padding: 8px 6px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 .menu-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
+    gap: 10px;
+    padding: 8px 12px;
     color: #1e293b;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     border-radius: 6px;
-    transition: 0.2s ease;
+    transition: 0.15s ease;
 }
 
 .menu-item i {
-    font-size: 15px;
-    width: 18px;
+    font-size: 14px;
+    width: 16px;
     text-align: center;
     color: #1f3f6d;
 }
@@ -87,100 +90,104 @@ body {
 .menu-item.active {
     background: #ffffff;
     color: #1f3f6d;
-    border-left: 4px solid #1f3f6d;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border-left: 3.5px solid #1f3f6d;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .date-box {
-    margin: auto 12px 16px;
+    margin: auto 10px 12px;
     background: #1f3f6d;
     color: #ffffff;
-    padding: 12px 14px;
-    border-radius: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
-.date-icon { font-size: 20px; color: #29d3ff; }
-.date-label { font-size: 9.5px; text-transform: uppercase; color: #b8ccec; }
-.date-value { font-size: 13px; font-weight: bold; margin-top: 1px; }
-.day-value { font-size: 10px; color: #e2ebf7; }
+.date-icon { font-size: 18px; color: #29d3ff; }
+.date-label { font-size: 8.5px; text-transform: uppercase; color: #b8ccec; }
+.date-value { font-size: 11.5px; font-weight: bold; margin-top: 1px; }
+.day-value { font-size: 9.5px; color: #e2ebf7; }
 
-/* MAIN CONTENT */
+/* =========================================================
+   MAIN CONTENT AREA
+   ========================================================= */
 .main-content {
-    margin-left: 240px;
+    margin-left: 220px;
     flex: 1;
-    padding: 0 28px 32px;
+    padding: 0 20px 24px;
+    min-width: 0; /* Prevents flex children from stretching page */
 }
 
+/* TOP BAR */
 .top-bar {
-    height: 72px;
+    height: 58px;
     background: #ffffff;
-    border-bottom: 2px solid #cbd5e1;
-    margin: 0 -28px 24px -28px;
-    padding: 0 28px;
+    border-bottom: 1.5px solid #cbd5e1;
+    margin: 0 -20px 14px -20px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
 }
 
 .page-title {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .title-icon {
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
     background: #e8f0fe;
     color: #1f3f6d;
-    border-radius: 10px;
+    border-radius: 8px;
     display: grid;
     place-items: center;
-    font-size: 18px;
+    font-size: 15px;
     border: 1px solid #bfdbfe;
 }
 
 .page-title h1 {
-    font-size: 17.5px;
+    font-size: 15px;
     color: #1f3f6d;
     font-weight: 700;
 }
 
 .page-title p {
-    font-size: 11.5px;
+    font-size: 10.5px;
     color: #64748b;
 }
 
 .student-profile-badge {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: #f8fafc;
     border: 1px solid #cbd5e1;
-    padding: 5px 12px 5px 8px;
-    border-radius: 40px;
+    padding: 4px 10px 4px 6px;
+    border-radius: 30px;
 }
 
 .student-avatar-wrap img {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #1f3f6d;
+    border: 1.5px solid #1f3f6d;
 }
 
 .student-meta strong {
-    font-size: 12.5px;
+    font-size: 11.5px;
     color: #0f172a;
     display: block;
 }
 
 .student-meta span {
-    font-size: 11px;
+    font-size: 10px;
     color: #64748b;
 }
 
@@ -188,12 +195,12 @@ body {
     border: 1px solid #f87171;
     background: #fee2e2;
     color: #991b1b;
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 11px;
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-size: 10px;
     font-weight: 700;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.15s;
 }
 
 .logout-btn:hover {
@@ -201,23 +208,33 @@ body {
     color: #ffffff;
 }
 
-/* 5 TOP SUMMARY CARDS */
+/* =========================================================
+   COMPACT ATTENDANCE CONTAINER
+   ========================================================= */
+.attendance-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* 5 SUMMARY CARDS - COMPACT ROW */
 .summary-cards {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
-    margin-bottom: 22px;
+    gap: 12px;
+    margin-bottom: 14px;
 }
 
 .card {
     background: #ffffff;
     border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 16px 14px;
+    border-radius: 8px;
+    padding: 10px 12px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    gap: 10px;
+    min-width: 0;
+    transition: transform 0.15s ease;
 }
 
 .card:hover {
@@ -225,33 +242,33 @@ body {
 }
 
 .stat-percent {
-    border-left: 5px solid #1f3f6d;
-    box-shadow: -4px 6px 12px rgba(31, 63, 109, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+    border-left: 4.5px solid #1f3f6d;
+    box-shadow: -3px 4px 10px rgba(31, 63, 109, 0.08), 0 2px 5px rgba(15, 23, 42, 0.03);
 }
 .stat-present {
-    border-left: 5px solid #16a34a;
-    box-shadow: -4px 6px 12px rgba(22, 163, 74, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+    border-left: 4.5px solid #16a34a;
+    box-shadow: -3px 4px 10px rgba(22, 163, 74, 0.08), 0 2px 5px rgba(15, 23, 42, 0.03);
 }
 .stat-absent {
-    border-left: 5px solid #dc2626;
-    box-shadow: -4px 6px 12px rgba(220, 38, 38, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+    border-left: 4.5px solid #dc2626;
+    box-shadow: -3px 4px 10px rgba(220, 38, 38, 0.08), 0 2px 5px rgba(15, 23, 42, 0.03);
 }
 .stat-leave {
-    border-left: 5px solid #d97706;
-    box-shadow: -4px 6px 12px rgba(217, 119, 6, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+    border-left: 4.5px solid #d97706;
+    box-shadow: -3px 4px 10px rgba(217, 119, 6, 0.08), 0 2px 5px rgba(15, 23, 42, 0.03);
 }
 .stat-total {
-    border-left: 5px solid #6366f1;
-    box-shadow: -4px 6px 12px rgba(99, 102, 241, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+    border-left: 4.5px solid #6366f1;
+    box-shadow: -3px 4px 10px rgba(99, 102, 241, 0.08), 0 2px 5px rgba(15, 23, 42, 0.03);
 }
 
 .card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     display: grid;
     place-items: center;
-    font-size: 18px;
+    font-size: 15px;
     flex-shrink: 0;
 }
 .stat-percent .card-icon { background: #e8f0fe; color: #1f3f6d; }
@@ -260,33 +277,63 @@ body {
 .stat-leave .card-icon   { background: #fef3c7; color: #d97706; }
 .stat-total .card-icon   { background: #e0e7ff; color: #4338ca; }
 
-.card-info span { font-size: 11.5px; font-weight: 600; color: #64748b; }
-.card-info strong { font-size: 20px; color: #0f172a; display: block; margin: 2px 0 1px; }
-.card-info small { font-size: 10.5px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-info {
+    min-width: 0;
+    flex: 1;
+}
 
-/* FILTERS */
+.card-info span { 
+    font-size: 10.5px; 
+    font-weight: 600; 
+    color: #64748b; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: block; 
+}
+
+.card-info strong { 
+    font-size: 17px; 
+    color: #0f172a; 
+    display: block; 
+    margin: 1px 0; 
+    line-height: 1.2;
+}
+
+.card-info small { 
+    font-size: 9.5px; 
+    color: #94a3b8; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: block; 
+}
+
+/* =========================================================
+   COMPACT FILTERS
+   ========================================================= */
 .filter-card {
     background: #ffffff;
     border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 14px 20px;
-    margin-bottom: 22px;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
 }
 
 .filter-left {
     display: flex;
-    gap: 16px;
+    gap: 12px;
 }
 
 .filter-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 .filter-group label {
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: 700;
     color: #475569;
     text-transform: uppercase;
@@ -294,54 +341,75 @@ body {
 
 .filter-group select {
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 13px;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 11.5px;
     color: #1e293b;
     outline: none;
     background: #f8fafc;
+    height: 30px;
 }
 
-/* TABLE CARD */
+/* =========================================================
+   COMPACT TABLE CARD
+   ========================================================= */
 .table-card {
     background: #ffffff;
     border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 22px 24px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    border-radius: 8px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
-.table-header { margin-bottom: 18px; }
-.table-header h3 { font-size: 16px; color: #1e293b; }
-.table-header p { font-size: 12px; color: #64748b; }
+.table-header { 
+    margin-bottom: 10px; 
+}
 
-.table-responsive { overflow-x: auto; }
-.data-table { width: 100%; border-collapse: collapse; }
+.table-header h3 { 
+    font-size: 14px; 
+    color: #1e293b; 
+}
+
+.table-header p { 
+    font-size: 10.5px; 
+    color: #64748b; 
+}
+
+.table-responsive { 
+    overflow-x: auto; 
+}
+
+.data-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
 
 .data-table th {
     background: #f1f5f9;
     color: #334155;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     text-align: left;
-    padding: 12px 14px;
-    border-bottom: 2px solid #cbd5e1;
+    padding: 8px 10px;
+    border-bottom: 1.5px solid #cbd5e1;
 }
 
 .data-table td {
-    padding: 13px 14px;
-    font-size: 13px;
+    padding: 8px 10px;
+    font-size: 12px;
     color: #1e293b;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #edf2f7;
 }
 
-.data-table tbody tr:hover { background: #f8fafc; }
+.data-table tbody tr:hover { 
+    background: #f8fbff; 
+}
 
 .badge-status {
     display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11.5px;
+    padding: 2px 10px;
+    border-radius: 14px;
+    font-size: 10.5px;
     font-weight: 700;
     text-align: center;
 }
@@ -353,23 +421,43 @@ body {
 
 .loading-state, .empty-state {
     text-align: center !important;
-    padding: 30px !important;
+    padding: 20px !important;
     color: #64748b;
-    font-size: 13.5px;
+    font-size: 12px;
 }
 
-@media (max-width: 1200px) {
-    .summary-cards { grid-template-columns: repeat(3, 1fr); }
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================= */
+@media (max-width: 1100px) {
+    .summary-cards { 
+        grid-template-columns: repeat(3, 1fr); 
+    }
 }
 
-@media (max-width: 900px) {
-    .sidebar { width: 70px; }
-    .sidebar .school-title span, .menu-item span, .date-box { display: none; }
-    .main-content { margin-left: 70px; }
-    .summary-cards { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 800px) {
+    .sidebar { 
+        width: 60px; 
+    }
+    .sidebar .school-title span, 
+    .menu-item span, 
+    .date-box { 
+        display: none; 
+    }
+    .main-content { 
+        margin-left: 60px; 
+        padding: 0 12px 16px; 
+    }
+    .summary-cards { 
+        grid-template-columns: repeat(2, 1fr); 
+    }
 }
 
-@media (max-width: 600px) {
-    .summary-cards { grid-template-columns: 1fr; }
-    .filter-left { flex-direction: column; }
+@media (max-width: 550px) {
+    .summary-cards { 
+        grid-template-columns: 1fr; 
+    }
+    .filter-left { 
+        flex-direction: column; 
+    }
 }

@@ -159,7 +159,7 @@ function renderHomework() {
         return subjectMatch && statusMatch;
     });
 
-    countBadge.textContent = `${filtered.length} Tasks Found`;
+    countBadge.textContent = `${filtered.length} Homework`;
 
     if (filtered.length === 0) {
         container.innerHTML = `
