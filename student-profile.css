@@ -111,7 +111,7 @@ body {
 .main-content {
     margin-left: 240px;
     flex: 1;
-    padding: 0 28px 32px;
+    padding: 0 28px 36px;
 }
 
 .top-bar {
@@ -201,175 +201,208 @@ body {
     color: #ffffff;
 }
 
-/* 5 TOP SUMMARY CARDS */
-.summary-cards {
+/* PROFILE LAYOUT */
+.profile-layout {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
-    margin-bottom: 22px;
+    grid-template-columns: 320px 1fr;
+    gap: 22px;
+    align-items: flex-start;
 }
 
-.card {
+/* LEFT HERO IDENTITY CARD */
+.identity-card {
     background: #ffffff;
     border: 1.5px solid #cbd5e1;
     border-radius: 12px;
-    padding: 16px 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-}
-
-.stat-percent {
-    border-left: 5px solid #1f3f6d;
-    box-shadow: -4px 6px 12px rgba(31, 63, 109, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
-}
-.stat-present {
-    border-left: 5px solid #16a34a;
-    box-shadow: -4px 6px 12px rgba(22, 163, 74, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
-}
-.stat-absent {
-    border-left: 5px solid #dc2626;
-    box-shadow: -4px 6px 12px rgba(220, 38, 38, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
-}
-.stat-leave {
-    border-left: 5px solid #d97706;
-    box-shadow: -4px 6px 12px rgba(217, 119, 6, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
-}
-.stat-total {
-    border-left: 5px solid #6366f1;
-    box-shadow: -4px 6px 12px rgba(99, 102, 241, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
-}
-
-.card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    display: grid;
-    place-items: center;
-    font-size: 18px;
-    flex-shrink: 0;
-}
-.stat-percent .card-icon { background: #e8f0fe; color: #1f3f6d; }
-.stat-present .card-icon { background: #dcfce7; color: #16a34a; }
-.stat-absent .card-icon  { background: #fee2e2; color: #dc2626; }
-.stat-leave .card-icon   { background: #fef3c7; color: #d97706; }
-.stat-total .card-icon   { background: #e0e7ff; color: #4338ca; }
-
-.card-info span { font-size: 11.5px; font-weight: 600; color: #64748b; }
-.card-info strong { font-size: 20px; color: #0f172a; display: block; margin: 2px 0 1px; }
-.card-info small { font-size: 10.5px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-/* FILTERS */
-.filter-card {
-    background: #ffffff;
-    border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 14px 20px;
-    margin-bottom: 22px;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-}
-
-.filter-left {
-    display: flex;
-    gap: 16px;
-}
-
-.filter-group {
+    padding: 26px 20px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    align-items: center;
 }
 
-.filter-group label {
-    font-size: 11px;
+.avatar-box {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    padding: 4px;
+    background: #e8f0fe;
+    border: 2px solid #1f3f6d;
+    margin-bottom: 14px;
+}
+
+.avatar-box img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.identity-card h2 {
+    font-size: 18px;
     font-weight: 700;
-    color: #475569;
-    text-transform: uppercase;
+    color: #0f172a;
+    margin-bottom: 3px;
 }
 
-.filter-group select {
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 13px;
-    color: #1e293b;
-    outline: none;
-    background: #f8fafc;
-}
-
-/* TABLE CARD */
-.table-card {
-    background: #ffffff;
-    border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 22px 24px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
-}
-
-.table-header { margin-bottom: 18px; }
-.table-header h3 { font-size: 16px; color: #1e293b; }
-.table-header p { font-size: 12px; color: #64748b; }
-
-.table-responsive { overflow-x: auto; }
-.data-table { width: 100%; border-collapse: collapse; }
-
-.data-table th {
-    background: #f1f5f9;
-    color: #334155;
+.card-adm {
     font-size: 12px;
-    font-weight: 700;
-    text-align: left;
-    padding: 12px 14px;
-    border-bottom: 2px solid #cbd5e1;
+    color: #64748b;
+    margin-bottom: 12px;
 }
 
-.data-table td {
-    padding: 13px 14px;
-    font-size: 13px;
-    color: #1e293b;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.data-table tbody tr:hover { background: #f8fafc; }
-
-.badge-status {
-    display: inline-block;
-    padding: 4px 12px;
+.status-badge-active {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 4px 14px;
     border-radius: 20px;
     font-size: 11.5px;
     font-weight: 700;
-    text-align: center;
+    border: 1px solid #86efac;
+    margin-bottom: 18px;
 }
 
-.badge-present { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
-.badge-absent  { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
-.badge-late    { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
-.badge-leave   { background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd; }
+.meta-pills-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    padding: 14px 0;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 18px;
+}
 
-.loading-state, .empty-state {
-    text-align: center !important;
-    padding: 30px !important;
+.meta-pill span {
+    font-size: 10.5px;
     color: #64748b;
-    font-size: 13.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: block;
 }
 
-@media (max-width: 1200px) {
-    .summary-cards { grid-template-columns: repeat(3, 1fr); }
+.meta-pill strong {
+    font-size: 14px;
+    color: #1f3f6d;
+    font-weight: 700;
+    display: block;
+    margin-top: 2px;
+}
+
+.notice-box {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 11.5px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+    line-height: 1.35;
+}
+
+.notice-box i {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* RIGHT DETAILS COLUMN */
+.details-column {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.detail-card {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.detail-card .card-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+.detail-card .card-header h3 {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #1f3f6d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.info-item label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.info-item p {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.address-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.address-box p {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+}
+
+.city-badge {
+    background: #e8f0fe;
+    color: #1f3f6d;
+    border: 1px solid #bfdbfe;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+    .profile-layout { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 900px) {
     .sidebar { width: 70px; }
     .sidebar .school-title span, .menu-item span, .date-box { display: none; }
     .main-content { margin-left: 70px; }
-    .summary-cards { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
-    .summary-cards { grid-template-columns: 1fr; }
-    .filter-left { flex-direction: column; }
+    .info-grid { grid-template-columns: 1fr; }
+    .address-box { flex-direction: column; align-items: flex-start; gap: 8px; }
 }

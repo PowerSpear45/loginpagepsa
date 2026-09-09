@@ -8,38 +8,82 @@
     <link rel="stylesheet" href="student-attendance.css">
 </head>
 <body>
-    <div class="page-wrapper">
-        <!-- TOP FULL-WIDTH HEADER -->
-        <header class="top-nav">
-            <div class="header-left">
-                <a href="student-home.html" class="back-btn">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Back to Dashboard</span>
+    <div class="page-container">
+        <!-- STANDARDIZED STUDENT SIDEBAR -->
+        <aside class="sidebar">
+            <div class="school-title">
+                <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Logo">
+                <span>Power Public School</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="student-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
                 </a>
-                <div class="school-brand">
-                    <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Power Public School Logo">
+                <a href="student-attendance.html" class="menu-item active">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="student-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="student-leaves.html" class="menu-item">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Leave Letter</span>
+                </a>
+                <a href="student-fees.html" class="menu-item">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Fees Payment</span>
+                </a>
+                <a href="student-marks.html" class="menu-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Marks & Report</span>
+                </a>
+                <a href="student-announcements.html" class="menu-item">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="student-profile.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </nav>
+
+            <div class="date-box">
+                <div class="date-icon"><i class="fa-regular fa-calendar-days"></i></div>
+                <div>
+                    <div class="date-label">Today's Date</div>
+                    <div class="date-value" id="currentDateVal">-- --- ----</div>
+                    <div class="day-value" id="currentDayVal">--------</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <div class="title-icon"><i class="fa-solid fa-calendar-check"></i></div>
                     <div>
-                        <h1>Power Public School</h1>
-                        <p>Student Attendance History</p>
+                        <h1>Daily Attendance Tracker</h1>
+                        <p>Track your verified classroom attendance logs and session percentage</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="student-profile-badge">
-                <div class="student-avatar-wrap">
-                    <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
-                </div>
-                <div class="student-meta">
-                    <strong id="studentName">Loading...</strong>
-                    <span>Class: <b id="studentClassSection">--</b> | Roll: <b id="studentRoll">--</b></span>
-                </div>
-                <button class="logout-btn" onclick="logoutStudent()">Logout</button>
-            </div>
-        </header>
+                <div class="student-profile-badge">
+                    <div class="student-avatar-wrap">
+                        <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
+                    </div>
+                    <div class="student-meta">
+                        <strong id="studentName">Loading...</strong>
+                        <span>Class: <b id="studentClassSection">--</b> | Roll: <b id="studentRoll">--</b></span>
+                    
+            </header>
 
-        <!-- MAIN CONTAINER -->
-        <main class="attendance-container">
-            <!-- 4 SUMMARY CARDS ON TOP -->
+            <!-- 5 SUMMARY CARDS -->
             <section class="summary-cards">
                 <div class="card stat-percent">
                     <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
@@ -76,9 +120,18 @@
                         <small>Approved leaves & late entries</small>
                     </div>
                 </div>
+
+                <div class="card stat-total">
+                    <div class="card-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                    <div class="card-info">
+                        <span>Total Days</span>
+                        <strong id="statTotalDays">0 Days</strong>
+                        <small>Total working sessions</small>
+                    </div>
+                </div>
             </section>
 
-            <!-- CONTROLS & FILTER BAR -->
+            <!-- FILTER CONTROLS (Badge removed) -->
             <section class="filter-card">
                 <div class="filter-left">
                     <div class="filter-group">
@@ -98,12 +151,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="filter-right">
-                    <span class="count-badge" id="recordCountBadge">0 Total Days</span>
-                </div>
             </section>
 
-            <!-- DAY-WISE ATTENDANCE TABLE -->
+            <!-- DAY-WISE LOG TABLE -->
             <section class="table-card">
                 <div class="table-header">
                     <div>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Announcements - Power Public School</title>
+    <title>My Homework - Power Public School</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="student-announcements.css">
+    <link rel="stylesheet" href="student-homework.css">
 </head>
 <body>
     <div class="page-container">
@@ -25,7 +25,7 @@
                     <i class="fa-solid fa-calendar-check"></i>
                     <span>Attendance</span>
                 </a>
-                <a href="student-homework.html" class="menu-item">
+                <a href="student-homework.html" class="menu-item active">
                     <i class="fa-solid fa-book-open"></i>
                     <span>Homework</span>
                 </a>
@@ -41,7 +41,7 @@
                     <i class="fa-solid fa-chart-line"></i>
                     <span>Marks & Report</span>
                 </a>
-                <a href="student-announcements.html" class="menu-item active">
+                <a href="student-announcements.html" class="menu-item">
                     <i class="fa-solid fa-bullhorn"></i>
                     <span>Announcements</span>
                 </a>
@@ -61,15 +61,15 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA -->
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             <!-- TOP BAR -->
             <header class="top-bar">
                 <div class="page-title">
-                    <div class="title-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    <div class="title-icon"><i class="fa-solid fa-book-open"></i></div>
                     <div>
-                        <h1>School Announcements & Notices</h1>
-                        <p>Stay updated with official circulars, exam notices & alerts</p>
+                        <h1>Class Homework & Assignments</h1>
+                        <p>View teacher instructions and download assigned question paper PDFs</p>
                     </div>
                 </div>
 
@@ -83,65 +83,76 @@
                     
             </header>
 
-            <!-- 3 TOP OVERVIEW STAT CARDS -->
+            <!-- 3 TOP SUMMARY CARDS -->
             <section class="summary-cards">
                 <div class="summary-card stat-total">
-                    <div class="summary-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="summary-icon"><i class="fa-solid fa-list-check"></i></div>
                     <div class="card-details">
-                        <span>Total Circulars</span>
+                        <span>Total Assigned</span>
                         <strong id="statTotalCount">0</strong>
-                        <small>All published updates</small>
+                        <small>All classroom tasks</small>
                     </div>
                 </div>
 
-                <div class="summary-card stat-admin">
-                    <div class="summary-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="summary-card stat-pending">
+                    <div class="summary-icon"><i class="fa-solid fa-clock"></i></div>
                     <div class="card-details">
-                        <span>From Administration</span>
-                        <strong id="statAdminCount">0</strong>
-                        <small>Principal & Management</small>
+                        <span>Active / Pending</span>
+                        <strong id="statPendingCount">0</strong>
+                        <small>Open before deadline</small>
                     </div>
                 </div>
 
-                <div class="summary-card stat-teacher">
-                    <div class="summary-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <div class="summary-card stat-overdue">
+                    <div class="summary-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
                     <div class="card-details">
-                        <span>From Class Teachers</span>
-                        <strong id="statTeacherCount">0</strong>
-                        <small>Class 5-B & subject notices</small>
+                        <span>Due Date Passed</span>
+                        <strong id="statOverdueCount">0</strong>
+                        <small>Overdue submissions</small>
                     </div>
                 </div>
             </section>
 
-            <!-- FILTER & SEARCH CONTROLS -->
-            <section class="filter-bar">
-                <div class="tab-group">
-                    <button class="tab-btn active" id="tabAll" onclick="switchTab('ALL')">
-                        <i class="fa-solid fa-border-all"></i> All Notices
-                    </button>
-                    <button class="tab-btn" id="tabAdmin" onclick="switchTab('ADMIN')">
-                        <i class="fa-solid fa-shield-halved"></i> Admin Notices
-                    </button>
-                    <button class="tab-btn" id="tabTeacher" onclick="switchTab('TEACHER')">
-                        <i class="fa-solid fa-chalkboard-user"></i> Teacher Notes
-                    </button>
+            <!-- FILTERS & SEARCH -->
+            <section class="filter-card">
+                <div class="filter-left">
+                    <div class="filter-group">
+                        <label for="subjectFilter"><i class="fa-solid fa-book"></i> Filter by Subject</label>
+                        <select id="subjectFilter" onchange="renderHomework()">
+                            <option value="ALL">All Subjects</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="English">English</option>
+                            <option value="Maths">Maths</option>
+                            <option value="Science">Science</option>
+                            <option value="Social">Social</option>
+                            <option value="Computer">Computer</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="statusFilter"><i class="fa-solid fa-filter"></i> Submission Status</label>
+                        <select id="statusFilter" onchange="renderHomework()">
+                            <option value="ALL">All Statuses</option>
+                            <option value="PENDING">Active / Pending</option>
+                            <option value="OVERDUE">Due Date Over</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="search-box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Search notices, exams, holidays..." oninput="handleSearch()">
+                <div class="filter-right">
+                    <span class="count-badge" id="recordCountBadge">0 Homework Found</span>
                 </div>
             </section>
 
-            <!-- ANNOUNCEMENT FEED CONTAINER -->
-            <section class="announcements-container" id="announcementsList">
+            <!-- HOMEWORK CARDS GRID -->
+            <section class="homework-grid" id="homeworkCardsContainer">
                 <div class="loading-state">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Loading notices & circulars from school database...
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading homework assignments from database...
                 </div>
             </section>
         </main>
     </div>
 
-    <script src="student-announcements.js"></script>
+    <script src="student-homework.js"></script>
 </body>
 </html>

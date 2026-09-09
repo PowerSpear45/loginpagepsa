@@ -3,20 +3,27 @@
  * Power Public School ERP
  */
 
-const API_BASE = "https://loginpagepsabackend.onrender.com/api"; //[cite: 5]
+const API_BASE = "https://loginpagepsabackend.onrender.com/api";
 const TARGET_ADMISSION_NO = localStorage.getItem("activeAdmissionNo") || "ADM5B01";
 
 let activeStudent = null;
 let allStudentRecords = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
+    updateTodayDate();
     await initStudent();
     await loadStudentAttendance();
 });
 
-/* =========================================================
-   LOAD STUDENT DETAILS
-   ========================================================= */
+function updateTodayDate() {
+    const now = new Date();
+    const dateVal = document.getElementById("currentDateVal");
+    const dayVal = document.getElementById("currentDayVal");
+
+    if (dateVal) dateVal.textContent = now.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+    if (dayVal) dayVal.textContent = now.toLocaleDateString("en-IN", { weekday: "long" });
+}
+
 async function initStudent() {
     try {
         const res = await fetch(`${API_BASE}/students`);
@@ -41,7 +48,6 @@ async function initStudent() {
         };
     }
 
-    // Populate Top Profile Badge
     const name = activeStudent.fullName || activeStudent.full_name || "V.S.Sakthivel";
     const cl = activeStudent.className || activeStudent.class_name || "5";
     const sec = activeStudent.section || "B";
@@ -55,9 +61,6 @@ async function initStudent() {
         `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1f3f6d&color=ffffff`;
 }
 
-/* =========================================================
-   FETCH ATTENDANCE DATA FROM DATABASE
-   ========================================================= */
 async function loadStudentAttendance() {
     const tableBody = document.getElementById("attendanceTableBody");
     const studentId = activeStudent.studentId || activeStudent.id || 1;
@@ -65,7 +68,6 @@ async function loadStudentAttendance() {
     try {
         let records = [];
 
-        // 1. Try student-specific endpoint
         try {
             const res = await fetch(`${API_BASE}/attendance/student/${studentId}`);
             if (res.ok) {
@@ -74,7 +76,6 @@ async function loadStudentAttendance() {
             }
         } catch (_) {}
 
-        // 2. Query general attendance table if student endpoint was empty
         if (!records || records.length === 0) {
             const allRes = await fetch(`${API_BASE}/attendance`);
             if (allRes.ok) {
@@ -85,12 +86,10 @@ async function loadStudentAttendance() {
             }
         }
 
-        // 3. Fallback mock entries if database has newly initialized student without logs
         if (!records || records.length === 0) {
             records = generateFallbackLogs();
         }
 
-        // Normalize and sort by date (newest first)
         allStudentRecords = records.map(r => {
             const rawDate = r.attendanceDate || r.attendance_date || r.date;
             return {
@@ -112,26 +111,37 @@ async function loadStudentAttendance() {
 }
 
 /* =========================================================
-   CALCULATE TOP SUMMARY CARDS (OVERALL PERCENTAGE)
+   CALCULATE OVERALL PERCENTAGE & KPIS
+   Attended = PRESENT only (or LATE).
+   ABSENT and LEAVE do not count as attended.
    ========================================================= */
 function computeOverallStats(records) {
     const total = records.length;
     let present = 0;
     let absent = 0;
-    let leave = 0;
+    let leaveOrLate = 0;
 
     records.forEach(r => {
-        if (r.status === "PRESENT") present++;
-        else if (r.status === "ABSENT") absent++;
-        else leave++; // LATE or LEAVE
+        if (r.status === "PRESENT") {
+            present++;
+        } else if (r.status === "ABSENT") {
+            absent++;
+        } else {
+            leaveOrLate++; // LATE or LEAVE
+        }
     });
 
-    const percent = total > 0 ? Math.round((present / total) * 100) : 0; //[cite: 1, 2]
+    // 9 Present out of 12 Total = 75%
+    const percent = total > 0 ? Math.round((present / total) * 100) : 0;
+
+    // Cache the calculated rate for the home dashboard
+    localStorage.setItem("calculatedAttendanceRate", `${percent}%`);
 
     document.getElementById("statPercentage").textContent = `${percent}%`;
     document.getElementById("statPresentDays").textContent = `${present} Days`;
     document.getElementById("statAbsentDays").textContent = `${absent} Days`;
-    document.getElementById("statLeaveDays").textContent = `${leave} Days`;
+    document.getElementById("statLeaveDays").textContent = `${leaveOrLate} Days`;
+    document.getElementById("statTotalDays").textContent = `${total} Days`;
 
     const remarkEl = document.getElementById("statRemark");
     if (percent >= 85) {
@@ -146,9 +156,6 @@ function computeOverallStats(records) {
     }
 }
 
-/* =========================================================
-   RENDER TABLE & MONTH DROPDOWN
-   ========================================================= */
 function populateMonthFilter() {
     const monthSelect = document.getElementById("monthFilter");
     const monthSet = new Set();
@@ -171,7 +178,6 @@ function renderAttendanceTable() {
     const monthFilter = document.getElementById("monthFilter").value;
     const statusFilter = document.getElementById("statusFilter").value;
     const tbody = document.getElementById("attendanceTableBody");
-    const countBadge = document.getElementById("recordCountBadge");
 
     const filtered = allStudentRecords.filter(r => {
         const m = r.date.toLocaleDateString("en-IN", { month: "long", year: "numeric" });
@@ -179,8 +185,6 @@ function renderAttendanceTable() {
         const statusMatch = (statusFilter === "ALL" || r.status === statusFilter);
         return monthMatch && statusMatch;
     });
-
-    countBadge.textContent = `${filtered.length} Recorded Days`;
 
     if (filtered.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No attendance records found for this filter.</td></tr>`;
@@ -191,8 +195,8 @@ function renderAttendanceTable() {
     filtered.forEach((rec, idx) => {
         const tr = document.createElement("tr");
 
-        const formattedDate = rec.date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }); //[cite: 1]
-        const formattedDay = rec.date.toLocaleDateString("en-IN", { weekday: "long" }); //[cite: 1]
+        const formattedDate = rec.date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+        const formattedDay = rec.date.toLocaleDateString("en-IN", { weekday: "long" });
         const classSec = `Class ${activeStudent.className || '5'} - ${activeStudent.section || 'B'}`;
 
         tr.innerHTML = `
@@ -220,9 +224,6 @@ function getStatusBadgeClass(status) {
     }
 }
 
-/* =========================================================
-   FALLBACK DATA (Simulates teacher daily register)
-   ========================================================= */
 function generateFallbackLogs() {
     return [
         { attendanceDate: "2026-09-08", status: "PRESENT" },

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="student-profile.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- STANDARDIZED STUDENT SIDEBAR -->
+        <aside class="sidebar">
+            <div class="school-title">
+                <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Logo">
+                <span>Power Public School</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="student-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="student-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="student-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="student-leaves.html" class="menu-item">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Leave Letter</span>
+                </a>
+                <a href="student-fees.html" class="menu-item">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Fees Payment</span>
+                </a>
+                <a href="student-marks.html" class="menu-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Marks & Report</span>
+                </a>
+                <a href="student-announcements.html" class="menu-item">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="student-profile.html" class="menu-item active">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </nav>
+
+            <div class="date-box">
+                <div class="date-icon"><i class="fa-regular fa-calendar-days"></i></div>
+                <div>
+                    <div class="date-label">Today's Date</div>
+                    <div class="date-value" id="currentDateVal">-- --- ----</div>
+                    <div class="day-value" id="currentDayVal">--------</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <div class="title-icon"><i class="fa-solid fa-id-card"></i></div>
+                    <div>
+                        <h1>Student Profile</h1>
+                        <p>Verified institutional records and biodata on file</p>
+                    </div>
+                </div>
+
+                <div class="student-profile-badge">
+                    <div class="student-avatar-wrap">
+                        <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
+                    </div>
+                    <div class="student-meta">
+                        <strong id="topStudentName">Loading...</strong>
+                        <span>Class: <b id="topClassSection">--</b> | Roll: <b id="topRollNo">--</b></span>
+                    
+            </header>
+
+            <!-- PROFILE MAIN LAYOUT -->
+            <div class="profile-layout">
+                <!-- LEFT IDENTITY HERO CARD -->
+                <section class="identity-card">
+                    <div class="avatar-box">
+                        <img id="profileBigPhoto" src="https://ui-avatars.com/api/?name=Student&background=1f3f6d&color=ffffff" alt="Profile Picture">
+                    </div>
+                    <h2 id="cardFullName">Loading Name...</h2>
+                    <p class="card-adm">Admission No: <strong id="cardAdmissionNo">--------</strong></p>
+
+                    <div class="status-badge-active" id="cardStatusBadge">
+                        <i class="fa-solid fa-circle-check"></i> <span id="cardStatus">Active Student</span>
+                    </div>
+
+                    <div class="meta-pills-row">
+                        <div class="meta-pill">
+                            <span>Class</span>
+                            <strong id="cardClass">--</strong>
+                        </div>
+                        <div class="meta-pill">
+                            <span>Section</span>
+                            <strong id="cardSection">--</strong>
+                        </div>
+                        <div class="meta-pill">
+                            <span>Roll No</span>
+                            <strong id="cardRollNo">--</strong>
+                        </div>
+                    </div>
+
+                    <div class="notice-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <p>Institutional record is locked. Contact your school administrator to update information.</p>
+                    </div>
+                </section>
+
+                <!-- RIGHT INFORMATION SECTIONS -->
+                <div class="details-column">
+                    <!-- SECTION 1: PERSONAL & ACADEMIC BIODATA -->
+                    <section class="detail-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-user"></i> Personal & Academic Details</h3>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Date of Birth</label>
+                                <p id="infoDob">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Gender</label>
+                                <p id="infoGender">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Blood Group</label>
+                                <p id="infoBloodGroup">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Mother Tongue</label>
+                                <p id="infoMotherTongue">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Nationality</label>
+                                <p id="infoNationality">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Religion</label>
+                                <p id="infoReligion">-</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2: LANGUAGE PROFICIENCY -->
+                    <section class="detail-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-language"></i> Language Preferences</h3>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>First Language</label>
+                                <p id="infoFirstLang">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Second Language</label>
+                                <p id="infoSecondLang">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Third Language</label>
+                                <p id="infoThirdLang">-</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: PARENT & GUARDIAN DETAILS -->
+                    <section class="detail-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-users"></i> Parent & Guardian Information</h3>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Father's Name</label>
+                                <p id="infoFatherName">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Father's Occupation</label>
+                                <p id="infoFatherOccupation">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Mother's Name</label>
+                                <p id="infoMotherName">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Mother's Occupation</label>
+                                <p id="infoMotherOccupation">-</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 4: RESIDENTIAL ADDRESS -->
+                    <section class="detail-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-location-dot"></i> Residential Address</h3>
+                        </div>
+                        <div class="address-box">
+                            <p id="infoFullAddress">-</p>
+                            <span id="infoCityPin" class="city-badge">-</span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="student-profile.js"></script>
+</body>
+</html>
