@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Leave - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="student-leaves.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- STANDARDIZED STUDENT SIDEBAR -->
+        <aside class="sidebar">
+            <div class="school-title">
+                <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Logo">
+                <span>Power Public School</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="student-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="student-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="student-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="student-leaves.html" class="menu-item active">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Leave Letter</span>
+                </a>
+                <a href="student-fees.html" class="menu-item">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Fees Payment</span>
+                </a>
+                <a href="student-marks.html" class="menu-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Marks & Report</span>
+                </a>
+                <a href="student-announcements.html" class="menu-item">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="student-profile.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </nav>
+
+            <div class="date-box">
+                <div class="date-icon"><i class="fa-regular fa-calendar-days"></i></div>
+                <div>
+                    <div class="date-label">Today's Date</div>
+                    <div class="date-value" id="currentDateVal">-- --- ----</div>
+                    <div class="day-value" id="currentDayVal">--------</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- TOP BAR (LOGOUT BUTTON REMOVED) -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <div class="title-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                    <div>
+                        <h1>Student Leave Applications</h1>
+                        <p>Compose formal leave requests to your class teacher and track approval status</p>
+                    </div>
+                </div>
+
+                <div class="student-profile-badge">
+                    <div class="student-avatar-wrap">
+                        <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
+                    </div>
+                    <div class="student-meta">
+                        <strong id="studentName">Loading...</strong>
+                        <span>Class: <b id="studentClassSection">--</b> | Roll: <b id="studentRoll">--</b></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 3 TOP SUMMARY CARDS -->
+            <section class="summary-cards">
+                <div class="summary-card stat-pending">
+                    <div class="summary-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                    <div class="card-details">
+                        <span>Pending Teacher Review</span>
+                        <strong id="kpiPendingCount">0</strong>
+                        <small>Awaiting response</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-approved">
+                    <div class="summary-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="card-details">
+                        <span>Approved Leaves</span>
+                        <strong id="kpiApprovedCount">0</strong>
+                        <small>Accepted by teacher</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-declined">
+                    <div class="summary-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                    <div class="card-details">
+                        <span>Declined Requests</span>
+                        <strong id="kpiDeclinedCount">0</strong>
+                        <small>Unapproved or rejected</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTROLS & ACTION BAR -->
+            <section class="controls-card">
+                <div class="filter-left">
+                    <div class="filter-group">
+                        <label for="statusFilter"><i class="fa-solid fa-filter"></i> Filter Status</label>
+                        <select id="statusFilter" onchange="renderLeaveHistory()">
+                            <option value="ALL">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Declined">Declined</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="typeFilter"><i class="fa-solid fa-tag"></i> Leave Category</label>
+                        <select id="typeFilter" onchange="renderLeaveHistory()">
+                            <option value="ALL">All Categories</option>
+                            <option value="Sick Leave">Sick Leave</option>
+                            <option value="Family Function">Family Function</option>
+                            <option value="Casual Leave">Casual Leave</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="action-right">
+                    <button type="button" class="btn-compose-popup" onclick="openComposeLeaveModal()">
+                        <i class="fa-solid fa-plus"></i> Compose Leave Application
+                    </button>
+                </div>
+            </section>
+
+            <!-- FULL-WIDTH LEAVE HISTORY TABLE -->
+            <section class="table-card">
+                <div class="table-header">
+                    <div>
+                        <h3><i class="fa-solid fa-clock-rotate-left"></i> Leave History</h3>
+                        <p>Track verified statuses and remarks provided by your teacher</p>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">#</th>
+                                <th>Leave Type</th>
+                                <th>Dates</th>
+                                <th style="text-align: center;">Total Days</th>
+                                <th style="text-align: center;">Status</th>
+                                <th>Teacher Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveHistoryTbody">
+                            <tr>
+                                <td colspan="6" class="loading-state">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Loading leave requests from database...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- EMPTY POPUP PLACEHOLDER -->
+    <div id="composeLeaveModal" class="modal-placeholder" style="display: none;">
+        <!-- Modal content link will be implemented here later -->
+    </div>
+
+    <script src="student-leaves.js"></script>
+</body>
+</html>

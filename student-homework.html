@@ -69,7 +69,7 @@
                     <div class="title-icon"><i class="fa-solid fa-book-open"></i></div>
                     <div>
                         <h1>Class Homework & Assignments</h1>
-                        <p>View teacher instructions and download assigned question paper PDFs</p>
+                        <p>View teacher instructions, download questions, and upload completed answer sheets</p>
                     </div>
                 </div>
 
@@ -80,7 +80,9 @@
                     <div class="student-meta">
                         <strong id="studentName">Loading...</strong>
                         <span>Class: <b id="studentClassSection">--</b> | Roll: <b id="studentRoll">--</b></span>
-                    
+                    </div>
+                    <button class="logout-btn" onclick="logoutStudent()">Logout</button>
+                </div>
             </header>
 
             <!-- 3 TOP SUMMARY CARDS -->
@@ -140,7 +142,7 @@
                 </div>
 
                 <div class="filter-right">
-                    <span class="count-badge" id="recordCountBadge">0 Homework Found</span>
+                    <span class="count-badge" id="recordCountBadge">0 Homework</span>
                 </div>
             </section>
 
@@ -151,6 +153,79 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <!-- VIEW HOMEWORK & SUBMIT MODAL POPUP -->
+    <div class="modal-overlay" id="hwDetailModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalHwTitle">Homework Details</h3>
+                    <p class="modal-subtext" id="modalHwMeta">Class 5 - B | Maths</p>
+                </div>
+                <button type="button" class="close-btn" onclick="closeHwModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Status & Due Date Pill -->
+                <div class="modal-deadline-bar">
+                    <div>
+                        <span class="field-label">Submission Deadline</span>
+                        <strong id="modalHwDueDate">-- --- ----</strong>
+                    </div>
+                    <span class="badge-due-status" id="modalHwStatusBadge">Pending</span>
+                </div>
+
+                <!-- Teacher Instructions -->
+                <div class="modal-section">
+                    <span class="field-label">Teacher Instructions</span>
+                    <div class="instructions-box" id="modalHwDesc">No instructions provided.</div>
+                </div>
+
+                <!-- Question Paper Download Card -->
+                <div class="modal-section">
+                    <span class="field-label">Question Paper Document</span>
+                    <div class="doc-download-card" id="modalQuestionBox">
+                        <div class="doc-icon-wrap"><i class="fa-solid fa-file-pdf"></i></div>
+                        <div class="doc-meta">
+                            <strong id="modalPdfName">Questions.pdf</strong>
+                            <span>Uploaded by Class Teacher</span>
+                        </div>
+                        <button type="button" class="btn-download-action" id="modalDownloadBtn">
+                            <i class="fa-solid fa-download"></i> Download Questions
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Answer Sheet Upload Section -->
+                <div class="modal-section">
+                    <span class="field-label">Submit Your Answer Sheet (PDF)</span>
+                    <div class="existing-submission-box" id="existingSubmissionNotice" style="display: none;">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div>
+                            <strong>Already Submitted!</strong>
+                            <p id="existingSubmissionText">You have already uploaded an answer sheet for this homework.</p>
+                        </div>
+                    </div>
+
+                    <form id="answerUploadForm" onsubmit="handleUploadAnswerSheet(event)">
+                        <div class="upload-dropzone">
+                            <input type="file" id="answerSheetInput" accept="application/pdf" required onchange="previewAnswerFile(this)">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span id="answerUploadStatusText">Click or Drag & Drop your Answer Sheet PDF here</span>
+                            <small>Only PDF format up to 10MB accepted</small>
+                        </div>
+
+                        <div class="modal-action-bar">
+                            <button type="button" class="btn-cancel" onclick="closeHwModal()">Close</button>
+                            <button type="submit" class="btn-submit-answer" id="btnSubmitAnswer">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Answer Sheet
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="student-homework.js"></script>

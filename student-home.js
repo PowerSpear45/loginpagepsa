@@ -39,9 +39,12 @@ async function fetchStudentDashboardData() {
                 document.getElementById("studentClassSection").textContent = `${className}-${section}`;
                 document.getElementById("studentRoll").textContent = rollNo;
                 
-                const avatar = student.photo || student.photoUrl || 
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=1f3f6d&color=ffffff`;
-                document.getElementById("studentAvatar").src = avatar;
+                document.getElementById("studentAvatar").src = 
+    activeStudent.studentPhoto || 
+    activeStudent.student_photo || 
+    activeStudent.photo || 
+    activeStudent.photoUrl || 
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1f3f6d&color=ffffff`;
 
                 localStorage.setItem("activeStudentId", resolvedStudentId);
                 localStorage.setItem("activeAdmissionNo", TARGET_ADMISSION_NO);
