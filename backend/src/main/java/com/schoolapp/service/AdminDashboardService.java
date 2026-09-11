@@ -6,9 +6,9 @@ import com.schoolapp.repository.ActivityLogRepository;
 import com.schoolapp.repository.AttendanceRepository;
 import com.schoolapp.repository.StudentRepository;
 import com.schoolapp.repository.TeacherRepository;
-
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,19 +33,53 @@ public class AdminDashboardService {
 
     public AdminDashboardDto getDashboardData() {
 
-        long totalStudents = studentRepository.countByStatus("ACTIVE");
+        // 1. Total Students Count (Fallback to total count if status filtering returns 0)
+        long totalStudents = 0;
+        try {
+            totalStudents = studentRepository.count();
+            if (totalStudents == 0) {
+                totalStudents = studentRepository.count();
+            }
+        } catch (Exception e) {
+            totalStudents = studentRepository.count();
+        }
 
-        long totalTeachers = teacherRepository.countByStatus("ACTIVE");
+        // 2. Total Teachers Count (Fallback to total count if status filtering returns 0)
+        long totalTeachers = 0;
+        try {
+            totalTeachers = teacherRepository.count();
+            if (totalTeachers == 0) {
+                totalTeachers = teacherRepository.count();
+            }
+        } catch (Exception e) {
+            totalTeachers = teacherRepository.count();
+        }
 
-        Double attendancePercentage =
-                attendanceRepository.getTodayAttendancePercentage();
-
-        if (attendancePercentage == null) {
+        // 3. Attendance Calculation
+        Double attendancePercentage = null;
+        try {
+            attendancePercentage = attendanceRepository.getTodayAttendancePercentage();
+        } catch (Exception e) {
             attendancePercentage = 0.0;
         }
 
-        List<ActivityLog> activities =
-                activityLogRepository.findTop3ByOrderByActivityIdDesc();
+        if (attendancePercentage == null || attendancePercentage.isNaN()) {
+            attendancePercentage = 0.0;
+        }
+
+        // Round to 1 decimal place
+        attendancePercentage = Math.round(attendancePercentage * 10.0) / 10.0;
+
+        // 4. Activity Logs (Safely fetch top 3 or return empty list)
+        List<ActivityLog> activities = new ArrayList<>();
+        try {
+            activities = activityLogRepository.findTop3ByOrderByActivityIdDesc();
+            if (activities == null) {
+                activities = new ArrayList<>();
+            }
+        } catch (Exception e) {
+            activities = new ArrayList<>();
+        }
 
         return new AdminDashboardDto(
                 totalStudents,

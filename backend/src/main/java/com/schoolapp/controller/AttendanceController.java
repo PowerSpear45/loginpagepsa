@@ -2,6 +2,8 @@ package com.schoolapp.controller;
 
 import com.schoolapp.entity.Attendance;
 import com.schoolapp.repository.AttendanceRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,39 +21,46 @@ public class AttendanceController {
     }
 
     @GetMapping
-    public List<Attendance> getAttendance(@RequestParam String date) {
-
-        LocalDate attendanceDate = LocalDate.parse(date);
-
-        return attendanceRepository.findByAttendanceDate(attendanceDate);
+    public ResponseEntity<List<Attendance>> getAttendance(@RequestParam String date) {
+        try {
+            LocalDate attendanceDate = LocalDate.parse(date);
+            return ResponseEntity.ok(attendanceRepository.findByAttendanceDate(attendanceDate));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/save")
-    public String saveAttendance(@RequestBody List<Attendance> attendanceList) {
-
-        for (Attendance attendance : attendanceList) {
-
-            Attendance existing = attendanceRepository
-                    .findByStudentIdAndAttendanceDate(
-                            attendance.getStudentId(),
-                            attendance.getAttendanceDate()
-                    )
-                    .orElse(null);
-
-            if (existing != null) {
-
-                existing.setStatus(attendance.getStatus());
-
-                attendanceRepository.save(existing);
-
-            } else {
-
-                attendanceRepository.save(attendance);
-
-            }
+    @Transactional
+    public ResponseEntity<?> saveAttendance(@RequestBody List<Attendance> attendanceList) {
+        if (attendanceList == null || attendanceList.isEmpty()) {
+            return ResponseEntity.badRequest().body("Attendance list is empty");
         }
 
-        return "Attendance Saved Successfully";
-    }
+        try {
+            for (Attendance attendance : attendanceList) {
+                if (attendance.getStudentId() == null || attendance.getAttendanceDate() == null) {
+                    continue;
+                }
 
+                Attendance existing = attendanceRepository
+                        .findByStudentIdAndAttendanceDate(
+                                attendance.getStudentId(),
+                                attendance.getAttendanceDate()
+                        )
+                        .orElse(null);
+
+                if (existing != null) {
+                    existing.setStatus(attendance.getStatus());
+                    attendanceRepository.save(existing);
+                } else {
+                    attendanceRepository.save(attendance);
+                }
+            }
+            return ResponseEntity.ok("Attendance Saved Successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Error saving: " + e.getMessage());
+        }
+    }
 }

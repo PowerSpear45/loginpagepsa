@@ -14,63 +14,115 @@ const overallAttendanceEl = document.getElementById("overallAttendance");
 
 let attendanceChart;
 let monthlyChart;
-
 let studentsData = [];
+
+document.addEventListener("DOMContentLoaded", async () => {
+  setDefaultDate();
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+
+  await loadStudents();
+  await loadTodayAttendance();
+});
+
+function setDefaultDate() {
+  const today = new Date().toISOString().split("T")[0];
+  if (attendanceDate) {
+    attendanceDate.value = today;
+  }
+}
+
 async function loadStudents() {
-    try {
+  try {
+    const response = await fetch(`${API_BASE}/students`);
+    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
-        const response = await fetch(`${API_BASE}/students`);
+    const rawData = await response.json();
 
-        console.log("Response Status:", response.status);
+    studentsData = rawData.map(student => {
+      const sId = student.studentId ?? student.student_id ?? student.id;
+      const sName = student.fullName || student.full_name || student.studentName || "Student";
+      const photo = student.studentPhoto || student.student_photo || student.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(sName)}&background=1f3f6d&color=ffffff`;
 
-        studentsData = await response.json();
+      return {
+        studentId: Number(sId),
+        rollNo: String(student.rollNo || student.roll_no || ""),
+        studentName: sName,
+        className: String(student.className || student.class_name || ""),
+        section: String(student.section || ""),
+        photo: photo,
+        presentDays: 0,
+        absentDays: 0,
+        lateDays: 0,
+        todayStatus: "Present"
+      };
+    });
 
-        console.log("Students from backend:", studentsData);
+    loadAttendanceTable();
+  } catch (error) {
+    console.error("LOAD STUDENTS ERROR:", error);
+    attendanceTableBody.innerHTML = `
+      <tr>
+        <td colspan="9" style="text-align:center; padding: 25px; color: #dc2626;">
+          Failed to load students. Please verify backend connectivity.
+        </td>
+      </tr>
+    `;
+  }
+}
 
-        studentsData = studentsData.map(student => ({
-            studentId: student.studentId,
-            rollNo: student.rollNo || "",
-            studentName: student.fullName || "",
-            className: student.className || "",
-            section: student.section || "",
-            photo: student.studentPhoto
-                ? student.studentPhoto
-                : `https://i.pravatar.cc/100?u=${student.studentId}`,
-            presentDays: 0,
-            absentDays: 0,
-            lateDays: 0,
-            todayStatus: "Present"
-        }));
+async function loadTodayAttendance() {
+  const selectedDate = attendanceDate.value;
+  if (!selectedDate) return;
 
-        console.log("Mapped Students:", studentsData);
+  try {
+    const response = await fetch(`${API_BASE}/attendance?date=${selectedDate}`);
+    if (response.ok) {
+      const attendance = await response.json();
+      attendance.forEach(record => {
+        const recordStudentId = Number(record.studentId || record.student_id);
+        const student = studentsData.find(s => s.studentId === recordStudentId);
 
-        loadAttendanceTable();
-
-    } catch (error) {
-
-        console.error("LOAD STUDENT ERROR:", error);
-
-        alert(error.message);
-
+        if (student && record.status) {
+          const rawStatus = record.status.trim().toLowerCase();
+          student.todayStatus = rawStatus.charAt(0).toUpperCase() + rawStatus.slice(1);
+        }
+      });
     }
+  } catch (error) {
+    console.warn("Could not fetch today's attendance:", error);
+  }
+
+  loadAttendanceTable();
 }
 
 function loadAttendanceTable() {
   const filteredData = getFilteredData();
-
   attendanceTableBody.innerHTML = "";
+
+  if (filteredData.length === 0) {
+    attendanceTableBody.innerHTML = `
+      <tr>
+        <td colspan="9" style="text-align:center; padding: 25px; color: #64748b;">
+          No students found matching the selected class and section.
+        </td>
+      </tr>
+    `;
+    updateSummaryCards([]);
+    updateCharts([]);
+    return;
+  }
 
   filteredData.forEach((student, index) => {
     const totalDays = student.presentDays + student.absentDays + student.lateDays;
-    const percentage = totalDays === 0 ? 0 : (student.presentDays / totalDays) * 100;
+    const percentage = totalDays === 0 ? 100 : (student.presentDays / totalDays) * 100;
 
     const row = document.createElement("tr");
-
     row.innerHTML = `
       <td>${index + 1}</td>
-      <td>${student.rollNo}</td>
+      <td><strong>${student.rollNo}</strong></td>
       <td>
-        <img class="student-photo" src="${student.photo}" alt="Student Photo">
+        <img class="student-photo" src="${student.photo}" alt="Student Photo" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
       </td>
       <td>${student.studentName}</td>
       <td>${student.presentDays}</td>
@@ -89,7 +141,6 @@ function loadAttendanceTable() {
         </select>
       </td>
     `;
-
     attendanceTableBody.appendChild(row);
   });
 
@@ -120,39 +171,31 @@ function updateSummaryCards(data) {
   let absentToday = 0;
   let lateToday = 0;
 
-  let totalPresentDays = 0;
-  let totalMarkedDays = 0;
-
   data.forEach(student => {
     if (student.todayStatus === "Present") presentToday++;
     if (student.todayStatus === "Absent") absentToday++;
     if (student.todayStatus === "Late") lateToday++;
-
-    totalPresentDays += student.presentDays;
-    totalMarkedDays += student.presentDays + student.absentDays + student.lateDays;
   });
 
-  const overallPercent =
-    totalMarkedDays === 0 ? 0 : (totalPresentDays / totalMarkedDays) * 100;
+  const overallPercent = totalStudents === 0 ? 0 : (presentToday / totalStudents) * 100;
 
   totalStudentsEl.textContent = totalStudents;
   totalPresentEl.textContent = presentToday;
   totalAbsentEl.textContent = absentToday;
   lateComersEl.textContent = lateToday;
-  overallAttendanceEl.textContent = overallPercent.toFixed(2) + "%";
+  overallAttendanceEl.textContent = overallPercent.toFixed(1) + "%";
 }
 
 function changeStatus(rollNo, status, selectElement) {
   const student = studentsData.find(s => s.rollNo === rollNo);
-
   if (student) {
     student.todayStatus = status;
   }
 
   selectElement.className = "status-select " + getStatusClass(status);
-
-  updateSummaryCards(getFilteredData());
-  updateCharts(getFilteredData());
+  const filtered = getFilteredData();
+  updateSummaryCards(filtered);
+  updateCharts(filtered);
 }
 
 function getStatusClass(status) {
@@ -167,7 +210,6 @@ document.getElementById("markAllPresent").addEventListener("click", () => {
   getFilteredData().forEach(student => {
     student.todayStatus = "Present";
   });
-
   loadAttendanceTable();
 });
 
@@ -175,77 +217,61 @@ document.getElementById("markAllAbsent").addEventListener("click", () => {
   getFilteredData().forEach(student => {
     student.todayStatus = "Absent";
   });
-
   loadAttendanceTable();
 });
 
 document.getElementById("saveAttendanceBtn").addEventListener("click", async () => {
+  const selectedDate = attendanceDate.value;
+  if (!selectedDate) {
+    alert("Please select an attendance date.");
+    return;
+  }
 
-    const selectedDate = attendanceDate.value;
+  const currentList = getFilteredData();
+  if (currentList.length === 0) {
+    alert("No students to save for the selected class.");
+    return;
+  }
 
-    if (!selectedDate) {
+  const attendancePayload = currentList.map(student => ({
+    studentId: student.studentId,
+    attendanceDate: selectedDate,
+    status: student.todayStatus.toUpperCase()
+  }));
 
-        alert("Select attendance date");
+  const saveBtn = document.getElementById("saveAttendanceBtn");
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
 
-        return;
+  try {
+    const response = await fetch(`${API_BASE}/attendance/save`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(attendancePayload)
+    });
 
+    if (response.ok) {
+      alert("Attendance Saved Successfully.");
+    } else {
+      const errorMsg = await response.text();
+      console.error("Server Error Response:", errorMsg);
+      alert(`Failed to save attendance: ${errorMsg || response.status}`);
     }
-
-    const attendancePayload = getFilteredData().map(student => ({
-
-        studentId: student.studentId,
-
-        attendanceDate: selectedDate,
-
-        status: student.todayStatus.toUpperCase()
-
-    }));
-
-    try{
-
-        const response = await fetch(`${API_BASE}/attendance/save`,{
-
-            method:"POST",
-
-            headers:{
-                "Content-Type":"application/json"
-            },
-
-            body:JSON.stringify(attendancePayload)
-
-        });
-
-        if(response.ok){
-
-            alert("Attendance Saved Successfully.");
-
-        }
-
-        else{
-
-            alert("Failed to save attendance.");
-
-        }
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        alert("Server error.");
-
-    }
-
-});
-
-document.getElementById("exportBtn").addEventListener("click", () => {
-  alert("Export feature will be added after backend connection.");
+  } catch (error) {
+    console.error("Save Attendance Network Error:", error);
+    alert("Server error. Check your connection or console logs.");
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Save Attendance`;
+  }
 });
 
 classFilter.addEventListener("change", loadAttendanceTable);
 sectionFilter.addEventListener("change", loadAttendanceTable);
 rollSearch.addEventListener("input", loadAttendanceTable);
+attendanceDate.addEventListener("change", loadTodayAttendance);
 
 function updateCharts(data) {
   let present = 0;
@@ -254,30 +280,24 @@ function updateCharts(data) {
 
   data.forEach(student => {
     if (student.todayStatus === "Present") present++;
-    if (student.todayStatus === "Absent") absent++;
+    if (student.todayStatus === "Absent") absentToday++;
     if (student.todayStatus === "Late") late++;
   });
 
   const total = data.length || 1;
-
-  const presentPercent = ((present / total) * 100).toFixed(2);
-  const absentPercent = ((absent / total) * 100).toFixed(2);
-  const latePercent = ((late / total) * 100).toFixed(2);
+  const presentPercent = ((present / total) * 100).toFixed(1);
+  const absentPercent = ((absent / total) * 100).toFixed(1);
+  const latePercent = ((late / total) * 100).toFixed(1);
 
   const attendanceCtx = document.getElementById("attendanceChart");
+  if (!attendanceCtx) return;
 
-  if (attendanceChart) {
-    attendanceChart.destroy();
-  }
+  if (attendanceChart) attendanceChart.destroy();
 
   attendanceChart = new Chart(attendanceCtx, {
     type: "doughnut",
     data: {
-      labels: [
-        `Present ${presentPercent}%`,
-        `Absent ${absentPercent}%`,
-        `Late ${latePercent}%`
-      ],
+      labels: [`Present ${presentPercent}%`, `Absent ${absentPercent}%`, `Late ${latePercent}%`],
       datasets: [{
         data: [present, absent, late],
         backgroundColor: ["#22c55e", "#ef4444", "#f59e0b"]
@@ -285,41 +305,36 @@ function updateCharts(data) {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
-        legend: {
-          position: "right"
-        }
+        legend: { position: "right" }
       }
     }
   });
 
   const monthlyCtx = document.getElementById("monthlyChart");
+  if (!monthlyCtx) return;
 
-  if (monthlyChart) {
-    monthlyChart.destroy();
-  }
+  if (monthlyChart) monthlyChart.destroy();
 
   monthlyChart = new Chart(monthlyCtx, {
     type: "line",
     data: {
-      labels: ["Dec", "Jan", "Feb", "Mar", "Apr", "May"],
+      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       datasets: [{
         label: "Attendance %",
-        data: [88.12, 90.45, 91.23, 89.75, 90.10, Number(presentPercent)],
+        data: [88, 90, 91, 89, 90, Number(presentPercent)],
         borderColor: "#2563eb",
         backgroundColor: "rgba(37, 99, 235, 0.12)",
         tension: 0.4,
-        fill: true,
-        pointRadius: 4
+        fill: true
       }]
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
-        y: {
-          beginAtZero: true,
-          max: 100
-        }
+        y: { beginAtZero: true, max: 100 }
       }
     }
   });
@@ -327,74 +342,16 @@ function updateCharts(data) {
 
 function updateDateTime() {
   const now = new Date();
+  const dateOptions = { day: "2-digit", month: "short", year: "numeric" };
+  const dayOptions = { weekday: "long" };
 
-  const dateOptions = {
-    day: "2-digit",
-    month: "short",
-    year: "numeric"
-  };
+  const todayDateEl = document.getElementById("todayDate");
+  const todayDayEl = document.getElementById("todayDay");
+  const currentTimeEl = document.getElementById("currentTime");
 
-  const dayOptions = {
-    weekday: "long"
-  };
-
-  document.getElementById("todayDate").textContent =
-    now.toLocaleDateString("en-IN", dateOptions);
-
-  document.getElementById("todayDay").textContent =
-    now.toLocaleDateString("en-IN", dayOptions);
-
-  document.getElementById("currentTime").textContent =
-    now.toLocaleTimeString("en-IN");
+  if (todayDateEl) todayDateEl.textContent = now.toLocaleDateString("en-IN", dateOptions);
+  if (todayDayEl) todayDayEl.textContent = now.toLocaleDateString("en-IN", dayOptions);
+  if (currentTimeEl) currentTimeEl.textContent = now.toLocaleTimeString("en-IN");
 }
 
-function setDefaultDate() {
-  const today = new Date().toISOString().split("T")[0];
-  attendanceDate.value = today;
-}
-
-setDefaultDate();
-updateDateTime();
-setInterval(updateDateTime, 1000);
-
-loadStudents().then(loadTodayAttendance); 
-attendanceDate.addEventListener("change", loadTodayAttendance);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-async function loadTodayAttendance() {
-
-    const selectedDate = attendanceDate.value;
-
-    try {
-
-        const response = await fetch(
-            `${API_BASE}/attendance?date=${selectedDate}`
-        );
-
-        const attendance = await response.json();
-
-        attendance.forEach(record => {
-
-            const student = studentsData.find(
-                s => s.studentId === record.studentId
-            );
-
-            if(student){
-
-                student.todayStatus =
-                    record.status.charAt(0) +
-                    record.status.slice(1).toLowerCase();
-
-            }
-
-        });
-
-        loadAttendanceTable();
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-    }
-
-}
+window.changeStatus = changeStatus;

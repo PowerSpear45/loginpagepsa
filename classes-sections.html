@@ -1,181 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classes & Sections</title>
-
-    <link rel="stylesheet" href="classes-sections.css">
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes & Sections - Power Public School</title>
+  <link rel="stylesheet" href="classes-sections.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body>
 
-<div class="page">
+  <div class="dashboard">
+
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="school-brand">
+        <img src="./school-logo.png" alt="Power Public School Logo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=PPS&background=203f70&color=fff';">
+        <span>Power Public School</span>
+      </div>
+
+      <div class="header-right">
+        <div class="notification">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+        <div class="admin-box">
+          <div class="admin-text">
+            <span>Admin</span>
+            <small>Suresh Kumar</small>
+          </div>
+          <img src="images/admin.png" class="profile-img" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Suresh+Kumar&background=ffffff&color=203f70';">
+        </div>
+      </div>
+    </header>
 
     <!-- Sidebar -->
     <aside class="sidebar">
+      <a href="admin-home.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
 
-        <h3>Power Public School</h3>
+      <a href="student-management.html">
+        <i class="fa-solid fa-user-graduate"></i>
+        <span>Students Management</span>
+      </a>
 
-        <a href="admin-home.html">
-            <i class="fa-solid fa-house"></i>
-            Dashboard
-        </a>
+      <a href="teacher-management.html">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <span>Teachers Management</span>
+      </a>
 
-        <a href="student-management.html">
-            <i class="fa-solid fa-user-graduate"></i>
-            Students Management
-        </a>
+      <a class="active" href="classes-sections.html">
+        <i class="fa-solid fa-school"></i>
+        <span>Classes & Sections</span>
+      </a>
 
-        <a href="teacher-management.html">
-            <i class="fa-solid fa-chalkboard-user"></i>
-            Teachers Management
-        </a>
+      <a href="fees-management.html">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <span>Fees Management</span>
+      </a>
 
-        <a class="active" href="classes-sections.html">
-            <i class="fa-solid fa-school"></i>
-            Classes & Sections
-        </a>
+      <a href="attendance-management.html">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Attendance Report</span>
+      </a>
 
-        <a href="fees-management.html">
-  <i class="fa-solid fa-money-bill-wave"></i> Fees Management
-</a>
+      <a href="marks-report.html">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Marks Report</span>
+      </a>
 
-        <a href="attendance-management.html" class="menu-card">
-    <i class="fa-solid fa-calendar-check"></i>
-    <span>Attendance ReportS</span>
-</a>
+      <a href="announcement-management.html">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span>Announcements</span>
+      </a>
 
-        <a href="marks-report.html" class="menu-card">
-
-    <i class="fa-solid fa-graduation-cap"></i>
-
-    <span>Marks Report</span>
-
-</a>
-
-       <a href="announcement-management.html">
-  <i class="fa-solid fa-bullhorn"></i> Announcements
-</a>
+      <div class="date-card">
+        <i class="fa-solid fa-calendar-days"></i>
+        <p>Today's Date</p>
+        <h3 id="currentDateVal">-- --- ----</h3>
+        <span id="currentDayVal">Loading...</span>
+      </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="content">
+    <main class="main-content">
+      
+      <div class="top-bar">
+        <h2>Classes & Sections</h2>
+        <div class="top-actions">
+          <div class="search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Search class, section, teacher...">
+          </div>
+          <button id="addClassBtn" class="btn-primary">
+            <i class="fa-solid fa-plus"></i> Add Class / Section
+          </button>
+        </div>
+      </div>
 
-        <div class="top-bar">
-
-            <h2>Classes & Sections</h2>
-
-            <div class="top-actions">
-
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search class, section, teacher...">
-
-                
-
-            </div>
-
+      <!-- KPI Summary Cards -->
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon c-blue">
+            <i class="fa-solid fa-school"></i>
+          </div>
+          <div>
+            <h4>Total Classes</h4>
+            <p id="totalClasses">0</p>
+          </div>
         </div>
 
-        <!-- Cards -->
-        <div class="cards">
-
-            <div class="card">
-                <h4>Total Classes</h4>
-                <p id="totalClasses">0</p>
-            </div>
-
-            <div class="card">
-                <h4>Total Sections</h4>
-                <p id="totalSections">0</p>
-            </div>
-
-            <div class="card">
-                <h4>Total Students</h4>
-                <p id="totalStudents">0</p>
-            </div>
-
+        <div class="card">
+          <div class="card-icon c-green">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <div>
+            <h4>Total Sections</h4>
+            <p id="totalSections">0</p>
+          </div>
         </div>
 
-        <!-- Table -->
-        <div class="table-container">
-
-            <table>
-
-                <thead>
-    <tr>
-        <th>S.No</th>
-        <th>Class</th>
-        <th>Section</th>
-        <th>Strength</th>
-        <th>Class Teacher</th>
-        <th>Actions</th>
-    </tr>
-</thead>
-
-                <tbody id="classesTableBody">
-
-                </tbody>
-
-            </table>
-
+        <div class="card">
+          <div class="card-icon c-orange">
+            <i class="fa-solid fa-user-graduate"></i>
+          </div>
+          <div>
+            <h4>Total Students</h4>
+            <p id="totalStudents">0</p>
+          </div>
         </div>
+      </div>
 
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-
-            <h3>Quick Actions</h3>
-
-            <button id="addClassBtn">
-                <i class="fa-solid fa-plus"></i>
-                Add New Class
-            </button>
-
-            <button id="addSectionBtn">
-                <i class="fa-solid fa-layer-group"></i>
-                Add New Section
-            </button>
-
-            <button id="assignTeacherBtn">
-                <i class="fa-solid fa-user-tie"></i>
-                Assign Class Teacher
-            </button>
-
-        </div>
-        <div id="classModal" class="modal">
-  <div class="modal-box">
-    <h3>Add New Class / Section</h3>
-
-    <label>Class</label>
-    <input type="text" id="classNameInput" placeholder="Example: 5">
-
-    <label>Section</label>
-    <input type="text" id="sectionInput" placeholder="Example: A">
-
-    <label>Strength</label>
-    <input type="number" id="strengthInput" placeholder="Example: 45">
-
-    <label>Class Teacher</label>
-    <input type="text" id="teacherInput" placeholder="Example: Mrs. Priya Sharma">
-
-    <div class="modal-actions">
-     <button id="deleteClassBtn" class="delete-btn">Delete</button>
-      <button id="closeModalBtn" class="cancel-btn">Cancel</button>
-      <button id="saveClassBtn" class="save-btn">Add</button>
-    </div>
-  </div>
-</div>
+      <!-- Table Section -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 60px;">S.No</th>
+              <th>Class</th>
+              <th>Section</th>
+              <th>Strength</th>
+              <th>Class Teacher</th>
+              <th style="text-align: center; width: 140px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="classesTableBody">
+            <tr>
+              <td colspan="6" style="text-align:center; padding: 25px; color:#888;">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading class data...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
     </main>
 
-</div>
+  </div>
 
-<script src="classes-sections.js"></script>
+  <!-- Add / Edit Modal -->
+  <div id="classModal" class="modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Class / Section</h3>
+        <button type="button" class="close-x" onclick="closeClassModal()">&times;</button>
+      </div>
 
+      <div class="modal-form-group">
+        <label>Class</label>
+        <input type="text" id="classNameInput" placeholder="Example: 5">
+      </div>
+
+      <div class="modal-form-group">
+        <label>Section</label>
+        <input type="text" id="sectionInput" placeholder="Example: A">
+      </div>
+
+      <div class="modal-form-group">
+        <label>Strength</label>
+        <input type="number" id="strengthInput" placeholder="Example: 45">
+      </div>
+
+      <div class="modal-form-group">
+        <label>Class Teacher</label>
+        <select id="teacherSelect">
+          <option value="">-- Select Class Teacher --</option>
+        </select>
+      </div>
+
+      <div class="modal-actions">
+        <button id="deleteClassBtn" class="delete-btn" type="button">Delete</button>
+        <button id="closeModalBtn" class="cancel-btn" type="button">Cancel</button>
+        <button id="saveClassBtn" class="save-btn" type="button">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="classes-sections.js"></script>
 </body>
 </html>

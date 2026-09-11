@@ -1,5 +1,7 @@
 package com.schoolapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,13 +15,24 @@ public class Attendance {
     @Column(name = "attendance_id")
     private Integer attendanceId;
 
-    @Column(name = "student_id")
+    @Column(name = "student_id", nullable = false)
+    @JsonProperty("studentId")
     private Integer studentId;
 
-    @Column(name = "attendance_date")
+    @Column(name = "attendance_date", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate attendanceDate;
 
+    @Column(name = "status", nullable = false)
     private String status;
+
+    public Attendance() {}
+
+    public Attendance(Integer studentId, LocalDate attendanceDate, String status) {
+        this.studentId = studentId;
+        this.attendanceDate = attendanceDate;
+        this.status = status;
+    }
 
     public Integer getAttendanceId() {
         return attendanceId;

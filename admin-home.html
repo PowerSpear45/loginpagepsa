@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Power Public School</title>
   <link rel="stylesheet" href="admin-home.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -11,9 +13,9 @@
 
     <header class="top-header">
       <div class="school-brand">
-    <img src="./school-logo.png" alt="Power Public School Logo">
-    <span>Power Public School</span>
-</div>
+        <img src="./school-logo.png" alt="Power Public School Logo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=PPS&background=203f70&color=fff';">
+        <span>Power Public School</span>
+      </div>
 
       <div class="header-right">
         <div class="notification">
@@ -21,65 +23,68 @@
         </div>
 
         <div class="admin-box">
-          <span>Admin 1</span>
-          <small>Suresh Kumar</small>
-          <img src="images/admin.png" class="profile-img">
+          <div class="admin-text">
+            <span>Admin</span>
+            <small id="adminNameDisplay">Suresh Kumar</small>
+          </div>
+          <img src="images/admin.png" class="profile-img" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Suresh+Kumar&background=ffffff&color=203f70';">
         </div>
       </div>
     </header>
 
     <aside class="sidebar">
-    <a class="active" href="admin-home.html">
-    <i class="fa-solid fa-house"></i>
-    Dashboard
-</a>
+      <a class="active" href="admin-home.html">
+        <i class="fa-solid fa-house"></i>
+        Dashboard
+      </a>
 
-<a  href="student-management.html">
-    <i class="fa-solid fa-user-graduate"></i>
-    Students Management
-</a>
+      <a href="student-management.html">
+        <i class="fa-solid fa-user-graduate"></i>
+        Students Management
+      </a>
       
-  <a href="teacher-management.html">
-    <i class="fa-solid fa-chalkboard-user"></i>
-    Teachers Management
-</a>
+      <a href="teacher-management.html">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        Teachers Management
+      </a>
+
       <a href="classes-sections.html">
-  <i class="fa-solid fa-school"></i> Classes & Sections
-</a>
+        <i class="fa-solid fa-school"></i>
+        Classes & Sections
+      </a>
+
       <a href="fees-management.html">
-  <i class="fa-solid fa-money-bill-wave"></i> Fees Management
-</a>
+        <i class="fa-solid fa-money-bill-wave"></i>
+        Fees Management
+      </a>
+
       <a href="attendance-management.html" class="menu-card">
-    <i class="fa-solid fa-calendar-check"></i>
-    <span>Attendance Report</span>
-</a>
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Attendance Report</span>
+      </a>
+
       <a href="marks-report.html" class="menu-card">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Marks Report</span>
+      </a>
 
-    <i class="fa-solid fa-graduation-cap"></i>
-
-    <span>Marks Report</span>
-
-</a>
       <a href="announcement-management.html">
-  <i class="fa-solid fa-bullhorn"></i> Announcements
-</a>
+        <i class="fa-solid fa-bullhorn"></i>
+        <span>Announcements</span>
+      </a>
 
       <div class="date-card">
-    <i class="fa-solid fa-calendar-days"></i>
-
-    <p>Today's Date</p>
-
-    <h3 id="currentDate"></h3>
-
-    <span id="currentDay"></span>
-</div>
+        <i class="fa-solid fa-calendar-days"></i>
+        <p>Today's Date</p>
+        <h3 id="currentDate">-- --- ----</h3>
+        <span id="currentDay">Loading...</span>
+      </div>
     </aside>
 
     <main class="main-content">
-      <h3>Welcome , Admin!</h3>
+      <h3 class="welcome-title">Welcome , Admin!</h3>
 
       <div class="stats-container">
-
         <div class="stat-card">
           <div class="card-icon students">
             <i class="fa-solid fa-user-graduate"></i>
@@ -119,54 +124,59 @@
             <small>"Fees Bug" Fixed on 09 Apr</small>
           </div>
         </div>
-
       </div>
 
       <section class="charts-row">
         <div class="chart-card">
           <h4>Fees Collection Overview</h4>
-          <canvas id="feesChart"></canvas>
+          <div class="chart-wrapper">
+            <canvas id="feesChart"></canvas>
+          </div>
         </div>
 
         <div class="chart-card">
           <h4>Attendance Overview</h4>
-          <canvas id="attendanceChart"></canvas>
+          <div class="chart-wrapper">
+            <canvas id="attendanceChart"></canvas>
+          </div>
         </div>
 
         <div class="chart-card">
           <h4>Students by Gender</h4>
-          <canvas id="genderChart"></canvas>
+          <div class="chart-wrapper">
+            <canvas id="genderChart"></canvas>
+          </div>
         </div>
       </section>
 
       <section class="bottom-area">
         <div class="recent-box">
-  <h3>Recent Activities</h3>
-
-  <div id="recentActivities"></div>
-
-</div>
+          <h3>Recent Activities</h3>
+          <div id="recentActivities" class="recent-activities-list">
+            <div class="activity-loading">Loading recent records...</div>
+          </div>
+        </div>
 
         <div class="right-panel">
           <div class="quick-actions">
             <h3>Quick Actions</h3>
 
-            <div class="quick-action-item student">
+            <div class="quick-action-item student" onclick="location.href='student-management.html'">
               <i class="fa-solid fa-circle-plus"></i>
               <span>Add New Student</span>
             </div>
 
-            <div class="quick-action-item teacher">
+            <div class="quick-action-item teacher" onclick="location.href='teacher-management.html'">
               <i class="fa-solid fa-user-plus"></i>
               <span>Add New Teacher</span>
             </div>
 
-            <div class="quick-action-item announcement">
+            <div class="quick-action-item announcement" onclick="location.href='announcement-management.html'">
               <i class="fa-solid fa-bullhorn"></i>
               <span>Create Announcement</span>
             </div>
 
-            <div class="quick-action-item fees">
+            <div class="quick-action-item fees" onclick="location.href='fees-management.html'">
               <i class="fa-solid fa-money-bill-wave"></i>
               <span>Collect Fees</span>
             </div>
