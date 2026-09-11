@@ -1,227 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marks Report</title>
-
-    <link rel="stylesheet" href="marks-report.css">
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marks Report - Power Public School</title>
+  <link rel="stylesheet" href="marks-report.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body>
 
-<div class="page">
+  <div class="dashboard">
 
-    <!-- ================= Sidebar ================= -->
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="school-brand">
+        <img src="./school-logo.png" alt="Power Public School Logo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=PPS&background=203f70&color=fff';">
+        <span>Power Public School</span>
+      </div>
 
+      <div class="header-right">
+        <div class="notification">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+        <div class="admin-box">
+          <div class="admin-text">
+            <span>Admin</span>
+            <small>Suresh Kumar</small>
+          </div>
+          <img src="images/admin.png" class="profile-img" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Suresh+Kumar&background=ffffff&color=203f70';">
+        </div>
+      </div>
+    </header>
+
+    <!-- Standardized Sidebar -->
     <aside class="sidebar">
+      <a href="admin-home.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
 
-        <h3>Power Public School</h3>
+      <a href="student-management.html">
+        <i class="fa-solid fa-user-graduate"></i>
+        <span>Students Management</span>
+      </a>
 
-        <a href="admin-home.html">
-            <i class="fa-solid fa-house"></i>
-            Dashboard
-        </a>
+      <a href="teacher-management.html">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <span>Teachers Management</span>
+      </a>
 
-        <a href="student-management.html">
-            <i class="fa-solid fa-user-graduate"></i>
-            Students Management
-        </a>
+      <a href="classes-sections.html">
+        <i class="fa-solid fa-school"></i>
+        <span>Classes & Sections</span>
+      </a>
 
-        <a href="teacher-management.html">
-            <i class="fa-solid fa-chalkboard-user"></i>
-            Teachers Management
-        </a>
+      <a href="fees-management.html">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <span>Fees Management</span>
+      </a>
 
-        <a class="active" href="classes-sections.html">
-            <i class="fa-solid fa-school"></i>
-            Classes & Sections
-        </a>
+      <a href="attendance-management.html">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Attendance Report</span>
+      </a>
 
-       <a class="active" href="fees-management.html">
-      <i class="fa-solid fa-money-bill-wave"></i> Fees Management
-    </a>
+      <a class="active" href="marks-report.html">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Marks Report</span>
+      </a>
 
-        <a href="attendance-report.html">
-            <i class="fa-solid fa-calendar-check"></i>
-            Attendance Report
-        </a>
+      <a href="announcement-management.html">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span>Announcements</span>
+      </a>
 
-        <a href="marks-report.html" class="active">
-            <i class="fa-solid fa-chart-column"></i>
-            Marks Report
-        </a>
-
-        <a class="active" href="announcement-management.html"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
-
-
-        
-
+      <div class="date-card">
+        <i class="fa-solid fa-calendar-days"></i>
+        <p>Today's Date</p>
+        <h3 id="todayDate">-- --- ----</h3>
+        <span id="todayDay">Loading...</span>
+      </div>
     </aside>
 
-    <!-- ================= Main ================= -->
-
+    <!-- Main Content -->
     <main class="main-content">
+      <div class="top-bar">
+        <h2>Student Examination & Marks Report</h2>
+        <div class="academic-badge">Academic Year: <strong>2026 - 2027</strong></div>
+      </div>
 
-        <div class="page-title">
-
-            <h2>Marks Report</h2>
-
+      <!-- 3 Summary KPI Cards -->
+      <section class="cards">
+        <div class="card average-card">
+          <div class="icon blue">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <div class="card-info">
+            <h4>Average Percentage</h4>
+            <h2 id="averagePercentage">0%</h2>
+          </div>
         </div>
 
-        <!-- ================= Dashboard Cards ================= -->
+        <div class="card highest-card">
+          <div class="icon green">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <div class="card-info">
+            <h4>Highest Score</h4>
+            <h2 id="highestMarks">0</h2>
+          </div>
+        </div>
 
-        <section class="cards">
+        <div class="card lowest-card">
+          <div class="icon orange">
+            <i class="fa-solid fa-arrow-down"></i>
+          </div>
+          <div class="card-info">
+            <h4>Lowest Score</h4>
+            <h2 id="lowestMarks">0</h2>
+          </div>
+        </div>
+      </section>
 
-            <div class="card average-card">
+      <!-- Filter Controls -->
+      <section class="filters-card">
+        <div class="filter-group">
+          <label for="classFilter">Class</label>
+          <select id="classFilter">
+            <option value="">All Classes</option>
+          </select>
+        </div>
 
-                <div class="icon blue">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
+        <div class="filter-group">
+          <label for="sectionFilter">Section</label>
+          <select id="sectionFilter">
+            <option value="">All Sections</option>
+          </select>
+        </div>
 
-                <div>
+        <div class="filter-group">
+          <label for="examFilter">Examination</label>
+          <select id="examFilter">
+            <option value="">All Exams</option>
+          </select>
+        </div>
 
-                    <h4>Average Percentage</h4>
+        <div class="filter-group search-group">
+          <label for="searchInput">Search Student</label>
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Search by name, roll no, or admission no...">
+          </div>
+        </div>
+      </section>
 
-                    <h2 id="averagePercentage">0%</h2>
+      <!-- Table Section -->
+      <div class="table-container">
+        <div class="table-header-title">
+          <h3>Published Student Scorecards</h3>
+          <span class="count-badge" id="rowCountBadge">0 Records</span>
+        </div>
 
-                </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 50px;">S.No</th>
+              <th>Roll No</th>
+              <th>Photo</th>
+              <th>Student Name</th>
+              <th>Class & Sec</th>
+              <th>Exam</th>
+              <th style="text-align: center;">Total Marks</th>
+              <th style="text-align: center;">Percentage</th>
+              <th style="text-align: center;">Grade</th>
+              <th style="text-align: center;">Result</th>
+              <th style="text-align: center; width: 110px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="marksTableBody">
+            <tr>
+              <td colspan="11" class="loading-cell">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading examination marks...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-            </div>
-
-            <div class="card highest-card">
-
-                <div class="icon green">
-                    <i class="fa-solid fa-trophy"></i>
-                </div>
-
-                <div>
-
-                    <h4>Highest Total</h4>
-
-                    <h2 id="highestMarks">0</h2>
-
-                </div>
-
-            </div>
-
-            <div class="card lowest-card">
-
-                <div class="icon orange">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-
-                <div>
-
-                    <h4>Lowest Total</h4>
-
-                    <h2 id="lowestMarks">0</h2>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ================= Filters ================= -->
-
-        <section class="filters">
-
-            <select id="academicYear">
-                <option>2024 - 2025</option>
-                <option>2025 - 2026</option>
-            </select>
-
-            <select id="classFilter">
-                <option value="">All Classes</option>
-            </select>
-
-            <select id="sectionFilter">
-                <option value="">All Sections</option>
-            </select>
-
-            <select id="examFilter">
-                <option value="">All Exams</option>
-            </select>
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search by student name or roll number">
-
-        </section>
-
-        <!-- ================= Table ================= -->
-
-        <section class="table-container">
-
-            <table>
-
-                <thead>
-<tr>
-    <th>S.No</th>
-    <th>Roll No</th>
-    <th>Photo</th>
-    <th>Student Name</th>
-    <th>Total Marks</th>
-    <th>Average</th>
-    <th>Result</th>
-    <th>Action</th>
-</tr>
-</thead>
-
-<tbody id="marksTableBody">
-</tbody>
-                    <td>
-    <button class="view-btn">
-       
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <!-- ================= Quick Actions ================= -->
-
-        <section class="quick-actions">
-
-            <button id="exportExcel">
-
-                <i class="fa-solid fa-file-excel"></i>
-
-                Export Excel
-
-            </button>
-
-            <button id="subjectAnalysis">
-
-                <i class="fa-solid fa-book-open"></i>
-
-                Subject Analysis
-
-            </button>
-
-            <button id="topPerformers">
-
-                <i class="fa-solid fa-trophy"></i>
-
-                Top Performers
-
-            </button>
-
-        </section>
-
+      <!-- Quick Action Buttons -->
+      <section class="quick-actions">
+        <button type="button" id="topPerformers">
+          <i class="fa-solid fa-trophy"></i> Top 5 Performers
+        </button>
+        <button type="button" id="exportExcel">
+          <i class="fa-solid fa-file-excel"></i> Export Report
+        </button>
+      </section>
     </main>
 
-</div>
+  </div>
 
-<script src="marks-report.js"></script>
+  <!-- Scorecard Details Modal -->
+  <div id="scorecardModal" class="modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="modalStudentName">Student Scorecard</h3>
+          <p id="modalStudentMeta">Class & Section | Exam</p>
+        </div>
+        <button type="button" class="close-modal" onclick="closeScorecardModal()">&times;</button>
+      </div>
 
+      <div class="modal-body">
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th style="text-align: center;">Max Marks</th>
+              <th style="text-align: center;">Marks Obtained</th>
+            </tr>
+          </thead>
+          <tbody id="modalSubjectsBody"></tbody>
+        </table>
+
+        <div class="score-summary-grid">
+          <div class="summary-box">
+            <span>Total Marks</span>
+            <strong id="modalTotalScore">0 / 600</strong>
+          </div>
+          <div class="summary-box">
+            <span>Percentage</span>
+            <strong id="modalPercentage">0%</strong>
+          </div>
+          <div class="summary-box">
+            <span>Overall Grade</span>
+            <strong id="modalGrade">--</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="marks-report.js"></script>
 </body>
-
 </html>

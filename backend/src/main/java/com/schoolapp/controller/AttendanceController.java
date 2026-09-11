@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/attendance")
@@ -20,16 +21,25 @@ public class AttendanceController {
         this.attendanceRepository = attendanceRepository;
     }
 
+    /**
+     * GET /api/attendance?date=YYYY-MM-DD
+     * Fetches all attendance records recorded for the given date
+     */
     @GetMapping
     public ResponseEntity<List<Attendance>> getAttendance(@RequestParam String date) {
         try {
             LocalDate attendanceDate = LocalDate.parse(date);
-            return ResponseEntity.ok(attendanceRepository.findByAttendanceDate(attendanceDate));
+            List<Attendance> records = attendanceRepository.findByAttendanceDate(attendanceDate);
+            return ResponseEntity.ok(records);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
+    /**
+     * POST /api/attendance/save
+     * Batch creates or updates attendance status for students
+     */
     @PostMapping("/save")
     @Transactional
     public ResponseEntity<?> saveAttendance(@RequestBody List<Attendance> attendanceList) {
@@ -43,14 +53,15 @@ public class AttendanceController {
                     continue;
                 }
 
-                Attendance existing = attendanceRepository
+                // Query existing record via Optional<Attendance>
+                Optional<Attendance> existingOpt = attendanceRepository
                         .findByStudentIdAndAttendanceDate(
                                 attendance.getStudentId(),
                                 attendance.getAttendanceDate()
-                        )
-                        .orElse(null);
+                        );
 
-                if (existing != null) {
+                if (existingOpt.isPresent()) {
+                    Attendance existing = existingOpt.get();
                     existing.setStatus(attendance.getStatus());
                     attendanceRepository.save(existing);
                 } else {
