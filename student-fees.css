@@ -10,8 +10,8 @@ body {
     background-image: 
         radial-gradient(#c6d4e8 0.85px, transparent 0.85px), 
         radial-gradient(#dce5f2 0.85px, #e9eff7 0.85px);
-    background-size: 24px 24px;
-    background-position: 0 0, 12px 12px;
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
     color: #0f172a;
     min-height: 100vh;
 }
@@ -111,7 +111,7 @@ body {
 .main-content {
     margin-left: 240px;
     flex: 1;
-    padding: 0 28px 32px;
+    padding: 0 28px 36px;
 }
 
 .top-bar {
@@ -189,7 +189,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .summary-card {
@@ -206,22 +206,22 @@ body {
     transform: translateY(-2px);
 }
 
-.stat-pending {
-    background: linear-gradient(135deg, #ffffff 40%, #fffcf0 100%);
-    border-left: 5px solid #d97706;
-    box-shadow: -4px 6px 12px rgba(217, 119, 6, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+.stat-total {
+    background: linear-gradient(135deg, #ffffff 40%, #f0f7ff 100%);
+    border-left: 5px solid #1f3f6d;
+    box-shadow: -4px 6px 12px rgba(31, 63, 109, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
-.stat-approved {
+.stat-paid {
     background: linear-gradient(135deg, #ffffff 40%, #f0fdf4 100%);
     border-left: 5px solid #16a34a;
     box-shadow: -4px 6px 12px rgba(22, 163, 74, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
-.stat-declined {
-    background: linear-gradient(135deg, #ffffff 40%, #fef2f2 100%);
-    border-left: 5px solid #dc2626;
-    box-shadow: -4px 6px 12px rgba(220, 38, 38, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+.stat-pending {
+    background: linear-gradient(135deg, #ffffff 40%, #fffcf0 100%);
+    border-left: 5px solid #d97706;
+    box-shadow: -4px 6px 12px rgba(217, 119, 6, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
 .summary-icon {
@@ -234,59 +234,25 @@ body {
     flex-shrink: 0;
 }
 
+.stat-total .summary-icon { background: #e0f2fe; color: #1f3f6d; }
+.stat-paid .summary-icon { background: #dcfce7; color: #16a34a; }
 .stat-pending .summary-icon { background: #fef3c7; color: #d97706; }
-.stat-approved .summary-icon { background: #dcfce7; color: #16a34a; }
-.stat-declined .summary-icon { background: #fee2e2; color: #dc2626; }
 
 .card-details span { font-size: 12px; color: #475569; font-weight: 600; }
 .card-details strong { font-size: 22px; color: #0f172a; display: block; margin: 2px 0 1px; }
 .card-details small { font-size: 11px; color: #64748b; }
 
-/* CONTROLS & ACTION BAR */
-.controls-card {
+/* CATEGORY TAB PILLS */
+.fee-category-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.cat-btn {
     background: #ffffff;
     border: 1.5px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 12px 18px;
-    margin-bottom: 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-}
-
-.filter-left {
-    display: flex;
-    gap: 16px;
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.filter-group label {
-    font-size: 10.5px;
-    font-weight: 700;
     color: #475569;
-    text-transform: uppercase;
-}
-
-.filter-group select {
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 12.5px;
-    color: #1e293b;
-    outline: none;
-    background: #f8fafc;
-}
-
-.btn-compose-popup {
-    background: #1f3f6d;
-    color: #ffffff;
-    border: none;
     padding: 9px 18px;
     border-radius: 8px;
     font-size: 12.5px;
@@ -295,13 +261,42 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 2px 6px rgba(31, 63, 109, 0.2);
-    transition: background 0.2s ease, transform 0.15s ease;
+    transition: all 0.2s ease;
 }
 
-.btn-compose-popup:hover {
-    background: #152d4f;
-    transform: translateY(-1px);
+.cat-btn.active {
+    background: #1f3f6d;
+    color: #ffffff;
+    border-color: #1f3f6d;
+    box-shadow: 0 3px 8px rgba(31, 63, 109, 0.2);
+}
+
+/* STUDENT STRIP */
+.student-info-strip {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    font-size: 12.5px;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.strip-label {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-right: 4px;
+}
+
+.student-info-strip strong {
+    color: #0f172a;
 }
 
 /* TABLE CARD */
@@ -309,14 +304,17 @@ body {
     background: #ffffff;
     border: 1.5px solid #cbd5e1;
     border-radius: 12px;
-    padding: 20px 22px;
+    padding: 20px;
     box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
 }
 
 .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 14px;
     border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
 }
 
 .table-header h3 {
@@ -328,19 +326,28 @@ body {
 .table-header p {
     font-size: 11.5px;
     color: #64748b;
-    margin-top: 2px;
+}
+
+.active-term-badge {
+    background: #e8f0fe;
+    color: #1f3f6d;
+    border: 1px solid #bfdbfe;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
 }
 
 .table-responsive {
     overflow-x: auto;
 }
 
-.leave-table {
+.fees-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.leave-table th {
+.fees-table th {
     background: #f1f5f9;
     color: #334155;
     font-size: 11.5px;
@@ -351,7 +358,7 @@ body {
     border-bottom: 2px solid #cbd5e1;
 }
 
-.leave-table td {
+.fees-table td {
     padding: 12px;
     font-size: 12.5px;
     color: #1e293b;
@@ -359,7 +366,7 @@ body {
     vertical-align: middle;
 }
 
-.leave-table tbody tr:hover {
+.fees-table tbody tr:hover {
     background: #f8fbff;
 }
 
@@ -368,33 +375,95 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
 }
 
-.status-pill.pending  { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-.status-pill.approved { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
-.status-pill.declined { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+.status-pill.paid { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.status-pill.pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
 
-.loading-state, .empty-state {
-    text-align: center !important;
-    padding: 35px 20px !important;
+/* RECEIPT DOWNLOAD BUTTON */
+.btn-receipt {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s;
+}
+
+.btn-receipt:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.receipt-unavailable {
+    color: #94a3b8;
+    font-size: 11.5px;
+    font-style: italic;
+}
+
+/* CHECKOUT BAR */
+.payment-checkout-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid #f1f5f9;
+    padding-top: 16px;
+    margin-top: 14px;
+}
+
+.checkout-summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.checkout-summary span {
+    font-size: 12px;
     color: #64748b;
-    font-size: 13px;
 }
 
-@media (max-width: 900px) {
-    .summary-cards { grid-template-columns: 1fr; }
-    .sidebar { width: 70px; }
-    .sidebar .school-title span, .menu-item span, .date-box { display: none; }
-    .main-content { margin-left: 70px; }
-    .controls-card { flex-direction: column; align-items: stretch; gap: 12px; }
+.amount-wrap strong {
+    font-size: 18px;
+    color: #0f172a;
+    margin-left: 6px;
 }
-/* =========================================================
-   COMPOSE LEAVE POPUP MODAL
-   ========================================================= */
+
+.btn-proceed-pay {
+    background: #1f3f6d;
+    color: #ffffff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.btn-proceed-pay:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-proceed-pay:not(:disabled):hover {
+    background: #152d4f;
+}
+
+/* MODAL POPUP */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -413,13 +482,11 @@ body {
 .modal-card {
     background: #ffffff;
     width: 100%;
-    max-width: 520px;
-    border-radius: 12px;
-    padding: 22px 24px;
+    max-width: 460px;
+    border-radius: 14px;
+    padding: 24px;
     border: 1.5px solid #cbd5e1;
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
-    max-height: 90vh;
-    overflow-y: auto;
 }
 
 .modal-header {
@@ -428,7 +495,7 @@ body {
     align-items: flex-start;
     border-bottom: 1.5px solid #f1f5f9;
     padding-bottom: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .modal-header h3 {
@@ -452,8 +519,8 @@ body {
     font-size: 18px;
     color: #64748b;
     cursor: pointer;
-    padding: 2px 6px;
     border-radius: 6px;
+    padding: 2px 6px;
 }
 
 .close-btn:hover {
@@ -461,76 +528,78 @@ body {
     background: #fee2e2;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 14px;
+.payment-summary-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
 }
 
-.form-group label {
+.pay-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: #475569;
+}
+
+.pay-row.highlight {
+    border-top: 1px dashed #cbd5e1;
+    padding-top: 8px;
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: #0f172a;
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.method-option {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
     font-size: 11.5px;
     font-weight: 700;
     color: #334155;
-}
-
-.form-group .req {
-    color: #dc2626;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.form-group select,
-.form-group input[type="date"],
-.form-group input[type="file"],
-.form-group textarea {
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 8px 10px;
-    font-size: 12.5px;
-    color: #1e293b;
-    background: #f8fafc;
-    outline: none;
-}
-
-.form-group select:focus,
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #1f3f6d;
-    background: #ffffff;
-}
-
-.file-hint {
-    font-size: 10.5px;
-    color: #94a3b8;
-}
-
-.modal-footer {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    border-top: 1.5px solid #f1f5f9;
-    padding-top: 14px;
-    margin-top: 6px;
+    gap: 6px;
 }
 
-.days-pill {
-    background: #edf4fc;
-    color: #1f3f6d;
-    border: 1px solid #bfdbfe;
-    font-size: 11.5px;
-    font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 20px;
+.method-option input { display: none; }
+.method-option.active { border-color: #1f3f6d; background: #edf4fc; color: #1f3f6d; }
+
+.upi-display {
+    text-align: center;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 18px;
 }
+
+.qr-placeholder {
+    font-size: 64px;
+    color: #1f3f6d;
+    margin-bottom: 6px;
+}
+
+.upi-display p { font-size: 12px; color: #1e293b; }
+.upi-display small { font-size: 10.5px; color: #64748b; }
 
 .modal-actions {
     display: flex;
-    gap: 8px;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .btn-cancel {
@@ -544,13 +613,13 @@ body {
     cursor: pointer;
 }
 
-.btn-submit {
-    background: #1f3f6d;
+.btn-confirm-pay {
+    background: #16a34a;
     color: #ffffff;
     border: none;
-    padding: 8px 16px;
+    padding: 9px 18px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
@@ -558,6 +627,11 @@ body {
     gap: 6px;
 }
 
-.btn-submit:hover {
-    background: #152d4f;
+.btn-confirm-pay:hover { background: #15803d; }
+
+@media (max-width: 900px) {
+    .sidebar { width: 70px; }
+    .sidebar .school-title span, .menu-item span, .date-box { display: none; }
+    .main-content { margin-left: 70px; }
+    .summary-cards { grid-template-columns: 1fr; }
 }

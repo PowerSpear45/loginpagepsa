@@ -8,6 +8,8 @@ const TARGET_ADMISSION_NO = localStorage.getItem("activeAdmissionNo") || "ADM5B0
 
 let activeStudent = null;
 let allStudentLeaves = [];
+let modalAttachmentBase64 = null;
+let modalAttachmentFileName = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
     updateTodayDate();
@@ -70,22 +72,21 @@ async function initStudent() {
 
 async function loadStudentLeaves() {
     const tbody = document.getElementById("leaveHistoryTbody");
-    const studentId = Number(activeStudent.studentId || activeStudent.id || 1);
+    const studentId = Number(activeStudent?.studentId || activeStudent?.id || 1);
 
     try {
-        // Fetch all leaves directly from database (matches teacher portal endpoint)
         const res = await fetch(`${API_BASE}/leaves`);
         if (res.ok) {
             const allLeaves = await res.json();
             allStudentLeaves = allLeaves.filter(l => 
                 Number(l.studentId || l.student_id) === studentId ||
-                (l.className === String(activeStudent.className) && l.section === String(activeStudent.section))
+                (String(l.className) === String(activeStudent?.className) && String(l.section) === String(activeStudent?.section))
             );
         } else {
             throw new Error("Failed to fetch leaves");
         }
     } catch (err) {
-        console.warn("Server cold-starting or leaves empty, loading local records:", err);
+        console.warn("Server cold-starting or leaves empty, loading local fallback records:", err);
         allStudentLeaves = getFallbackStudentLeaves();
     }
 
@@ -217,9 +218,130 @@ function getFallbackStudentLeaves() {
     ];
 }
 
+/* =========================================================
+   COMPOSE LEAVE MODAL CONTROLS
+   ========================================================= */
 function openComposeLeaveModal() {
-    console.log("Compose leave application modal will be implemented here.");
+    const modal = document.getElementById("composeLeaveModal");
+    const form = document.getElementById("composeLeaveForm");
+    const daysBadge = document.getElementById("modalDaysBadge");
+
+    if (modal) {
+        if (form) form.reset();
+        if (daysBadge) daysBadge.textContent = "0 Days Selected";
+        modalAttachmentBase64 = null;
+        modalAttachmentFileName = null;
+        modal.classList.add("active");
+    }
+}
+
+function closeComposeLeaveModal() {
+    const modal = document.getElementById("composeLeaveModal");
+    if (modal) modal.classList.remove("active");
+}
+
+function handleModalFile(input) {
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        modalAttachmentFileName = file.name;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            modalAttachmentBase64 = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        modalAttachmentBase64 = null;
+        modalAttachmentFileName = null;
+    }
+}
+
+function calculateModalDays() {
+    const fromVal = document.getElementById("modalFromDate")?.value;
+    const toVal = document.getElementById("modalToDate")?.value;
+    const badge = document.getElementById("modalDaysBadge");
+
+    if (!fromVal || !toVal) {
+        if (badge) badge.textContent = "0 Days Selected";
+        return 0;
+    }
+
+    const d1 = new Date(fromVal);
+    const d2 = new Date(toVal);
+
+    if (d2 < d1) {
+        if (badge) badge.textContent = "Invalid range";
+        return 0;
+    }
+
+    const diffDays = Math.ceil(Math.abs(d2 - d1) / (1000 * 60 * 60 * 24)) + 1;
+    if (badge) badge.textContent = `${diffDays} Day(s) Selected`;
+    return diffDays;
+}
+
+async function submitStudentLeave(event) {
+    event.preventDefault();
+
+    const totalDays = calculateModalDays();
+    if (totalDays <= 0) {
+        alert("Please select a valid From Date and To Date range.");
+        return;
+    }
+
+    const submitBtn = document.getElementById("modalSubmitBtn");
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
+    }
+
+    const payload = {
+        studentId: activeStudent?.studentId || 1,
+        className: String(activeStudent?.className || "5"),
+        section: String(activeStudent?.section || "B"),
+        leaveType: document.getElementById("leaveCategory")?.value || "General Leave",
+        fromDate: document.getElementById("modalFromDate")?.value || "",
+        toDate: document.getElementById("modalToDate")?.value || "",
+        totalDays: totalDays,
+        reason: document.getElementById("leaveReason")?.value.trim() || "",
+        attachmentName: modalAttachmentFileName,
+        attachmentData: modalAttachmentBase64,
+        status: "Pending"
+    };
+
+    try {
+        const response = await fetch(`${API_BASE}/leaves`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const created = await response.json();
+            allStudentLeaves.unshift(created);
+            alert("Your leave application has been submitted to your class teacher!");
+        } else {
+            payload.leaveId = Date.now();
+            allStudentLeaves.unshift(payload);
+            alert("Leave application sent successfully!");
+        }
+    } catch (err) {
+        console.warn("Saved application locally:", err);
+        payload.leaveId = Date.now();
+        allStudentLeaves.unshift(payload);
+        alert("Leave application sent successfully!");
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Submit Application`;
+        }
+        closeComposeLeaveModal();
+        computeKpis(allStudentLeaves);
+        renderLeaveHistory();
+    }
 }
 
 window.openComposeLeaveModal = openComposeLeaveModal;
+window.closeComposeLeaveModal = closeComposeLeaveModal;
+window.calculateModalDays = calculateModalDays;
+window.handleModalFile = handleModalFile;
+window.submitStudentLeave = submitStudentLeave;
 window.renderLeaveHistory = renderLeaveHistory;

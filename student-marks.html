@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks & Report - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="student-marks.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- STANDARDIZED STUDENT SIDEBAR -->
+        <aside class="sidebar">
+            <div class="school-title">
+                <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Logo">
+                <span>Power Public School</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="student-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="student-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="student-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="student-leaves.html" class="menu-item">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Leave Letter</span>
+                </a>
+                <a href="student-fees.html" class="menu-item">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Fees Payment</span>
+                </a>
+                <a href="student-marks.html" class="menu-item active">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Marks & Report</span>
+                </a>
+                <a href="student-announcements.html" class="menu-item">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="student-profile.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </nav>
+
+            <div class="date-box">
+                <div class="date-icon"><i class="fa-regular fa-calendar-days"></i></div>
+                <div>
+                    <div class="date-label">Today's Date</div>
+                    <div class="date-value" id="currentDateVal">-- --- ----</div>
+                    <div class="day-value" id="currentDayVal">--------</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <div class="title-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div>
+                        <h1>Examination Marks & Progress Report</h1>
+                        <p>View published term examination scores, grades, and download official report cards</p>
+                    </div>
+                </div>
+
+                <div class="student-profile-badge">
+                    <div class="student-avatar-wrap">
+                        <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
+                    </div>
+                    <div class="student-meta">
+                        <strong id="studentName">Loading...</strong>
+                        <span>Class: <b id="studentClassSection">--</b> | Roll: <b id="studentRoll">--</b></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 3 SUMMARY CARDS (Result Status Card Removed) -->
+            <section class="summary-cards">
+                <div class="summary-card stat-percentage">
+                    <div class="summary-icon"><i class="fa-solid fa-percent"></i></div>
+                    <div class="card-details">
+                        <span>Overall Percentage</span>
+                        <strong id="kpiPercentage">0%</strong>
+                        <small id="kpiPerformanceLabel">Calculated Average</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-total">
+                    <div class="summary-icon"><i class="fa-solid fa-award"></i></div>
+                    <div class="card-details">
+                        <span>Total Marks</span>
+                        <strong id="kpiTotalMarks">0 / 0</strong>
+                        <small>Cumulative Score</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-grade">
+                    <div class="summary-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="card-details">
+                        <span>Academic Grade</span>
+                        <strong id="kpiOverallGrade">--</strong>
+                        <small>Evaluation Level</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTROLS & REPORT ACTIONS -->
+            <section class="controls-card">
+                <div class="filter-left">
+                    <div class="filter-group">
+                        <label for="examFilter"><i class="fa-solid fa-filter"></i> Select Examination</label>
+                        <select id="examFilter" onchange="renderMarksTable()">
+                            <option value="All">All Examinations</option>
+                            <option value="Quarterly Exam">Quarterly Exam</option>
+                            <option value="Half Yearly Exam">Half Yearly Exam</option>
+                            <option value="Annual Exam">Annual Exam</option>
+                            <option value="Unit Test 1">Unit Test 1</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="subjectFilter"><i class="fa-solid fa-book"></i> Filter Subject</label>
+                        <select id="subjectFilter" onchange="renderMarksTable()">
+                            <option value="All">All Subjects</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="English">English</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Science">Science</option>
+                            <option value="Social">Social</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="action-right">
+                    <button type="button" class="btn-download-report" onclick="downloadReportCardPDF()">
+                        <i class="fa-solid fa-file-pdf"></i> Download Report Card
+                    </button>
+                </div>
+            </section>
+
+            <!-- MARKS REPORT TABLE -->
+            <section class="table-card">
+                <div class="table-header">
+                    <div>
+                        <h3>Subject-Wise Performance Breakdown</h3>
+                        <p>Verified examination marks entered by your subject teachers</p>
+                    </div>
+                    <span class="active-term-badge">Academic Year 2026 - 2027</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="marks-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center;">#</th>
+                                <th>Subject</th>
+                                <th>Examination</th>
+                                <th style="text-align: center;">Max Marks</th>
+                                <th style="text-align: center;">Marks Obtained</th>
+                                <th style="text-align: center;">Percentage</th>
+                                <th style="text-align: center;">Grade</th>
+                                <th style="text-align: center;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="marksTableBody">
+                            <tr>
+                                <td colspan="8" class="loading-state">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Loading examination marks...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="student-marks.js"></script>
+</body>
+</html>

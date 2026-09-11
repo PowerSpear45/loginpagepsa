@@ -179,9 +179,65 @@
         </main>
     </div>
 
-    <!-- EMPTY POPUP PLACEHOLDER -->
-    <div id="composeLeaveModal" class="modal-placeholder" style="display: none;">
-        <!-- Modal content link will be implemented here later -->
+   <!-- COMPOSE LEAVE APPLICATION POPUP MODAL -->
+    <div class="modal-overlay" id="composeLeaveModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3><i class="fa-solid fa-pen-nib"></i> Apply for Leave</h3>
+                    
+                </div>
+                <button type="button" class="close-btn" onclick="closeComposeLeaveModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="composeLeaveForm" onsubmit="submitStudentLeave(event)">
+                <div class="form-group">
+                    <label for="leaveCategory">Leave Category <span class="req">*</span></label>
+                    <select id="leaveCategory" required>
+                        <option value="">-- Choose Category --</option>
+                        <option value="Sick Leave">Sick / Medical Leave</option>
+                        <option value="Family Function">Family Function / Marriage</option>
+                        <option value="Casual Leave">Casual / Personal Leave</option>
+                        <option value="Emergency Leave">Emergency Leave</option>
+                        <option value="Out of Station">Out of Station / Travel</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modalFromDate">From Date <span class="req">*</span></label>
+                        <input type="date" id="modalFromDate" required onchange="calculateModalDays()">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalToDate">To Date <span class="req">*</span></label>
+                        <input type="date" id="modalToDate" required onchange="calculateModalDays()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="leaveReason">Reason for Absence <span class="req">*</span></label>
+                    <textarea id="leaveReason" rows="3" placeholder="Explain the reason for your absence..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalAttachment">Doctor's Certificate / Supporting Document (Optional)</label>
+                    <input type="file" id="modalAttachment" accept=".pdf,.png,.jpg,.jpeg" onchange="handleModalFile(this)">
+                    <small class="file-hint">PDF or Images up to 5MB</small>
+                </div>
+
+                <div class="modal-footer">
+                    <span class="days-pill" id="modalDaysBadge">0 Days Selected</span>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeComposeLeaveModal()">Cancel</button>
+                        <button type="submit" class="btn-submit" id="modalSubmitBtn">
+                            <i class="fa-solid fa-paper-plane"></i> Submit Application
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="student-leaves.js"></script>

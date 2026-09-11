@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees Payment - Power Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="student-fees.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- STANDARDIZED SIDEBAR -->
+        <aside class="sidebar">
+            <div class="school-title">
+                <img src="school-logo.png.png" onerror="this.onerror=null; this.src='school-logo.png';" class="school-logo-img" alt="Logo">
+                <span>Power Public School</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="student-home.html" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="student-attendance.html" class="menu-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="student-homework.html" class="menu-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Homework</span>
+                </a>
+                <a href="student-leaves.html" class="menu-item">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Leave Letter</span>
+                </a>
+                <a href="student-fees.html" class="menu-item active">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Fees Payment</span>
+                </a>
+                <a href="student-marks.html" class="menu-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Marks & Report</span>
+                </a>
+                <a href="student-announcements.html" class="menu-item">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Announcements</span>
+                </a>
+                <a href="student-profile.html" class="menu-item">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </nav>
+
+            <div class="date-box">
+                <div class="date-icon"><i class="fa-regular fa-calendar-days"></i></div>
+                <div>
+                    <div class="date-label">Today's Date</div>
+                    <div class="date-value" id="currentDateVal">-- --- ----</div>
+                    <div class="day-value" id="currentDayVal">--------</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <div class="title-icon"><i class="fa-solid fa-receipt"></i></div>
+                    <div>
+                        <h1>Student Fees & Billing</h1>
+                        <p>Track fee installments, settle outstanding dues, and download payment receipts</p>
+                    </div>
+                </div>
+
+                <div class="student-profile-badge">
+                    <div class="student-avatar-wrap">
+                        <img id="studentAvatar" src="https://ui-avatars.com/api/?name=Loading&background=1f3f6d&color=ffffff" alt="Student Photo">
+                    </div>
+                    <div class="student-meta">
+                        <strong id="studentName">Loading...</strong>
+                        <span>Class: <b id="studentClassSection">--</b> | Roll: <b id="studentRoll">--</b></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 3 TOP SUMMARY CARDS -->
+            <section class="summary-cards">
+                <div class="summary-card stat-total">
+                    <div class="summary-icon"><i class="fa-solid fa-calculator"></i></div>
+                    <div class="card-details">
+                        <span>Total Academic Fees</span>
+                        <strong id="kpiTotalFees">₹0</strong>
+                        <small>Curriculum & facility fees</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-paid">
+                    <div class="summary-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="card-details">
+                        <span>Total Paid Amount</span>
+                        <strong id="kpiPaidFees">₹0</strong>
+                        <small>Settled transactions</small>
+                    </div>
+                </div>
+
+                <div class="summary-card stat-pending">
+                    <div class="summary-icon"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="card-details">
+                        <span>Outstanding Dues</span>
+                        <strong id="kpiPendingFees">₹0</strong>
+                        <small>Active term balance</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CATEGORY TAB BUTTONS -->
+            <div class="fee-category-tabs">
+                <button class="cat-btn active" id="tabAllFees" onclick="switchFeeCategory('ALL')">
+                    <i class="fa-solid fa-list-check"></i> All Particulars
+                </button>
+                <button class="cat-btn" id="tabTuition" onclick="switchFeeCategory('TUITION')">
+                    <i class="fa-solid fa-graduation-cap"></i> Tuition Fees
+                </button>
+                <button class="cat-btn" id="tabExtra" onclick="switchFeeCategory('EXTRA')">
+                    <i class="fa-solid fa-bus-simple"></i> Extra / Ancillary Fees
+                </button>
+            </div>
+
+            <!-- STUDENT IDENTIFIER BANNER -->
+            <div class="student-info-strip">
+                <div>
+                    <span class="strip-label">Student Name:</span>
+                    <strong id="stripStudentName">V.S.Sakthivel</strong>
+                </div>
+                <div>
+                    <span class="strip-label">Admission No:</span>
+                    <strong id="stripAdmNo">ADM5B01</strong>
+                </div>
+                <div>
+                    <span class="strip-label">Class & Section:</span>
+                    <strong id="stripClassSec">Class 5 - B</strong>
+                </div>
+                <div>
+                    <span class="strip-label">Date of Birth:</span>
+                    <strong id="stripDob">14-02-2015</strong>
+                </div>
+            </div>
+
+            <!-- FEES TABLE CARD -->
+            <section class="table-card">
+                <div class="table-header">
+                    <div>
+                        <h3>Fee Particulars & Due Schedule</h3>
+                        <p>Select unpaid items with the checkbox to pay together</p>
+                    </div>
+                    <span class="active-term-badge">Academic Year 2026 - 2027</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="fees-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 45px; text-align: center;">
+                                    <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)">
+                                </th>
+                                <th style="width: 50px;">S.No</th>
+                                <th>Fee Particulars / Description</th>
+                                <th>Due Date</th>
+                                <th style="text-align: right;">Total Amount</th>
+                                <th style="text-align: center;">Payment Status</th>
+                                <th style="text-align: center;">Official Receipt</th>
+                            </tr>
+                        </thead>
+                        <tbody id="feesTableBody">
+                            <tr>
+                                <td colspan="7" class="loading-state">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Loading billing records from database...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- BOTTOM CHECKOUT ACTION PANEL -->
+                <div class="payment-checkout-bar">
+                    <div class="checkout-summary">
+                        <span id="selectedItemsText">0 items selected</span>
+                        <div class="amount-wrap">
+                            <span>Payable Amount:</span>
+                            <strong id="totalPayableAmountDisplay">₹0</strong>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-proceed-pay" id="btnProceedPay" onclick="openPaymentGatewayModal()" disabled>
+                        <i class="fa-solid fa-shield-halved"></i> Proceed to Pay
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PAYMENT GATEWAY SIMULATION POPUP MODAL -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3><i class="fa-solid fa-credit-card"></i> School Payment Gateway</h3>
+                    <p class="modal-subtext">Power Public School Secure Terminal</p>
+                </div>
+                <button type="button" class="close-btn" onclick="closePaymentGatewayModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="payment-summary-box">
+                <div class="pay-row">
+                    <span>Student:</span>
+                    <strong id="payModalStudentName">V.S.Sakthivel</strong>
+                </div>
+                <div class="pay-row">
+                    <span>Admission No:</span>
+                    <strong id="payModalAdmNo">ADM5B01</strong>
+                </div>
+                <div class="pay-row highlight">
+                    <span>Total Amount to Pay:</span>
+                    <strong id="payModalAmount">₹0</strong>
+                </div>
+            </div>
+
+            <form id="paymentForm" onsubmit="executePayment(event)">
+                <div class="payment-methods">
+                    <label class="method-option active">
+                        <input type="radio" name="payMethod" value="UPI" checked>
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>UPI / QR</span>
+                    </label>
+                    <label class="method-option">
+                        <input type="radio" name="payMethod" value="Card">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span>Debit / Credit</span>
+                    </label>
+                    <label class="method-option">
+                        <input type="radio" name="payMethod" value="NetBanking">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Net Banking</span>
+                    </label>
+                </div>
+
+                <div class="upi-display" id="upiBox">
+                    <div class="qr-placeholder">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </div>
+                    <p>UPI ID: <strong>powerpublicschool@icici</strong></p>
+                    <small>Scan and approve in Google Pay, PhonePe, or Paytm</small>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closePaymentGatewayModal()">Cancel</button>
+                    <button type="submit" class="btn-confirm-pay" id="btnConfirmPay">
+                        <i class="fa-solid fa-lock"></i> Pay Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="student-fees.js"></script>
+</body>
+</html>
